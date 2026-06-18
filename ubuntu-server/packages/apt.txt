@@ -1,0 +1,30 @@
+# os-configs — Ubuntu Server APT package list
+# One package per line. Comments (#) and blank lines are ignored.
+
+# Core tools
+git
+curl
+wget
+zsh
+stow
+
+# Monitoring
+htop
+btop
+neofetch
+
+# Networking
+tailscale
+ufw
+
+# Docker (from Docker's official repo)
+docker-ce
+docker-ce-cli
+containerd.io
+docker-compose-plugin
+
+# Utilities
+ncdu
+tmux
+rsync
+jq

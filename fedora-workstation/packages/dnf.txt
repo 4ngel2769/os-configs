@@ -1,0 +1,61 @@
+# os-configs — Fedora Workstation DNF package list
+# One package per line. Comments (#) and blank lines are ignored.
+# These packages depend on repos configured in repos.sh
+
+# Shell & terminal
+zsh
+ghostty
+stow
+
+# Development
+git
+curl
+wget
+gcc
+make
+cmake
+python3
+python3-pip
+nodejs
+docker-ce
+docker-ce-cli
+containerd.io
+docker-compose-plugin
+code
+sublime-text
+antigravity
+
+# System tools
+htop
+btop
+neofetch
+tailscale
+envycontrol
+pycharm-community
+
+# NVIDIA
+nvidia-container-toolkit
+
+# Media & creative
+gimp
+audacity
+obs-studio
+
+# Networking
+nmap
+
+# Utilities
+flatpak
+gnome-tweaks
+gnome-extensions-app
+
+# Fonts
+fira-code-fonts
+google-noto-fonts-common
+
+# Gaming
+steam
+
+# Browsers (from third-party repos)
+brave-browser
+google-chrome-stable

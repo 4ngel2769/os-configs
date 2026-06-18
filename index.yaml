@@ -1,0 +1,38 @@
+# os-configs machine catalog
+# Maintained by 4ngel2769 — https://github.com/4ngel2769/os-configs
+
+profiles:
+  fedora-workstation:
+    description: "Daily driver – Acer Aspire A715-51G, GNOME, full GUI stack"
+    distro: fedora
+    release: 44
+    de: gnome
+    package_manager: dnf
+    machines:
+      - hostname: acer-a715
+        notes: "i5-12th gen, NVIDIA GPU, Ghostty terminal, full dev stack"
+    status: complete
+
+  ubuntu-server:
+    description: "Home server – headless, Docker/Portainer stack"
+    distro: ubuntu
+    de: none
+    package_manager: apt
+    machines:
+      - hostname: blade
+        notes: "8TB external drive at /mnt/8tbv1, Docker data-root on 8TB"
+    status: in-progress
+
+  debian-desktop:
+    description: "Placeholder – Debian GUI workstation"
+    distro: debian
+    de: gnome
+    package_manager: apt
+    status: stub
+
+  arch-desktop:
+    description: "Placeholder – Arch desktop"
+    distro: arch
+    de: gnome
+    package_manager: pacman
+    status: stub

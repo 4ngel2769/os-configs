@@ -1,0 +1,54 @@
+# ─────────────────────────────────────────────────────────────
+# os-configs — shared .gitconfig
+# https://github.com/4ngel2769/os-configs
+# ─────────────────────────────────────────────────────────────
+
+[user]
+	name = 4ngel2769
+	email = 4ngel2769@users.noreply.github.com
+
+[init]
+	defaultBranch = main
+
+[core]
+	editor = nvim
+	autocrlf = input
+	pager = less -FRX
+	whitespace = trailing-space,space-before-tab
+
+[color]
+	ui = auto
+
+[pull]
+	rebase = true
+
+[push]
+	default = current
+	autoSetupRemote = true
+
+[fetch]
+	prune = true
+
+[merge]
+	conflictstyle = diff3
+
+[diff]
+	colorMoved = default
+
+[alias]
+	st = status
+	co = checkout
+	br = branch
+	ci = commit
+	lg = log --oneline --graph --decorate -20
+	lga = log --oneline --graph --decorate --all -30
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	amend = commit --amend --no-edit
+	wip = !git add -A && git commit -m 'wip'
+
+[credential]
+	helper = store
+
+[url "git@github.com:"]
+	insteadOf = https://github.com/

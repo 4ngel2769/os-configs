@@ -1,0 +1,13 @@
+# os-configs — Ghostty terminal configuration
+# https://github.com/4ngel2769/os-configs
+# Docs: https://ghostty.org/docs/config
+
+font-family = "Fira Code"
+font-size = 13
+theme = catppuccin-mocha
+cursor-style = block
+cursor-style-blink = false
+background-opacity = 0.95
+window-decoration = false
+shell-integration = zsh
+scrollback-limit = 100000

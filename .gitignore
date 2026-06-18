@@ -1,0 +1,32 @@
+# Environment & secrets
+*.env
+.env*
+**/.env
+
+# Keys & credentials
+*.key
+*.pem
+id_rsa
+id_ed25519
+id_ecdsa
+*.ppk
+.gnupg/
+.ssh/id_*
+.ssh/known_hosts
+
+# Secrets
+secrets/
+*.secret
+*.token
+
+# Logs
+*.log
+
+# Dependencies & caches
+node_modules/
+.cache/
+
+# OS junk
+.DS_Store
+Thumbs.db
+config.md

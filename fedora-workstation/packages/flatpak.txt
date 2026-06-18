@@ -1,0 +1,27 @@
+# os-configs — Fedora Workstation Flatpak app list
+# One Flatpak app ID per line. Comments (#) and blank lines are ignored.
+
+# Communication
+org.signal.Signal
+io.github.mimbrero.materialgram
+
+# Media
+com.spotify.Client
+io.github.pear_devs.pear-desktop
+com.obsproject.Studio
+
+# Creative
+org.gimp.GIMP
+org.audacityteam.Audacity
+io.github.losslesscut.LosslessCut
+
+# Productivity & tools
+com.raggesilver.BlackBox
+io.github.angryipscanner.AngryIPScanner
+
+# Browser
+org.mozilla.firefox
+io.github.zen_browser.zen
+
+# Gaming
+com.modrinth.ModrinthApp
