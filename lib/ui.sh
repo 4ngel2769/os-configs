@@ -12,6 +12,42 @@ ui_require_gum() {
     return 1
 }
 
+ui_platform_label() {
+    case "${1,,}" in
+        laptop) echo "Laptop" ;;
+        desktop) echo "Desktop" ;;
+        server) echo "Server" ;;
+        *) echo "$1" ;;
+    esac
+}
+
+ui_gpu_label() {
+    case "${1,,}" in
+        igpu-gaming) echo "Gaming capable iGPU" ;;
+        igpu-basic) echo "Basic iGPU" ;;
+        dgpu) echo "Dedicated Graphics" ;;
+        none) echo "No GPU detected" ;;
+        *) echo "$1" ;;
+    esac
+}
+
+ui_platform_pick() {
+    local picked
+
+    ui_require_gum || return 1
+    picked="$(gum choose "Server" "Desktop" "Laptop")"
+
+    case "$picked" in
+        Server) echo "server" ;;
+        Desktop) echo "desktop" ;;
+        Laptop) echo "laptop" ;;
+        *)
+            echo "ui: unknown platform choice '${picked}'" >&2
+            return 1
+            ;;
+    esac
+}
+
 ui_style_header() {
     ui_require_gum || return 1
     gum style --bold --margin "1 0 0 0" "$@"

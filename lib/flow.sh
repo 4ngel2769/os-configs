@@ -63,16 +63,18 @@ flow_label_to_preset_id() {
 }
 
 flow_show_detection_summary() {
-    local badge
+    local badge platform_label gpu_label
     badge="$(ui_distro_badge)"
+    platform_label="$(ui_platform_label "$PLATFORM_CLASS")"
 
     ui_style_header "os-configs"
     ui_style_subheader "Post-install setup"
     ui_style_divider
     gum style "Distro:    ${badge} (${DISTRO_FAMILY})"
-    gum style "Platform:  ${PLATFORM_CLASS}"
+    gum style "Platform:  ${platform_label}"
     if [[ "$PLATFORM_CLASS" != "server" ]]; then
-        gum style "GPU:       ${GPU_CLASS}"
+        gpu_label="$(ui_gpu_label "$GPU_CLASS")"
+        gum style "GPU:       ${gpu_label}"
     fi
     ui_style_divider
 }
@@ -83,19 +85,19 @@ flow_platform_override() {
     flow_show_detection_summary
 
     if [[ "$auto" == "true" ]]; then
-        ui_style_subheader "(auto) keeping detected platform: ${PLATFORM_CLASS}"
+        ui_style_subheader "(auto) keeping detected platform: $(ui_platform_label "$PLATFORM_CLASS")"
         return 0
     fi
 
-    if ui_confirm "Keep detected platform '${PLATFORM_CLASS}'?"; then
+    if ui_confirm "Keep detected platform '$(ui_platform_label "$PLATFORM_CLASS")'?"; then
         return 0
     fi
 
     local picked
-    picked="$(gum choose "server" "desktop" "laptop")"
+    picked="$(ui_platform_pick)"
     PLATFORM_CLASS="$picked"
     export PLATFORM_CLASS
-    ui_style_subheader "Platform overridden to: ${PLATFORM_CLASS}"
+    ui_style_subheader "Platform overridden to: $(ui_platform_label "$PLATFORM_CLASS")"
 }
 
 flow_select_preset_menu() {
