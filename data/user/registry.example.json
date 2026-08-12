@@ -1,0 +1,40 @@
+{
+  "_schema": "User registry overlay — merged on top of data/registry.json. Keys are simple-names.",
+  "_comment": "Use \"*\" as family key when the same entry applies to all distros (e.g. github). User entries override base entries per field.",
+  "my-editor": {
+    "ubuntu": { "manager": "apt", "package": "micro" },
+    "debian": { "manager": "apt", "package": "micro" },
+    "fedora": { "manager": "dnf", "package": "micro" },
+    "arch": { "manager": "pacman", "package": "micro" }
+  },
+  "eza": {
+    "*": {
+      "manager": "github",
+      "repo": "eza-community/eza",
+      "method": "release",
+      "asset_pattern": "eza_.*_linux.tar.gz",
+      "bin": "eza",
+      "install_dir": "~/.local/bin"
+    }
+  },
+  "fastfetch-installer": {
+    "*": {
+      "manager": "github",
+      "repo": "fastfetch-cli/fastfetch",
+      "method": "script",
+      "script_path": "install.sh",
+      "ref": "main"
+    }
+  },
+  "my-tool-from-source": {
+    "*": {
+      "manager": "github",
+      "repo": "owner/my-tool",
+      "method": "build",
+      "clone_dir": "~/.cache/os-configs/build/my-tool",
+      "ref": "main",
+      "build_cmd": "make && make install PREFIX=$HOME/.local",
+      "build_packages": ["git", "build-essential"]
+    }
+  }
+}

@@ -9,21 +9,35 @@ _custom_registry="${_custom_repo}/data/registry.json"
 SELECTED_CUSTOM_FILE=""
 declare -A CUSTOM_SELECTION=()
 
+_custom_merged_categories=""
+
+custom_merged_categories_path() {
+    if [[ -z "$_custom_merged_categories" || ! -f "$_custom_merged_categories" ]]; then
+        _custom_merged_categories="${OS_CONFIGS_CACHE:-${HOME}/.cache}/os-configs/categories-merged.json"
+        mkdir -p "$(dirname "$_custom_merged_categories")"
+        categories_merged_json >"$_custom_merged_categories"
+    fi
+    echo "$_custom_merged_categories"
+}
+
 custom_category_keys() {
-    jq -r 'keys[]' "$_custom_categories"
+    jq -r 'keys[] | select(startswith("_") | not)' "$(custom_merged_categories_path)"
 }
 
 custom_category_label() {
-    jq -r --arg key "$1" '.[$key].label' "$_custom_categories"
+    jq -r --arg key "$1" '.[$key].label' "$(custom_merged_categories_path)"
 }
 
 custom_category_apps() {
     local key="$1"
-    jq -r --arg key "$key" --arg family "$DISTRO_FAMILY" '
-        .[$key].apps[]
-        | . as $app
-        | select($registry[$app][$family] != null)
-    ' --argjson registry "$(jq '.' "$_custom_registry")" "$_custom_categories"
+    local app
+
+    while IFS= read -r app; do
+        [[ -n "$app" ]] || continue
+        if registry_has_entry "$app"; then
+            echo "$app"
+        fi
+    done < <(jq -r --arg key "$key" '.[$key].apps[]?' "$(custom_merged_categories_path)")
 }
 
 custom_pick_category() {

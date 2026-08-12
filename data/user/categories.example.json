@@ -1,0 +1,11 @@
+{
+  "_schema": "User category overlay — merged on top of data/categories.json.",
+  "_comment": "Add simple-names to existing categories or define new ones. Apps must exist in registry (base or user).",
+  "utilities": {
+    "apps": ["eza", "my-editor"]
+  },
+  "community": {
+    "label": "Community / GitHub",
+    "apps": ["eza", "fastfetch-installer", "my-tool-from-source"]
+  }
+}

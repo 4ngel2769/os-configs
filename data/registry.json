@@ -120,5 +120,11 @@
     "debian": { "manager": "apt", "package": "yazi", "source": "yazi" },
     "ubuntu": { "manager": "apt", "package": "yazi", "source": "yazi" },
     "fedora": { "manager": "dnf", "package": "yazi", "source": "yazi" }
+  },
+  "stow": {
+    "arch": { "manager": "pacman", "package": "stow" },
+    "debian": { "manager": "apt", "package": "stow" },
+    "ubuntu": { "manager": "apt", "package": "stow" },
+    "fedora": { "manager": "dnf", "package": "stow" }
   }
 }

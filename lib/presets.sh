@@ -16,7 +16,7 @@ preset_validate_registry() {
 
     while IFS= read -r app; do
         [[ -n "$app" ]] || continue
-        if ! jq -e --arg app "$app" --arg family "$family" '.[$app][$family]' "$_presets_registry" >/dev/null; then
+        if ! registry_has_entry "$app"; then
             echo "preset: '${app}' in $(basename "$file") has no registry entry for family '${family}'" >&2
             missing=$((missing + 1))
         fi

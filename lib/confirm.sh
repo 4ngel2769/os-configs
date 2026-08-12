@@ -7,10 +7,12 @@ _confirm_lib_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${_confirm_lib_dir}/presets.sh"
 # shellcheck source=/dev/null
 source "${_confirm_lib_dir}/install.sh"
+# shellcheck source=/dev/null
+source "${_confirm_lib_dir}/dotfiles.sh"
 
 confirm_format_app_line() {
     local simple_name="$1"
-    local lookup manager package
+    local lookup
 
     if ! lookup="$(registry_lookup "$simple_name" 2>/dev/null)"; then
         echo "  ${simple_name}  (missing registry entry)"
@@ -18,9 +20,7 @@ confirm_format_app_line() {
     fi
 
     install_parse_lookup "$lookup"
-    manager="$INSTALL_MANAGER"
-    package="$INSTALL_PACKAGE"
-    echo "  ${simple_name}  →  ${manager}:${package}"
+    echo "  $(install_format_label "$simple_name")"
 }
 
 confirm_show_plan() {
@@ -62,6 +62,7 @@ confirm_show_plan() {
 confirm_run() {
     local auto="${1:-false}"
     local dry_run="${2:-false}"
+    local skip_dotfiles="${3:-false}"
     local plan_file
 
     plan_file="$(flow_active_plan_file)"
@@ -81,6 +82,7 @@ confirm_run() {
     if [[ "$dry_run" == "true" ]]; then
         install_run_plan "$plan_file" true
         log_print_summary
+        dotfiles_deploy true "$auto" "$skip_dotfiles"
         return 0
     fi
 
@@ -95,4 +97,5 @@ confirm_run() {
 
     install_run_plan "$plan_file" false
     log_print_summary
+    dotfiles_deploy false "$auto" "$skip_dotfiles"
 }

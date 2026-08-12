@@ -34,3 +34,7 @@ node_modules/
 .DS_Store
 Thumbs.db
 config.md
+
+# Local user overlays (copy from *.example.json)
+data/user/registry.json
+data/user/categories.json
