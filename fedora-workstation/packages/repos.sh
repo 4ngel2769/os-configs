@@ -152,6 +152,15 @@ REPO
     msg_ok "Antigravity repo added"
 fi
 
+# ── 12. COPR: lihaohong/yazi ────────────────────────────────
+msg_info "Setting up Yazi COPR..."
+if sudo dnf copr list --enabled 2>/dev/null | grep -q "lihaohong/yazi"; then
+    msg_ok "Yazi COPR already enabled"
+else
+    sudo dnf copr enable lihaohong/yazi -y
+    msg_ok "Yazi COPR enabled"
+fi
+
 # ── Refresh cache ────────────────────────────────────────────
 msg_info "Refreshing DNF cache..."
 sudo dnf makecache

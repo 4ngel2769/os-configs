@@ -12,6 +12,7 @@ stow
 htop
 btop
 neofetch
+glances
 
 # Networking
 tailscale
@@ -28,3 +29,14 @@ ncdu
 tmux
 rsync
 jq
+
+# CLI tools
+fzf
+lazygit
+yazi
+fd-find
+ripgrep
+zoxide
+p7zip-full
+poppler-utils
+file

@@ -1,0 +1,88 @@
+{
+  "brave": {
+    "arch": { "manager": "aur", "package": "brave-bin" },
+    "debian": { "manager": "apt", "package": "brave-browser", "source": "brave" },
+    "ubuntu": { "manager": "apt", "package": "brave-browser", "source": "brave" },
+    "fedora": { "manager": "dnf", "package": "brave-browser", "source": "brave" }
+  },
+  "discord": {
+    "arch": { "manager": "aur", "package": "discord" }
+  },
+  "signal": {
+    "arch": { "manager": "aur", "package": "signal-desktop" },
+    "debian": { "manager": "apt", "package": "signal-desktop", "source": "signal" },
+    "ubuntu": { "manager": "apt", "package": "signal-desktop", "source": "signal" }
+  },
+  "telegram": {
+    "arch": { "manager": "aur", "package": "telegram-desktop" },
+    "debian": { "manager": "apt", "package": "telegram-desktop" },
+    "ubuntu": { "manager": "apt", "package": "telegram-desktop" },
+    "fedora": { "manager": "dnf", "package": "telegram-desktop" }
+  },
+  "firefox": {
+    "arch": { "manager": "pacman", "package": "firefox" },
+    "debian": { "manager": "apt", "package": "firefox-esr" },
+    "ubuntu": { "manager": "apt", "package": "firefox" },
+    "fedora": { "manager": "dnf", "package": "firefox" }
+  },
+  "vscode": {
+    "arch": { "manager": "aur", "package": "visual-studio-code-bin" },
+    "debian": { "manager": "apt", "package": "code", "source": "vscode" },
+    "ubuntu": { "manager": "apt", "package": "code", "source": "vscode" },
+    "fedora": { "manager": "dnf", "package": "code", "source": "vscode" }
+  },
+  "git": {
+    "arch": { "manager": "pacman", "package": "git" },
+    "debian": { "manager": "apt", "package": "git" },
+    "ubuntu": { "manager": "apt", "package": "git" },
+    "fedora": { "manager": "dnf", "package": "git" }
+  },
+  "obs": {
+    "arch": { "manager": "pacman", "package": "obs-studio" },
+    "debian": { "manager": "apt", "package": "obs-studio" },
+    "ubuntu": { "manager": "apt", "package": "obs-studio" },
+    "fedora": { "manager": "dnf", "package": "obs-studio" }
+  },
+  "steam": {
+    "arch": { "manager": "aur", "package": "steam" },
+    "debian": { "manager": "apt", "package": "steam", "component": "non-free" },
+    "ubuntu": { "manager": "apt", "package": "steam", "component": "multiverse" },
+    "fedora": { "manager": "dnf", "package": "steam", "component": "rpmfusion-nonfree" }
+  },
+  "libreoffice": {
+    "arch": { "manager": "pacman", "package": "libreoffice-fresh" },
+    "debian": { "manager": "apt", "package": "libreoffice" },
+    "ubuntu": { "manager": "apt", "package": "libreoffice" },
+    "fedora": { "manager": "dnf", "package": "libreoffice" }
+  },
+  "vlc": {
+    "arch": { "manager": "pacman", "package": "vlc" },
+    "debian": { "manager": "apt", "package": "vlc" },
+    "ubuntu": { "manager": "apt", "package": "vlc" },
+    "fedora": { "manager": "dnf", "package": "vlc" }
+  },
+  "gimp": {
+    "arch": { "manager": "pacman", "package": "gimp" },
+    "debian": { "manager": "apt", "package": "gimp" },
+    "ubuntu": { "manager": "apt", "package": "gimp" },
+    "fedora": { "manager": "dnf", "package": "gimp" }
+  },
+  "btop": {
+    "arch": { "manager": "pacman", "package": "btop" },
+    "debian": { "manager": "apt", "package": "btop" },
+    "ubuntu": { "manager": "apt", "package": "btop" },
+    "fedora": { "manager": "dnf", "package": "btop" }
+  },
+  "fzf": {
+    "arch": { "manager": "pacman", "package": "fzf" },
+    "debian": { "manager": "apt", "package": "fzf" },
+    "ubuntu": { "manager": "apt", "package": "fzf" },
+    "fedora": { "manager": "dnf", "package": "fzf" }
+  },
+  "ncdu": {
+    "arch": { "manager": "pacman", "package": "ncdu" },
+    "debian": { "manager": "apt", "package": "ncdu" },
+    "ubuntu": { "manager": "apt", "package": "ncdu" },
+    "fedora": { "manager": "dnf", "package": "ncdu" }
+  }
+}

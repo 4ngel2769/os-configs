@@ -46,6 +46,7 @@ track_phase() {
 }
 
 track_phase "System updated"
+track_phase "Repos configured"
 track_phase "APT packages installed"
 track_phase "Docker CE configured"
 track_phase "Tailscale installed"
@@ -165,7 +166,12 @@ phase_update() {
     msg_ok "System updated"
 }
 
-# ── 2. APT packages ─────────────────────────────────────────
+# ── 2. Repos ─────────────────────────────────────────────────
+phase_repos() {
+    bash "$SCRIPT_DIR/packages/repos.sh"
+}
+
+# ── 3. APT packages ─────────────────────────────────────────
 phase_apt() {
     local pkg_file="$SCRIPT_DIR/packages/apt.txt"
 
@@ -188,10 +194,18 @@ phase_apt() {
 
     msg_info "Installing ${#packages[@]} packages..."
     sudo apt install -y "${packages[@]}"
+
+    # fd-find on Ubuntu installs as fdfind; yazi expects fd
+    if command -v fdfind &>/dev/null && ! command -v fd &>/dev/null; then
+        msg_info "Linking fdfind → fd for yazi..."
+        sudo ln -sf "$(command -v fdfind)" /usr/local/bin/fd
+        msg_ok "fd symlink created"
+    fi
+
     msg_ok "APT packages installed"
 }
 
-# ── 3. Docker CE ─────────────────────────────────────────────
+# ── 4. Docker CE ─────────────────────────────────────────────
 phase_docker() {
     msg_info "Setting up Docker CE..."
 
@@ -230,7 +244,7 @@ phase_docker() {
     msg_ok "Docker CE configured"
 }
 
-# ── 4. Tailscale ─────────────────────────────────────────────
+# ── 5. Tailscale ─────────────────────────────────────────────
 phase_tailscale() {
     msg_info "Setting up Tailscale..."
 
@@ -248,17 +262,17 @@ phase_tailscale() {
     msg_ok "Tailscale configured"
 }
 
-# ── 5. Oh My Zsh ────────────────────────────────────────────
+# ── 6. Oh My Zsh ────────────────────────────────────────────
 phase_ohmyzsh() {
     bash "$REPO_ROOT/shared/scripts/install-ohmyzsh.sh"
 }
 
-# ── 6. nvm ───────────────────────────────────────────────────
+# ── 7. nvm ───────────────────────────────────────────────────
 phase_nvm() {
     bash "$REPO_ROOT/shared/scripts/install-nvm.sh"
 }
 
-# ── 7. Dotfiles ──────────────────────────────────────────────
+# ── 8. Dotfiles ──────────────────────────────────────────────
 phase_dotfiles() {
     msg_info "Stowing dotfiles..."
 
@@ -327,6 +341,7 @@ main() {
     phase_preflight
 
     run_phase "System updated"          phase_update     false
+    run_phase "Repos configured"        phase_repos      false
     run_phase "APT packages installed"  phase_apt        "$SKIP_PACKAGES"
     run_phase "Docker CE configured"    phase_docker     "$SKIP_DOCKER"
     run_phase "Tailscale installed"     phase_tailscale  false

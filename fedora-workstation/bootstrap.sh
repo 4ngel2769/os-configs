@@ -61,6 +61,7 @@ track_phase "Oh My Zsh + plugins"
 track_phase "nvm + Node LTS"
 track_phase "bun"
 track_phase "Homebrew"
+track_phase "Concord installed"
 track_phase "Dotfiles stowed"
 track_phase "GNOME extensions installed"
 track_phase "Themes applied"
@@ -329,7 +330,13 @@ phase_homebrew() {
     bash "$REPO_ROOT/shared/scripts/install-homebrew.sh"
 }
 
-# ── 8. Dotfiles ──────────────────────────────────────────────
+# ── 8. Concord ───────────────────────────────────────────────
+phase_concord() {
+    msg_section "Concord (Discord TUI)"
+    bash "$REPO_ROOT/shared/scripts/install-concord.sh"
+}
+
+# ── 9. Dotfiles ──────────────────────────────────────────────
 phase_dotfiles() {
     msg_section "Stowing dotfiles"
 
@@ -367,7 +374,7 @@ phase_dotfiles() {
     msg_ok "Dotfiles stowed"
 }
 
-# ── 9. GNOME extensions ─────────────────────────────────────
+# ── 10. GNOME extensions ────────────────────────────────────
 phase_gnome_extensions() {
     msg_section "GNOME extensions"
     bash "$SCRIPT_DIR/gnome/install-extensions.sh"
@@ -547,6 +554,7 @@ main() {
     run_phase "nvm + Node LTS"             phase_nvm              false
     run_phase "bun"                        phase_bun              false
     run_phase "Homebrew"                   phase_homebrew          false
+    run_phase "Concord installed"          phase_concord           false
     run_phase "Dotfiles stowed"            phase_dotfiles          "$SKIP_DOTFILES"
     run_phase "GNOME extensions installed" phase_gnome_extensions  "$SKIP_GNOME"
     run_phase "Themes applied"             phase_gnome_themes      "$SKIP_GNOME"

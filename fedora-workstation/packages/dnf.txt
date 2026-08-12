@@ -29,9 +29,30 @@ antigravity
 htop
 btop
 neofetch
+glances
 tailscale
 envycontrol
 pycharm-community
+
+# CLI tools
+fzf
+lazygit
+yazi
+fd
+ripgrep
+zoxide
+p7zip
+poppler-utils
+file
+jq
+
+# Concord (Discord TUI) runtime
+alsa-lib
+libva
+mesa-libEGL
+pipewire-libs
+xdg-desktop-portal
+mpv
 
 # NVIDIA
 nvidia-container-toolkit
