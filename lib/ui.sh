@@ -131,5 +131,5 @@ ui_format_preset_row() {
 
     local badge
     badge="$(ui_distro_badge "$distro_id" "$family")"
-    printf '%s  %s' "$preset_name" "$badge"
+    printf '%s  %s\n' "$preset_name" "$badge"
 }
