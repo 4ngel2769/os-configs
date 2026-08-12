@@ -3,13 +3,24 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+REPO_ROOT="$ROOT"
+
+export TERM="${TERM:-xterm-256color}"
+
+# shellcheck source=/dev/null
+source "$ROOT/lib/deps.sh"
+os_configs_ensure_deps
+
 # shellcheck source=/dev/null
 source "$ROOT/lib/ui.sh"
 
 export DISTRO_ID="${DISTRO_ID:-ubuntu}"
 export DISTRO_FAMILY="${DISTRO_FAMILY:-ubuntu}"
 
-ui_require_gum
+AUTO=false
+if [[ "${1:-}" == "--auto" ]]; then
+    AUTO=true
+fi
 
 clear || true
 
@@ -30,7 +41,12 @@ options=(
     "Custom"
 )
 
-choice="$(gum choose "${options[@]}")"
+if [[ "$AUTO" == "true" ]]; then
+    choice="${options[0]}"
+    gum style --foreground 245 "(auto) selected first preset"
+else
+    choice="$(gum choose "${options[@]}")"
+fi
 
 ui_style_divider
 gum style --foreground 245 "Selected: ${choice}"
