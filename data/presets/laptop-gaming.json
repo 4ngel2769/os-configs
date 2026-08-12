@@ -1,1 +1,15 @@
-{"name": "Laptop Gaming", "platform_class": "laptop", "categories": {}}
+{
+  "name": "Laptop Gaming",
+  "platform_class": "laptop",
+  "categories": {
+    "browser": ["brave", "firefox"],
+    "communication": ["telegram"],
+    "developer": ["git", "vscode"],
+    "gaming": ["steam"],
+    "media": ["vlc"],
+    "utilities": ["fzf", "btop", "ncdu", "lazygit", "glances", "yazi"]
+  },
+  "de_wm_default": "gnome",
+  "dm_default": "gdm",
+  "laptop_tuning": true
+}

@@ -1,1 +1,13 @@
-{"name": "Server Everything", "platform_class": "server", "categories": {}}
+{
+  "name": "Server Everything",
+  "platform_class": "server",
+  "categories": {
+    "browser": ["firefox"],
+    "communication": ["telegram"],
+    "developer": ["git", "vscode"],
+    "utilities": ["fzf", "btop", "ncdu", "lazygit", "glances", "htop", "tmux", "rsync", "yazi"],
+    "media": ["vlc"],
+    "office": ["libreoffice"],
+    "creator": ["obs", "gimp"]
+  }
+}

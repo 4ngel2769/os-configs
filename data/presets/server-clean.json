@@ -1,1 +1,7 @@
-{"name": "Server Clean", "platform_class": "server", "categories": {}}
+{
+  "name": "Server Clean",
+  "platform_class": "server",
+  "categories": {
+    "utilities": ["git", "fzf", "btop", "ncdu", "lazygit", "glances", "htop", "tmux", "rsync", "yazi"]
+  }
+}

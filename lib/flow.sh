@@ -179,7 +179,9 @@ flow_stub_confirm() {
     ui_style_header "Next step"
 
     if [[ "$INSTALL_MODE" == "preset" ]]; then
-        gum style "Preset:    ${SELECTED_PRESET_ID}"
+        local summary
+        summary="$(preset_summary_line "$SELECTED_PRESET_FILE")"
+        gum style "Preset:    ${summary}"
         gum style "File:      ${SELECTED_PRESET_FILE}"
         gum style --foreground 240 "(confirmation + install — Phase 7)"
     else

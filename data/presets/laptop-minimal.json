@@ -1,1 +1,11 @@
-{"name": "Laptop Minimal (Light)", "platform_class": "laptop", "categories": {}}
+{
+  "name": "Laptop Minimal (Light)",
+  "platform_class": "laptop",
+  "categories": {
+    "browser": ["firefox"],
+    "utilities": ["git", "fzf", "btop", "ncdu"]
+  },
+  "de_wm_default": "gnome",
+  "dm_default": "gdm",
+  "laptop_tuning": true
+}

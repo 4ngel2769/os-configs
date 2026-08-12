@@ -1,1 +1,15 @@
-{"name": "Laptop Workstation", "platform_class": "laptop", "categories": {}}
+{
+  "name": "Laptop Workstation",
+  "platform_class": "laptop",
+  "categories": {
+    "browser": ["brave", "firefox"],
+    "communication": ["telegram"],
+    "developer": ["git", "vscode"],
+    "utilities": ["fzf", "btop", "ncdu", "lazygit", "glances", "yazi"],
+    "office": ["libreoffice"],
+    "media": ["vlc"]
+  },
+  "de_wm_default": "gnome",
+  "dm_default": "gdm",
+  "laptop_tuning": true
+}

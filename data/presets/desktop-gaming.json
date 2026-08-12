@@ -1,1 +1,14 @@
-{"name": "Desktop Gaming (Pick your Desktop)", "platform_class": "desktop", "categories": {}}
+{
+  "name": "Desktop Gaming (Pick your Desktop)",
+  "platform_class": "desktop",
+  "categories": {
+    "browser": ["brave", "firefox"],
+    "communication": ["telegram"],
+    "developer": ["git", "vscode"],
+    "gaming": ["steam"],
+    "media": ["vlc"],
+    "utilities": ["fzf", "btop", "ncdu", "lazygit", "glances", "yazi"]
+  },
+  "de_wm_default": "gnome",
+  "dm_default": "gdm"
+}

@@ -1,1 +1,14 @@
-{"name": "Desktop Workstation", "platform_class": "desktop", "categories": {}}
+{
+  "name": "Desktop Workstation",
+  "platform_class": "desktop",
+  "categories": {
+    "browser": ["brave", "firefox"],
+    "communication": ["telegram"],
+    "developer": ["git", "vscode"],
+    "utilities": ["fzf", "btop", "ncdu", "lazygit", "glances", "yazi"],
+    "office": ["libreoffice"],
+    "media": ["vlc"]
+  },
+  "de_wm_default": "gnome",
+  "dm_default": "gdm"
+}

@@ -1,1 +1,14 @@
-{"name": "Desktop Creator", "platform_class": "desktop", "categories": {}}
+{
+  "name": "Desktop Creator",
+  "platform_class": "desktop",
+  "categories": {
+    "browser": ["firefox"],
+    "communication": ["telegram"],
+    "developer": ["git", "vscode"],
+    "creator": ["obs", "gimp"],
+    "media": ["vlc"],
+    "utilities": ["fzf", "btop", "ncdu", "lazygit", "yazi"]
+  },
+  "de_wm_default": "gnome",
+  "dm_default": "gdm"
+}

@@ -84,5 +84,41 @@
     "debian": { "manager": "apt", "package": "ncdu" },
     "ubuntu": { "manager": "apt", "package": "ncdu" },
     "fedora": { "manager": "dnf", "package": "ncdu" }
+  },
+  "lazygit": {
+    "arch": { "manager": "pacman", "package": "lazygit" },
+    "debian": { "manager": "apt", "package": "lazygit" },
+    "ubuntu": { "manager": "apt", "package": "lazygit" },
+    "fedora": { "manager": "dnf", "package": "lazygit" }
+  },
+  "glances": {
+    "arch": { "manager": "pacman", "package": "glances" },
+    "debian": { "manager": "apt", "package": "glances" },
+    "ubuntu": { "manager": "apt", "package": "glances" },
+    "fedora": { "manager": "dnf", "package": "glances" }
+  },
+  "htop": {
+    "arch": { "manager": "pacman", "package": "htop" },
+    "debian": { "manager": "apt", "package": "htop" },
+    "ubuntu": { "manager": "apt", "package": "htop" },
+    "fedora": { "manager": "dnf", "package": "htop" }
+  },
+  "tmux": {
+    "arch": { "manager": "pacman", "package": "tmux" },
+    "debian": { "manager": "apt", "package": "tmux" },
+    "ubuntu": { "manager": "apt", "package": "tmux" },
+    "fedora": { "manager": "dnf", "package": "tmux" }
+  },
+  "rsync": {
+    "arch": { "manager": "pacman", "package": "rsync" },
+    "debian": { "manager": "apt", "package": "rsync" },
+    "ubuntu": { "manager": "apt", "package": "rsync" },
+    "fedora": { "manager": "dnf", "package": "rsync" }
+  },
+  "yazi": {
+    "arch": { "manager": "aur", "package": "yazi" },
+    "debian": { "manager": "apt", "package": "yazi", "source": "yazi" },
+    "ubuntu": { "manager": "apt", "package": "yazi", "source": "yazi" },
+    "fedora": { "manager": "dnf", "package": "yazi", "source": "yazi" }
   }
 }

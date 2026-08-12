@@ -1,1 +1,7 @@
-{"name": "Server Minimal", "platform_class": "server", "categories": {}}
+{
+  "name": "Server Minimal",
+  "platform_class": "server",
+  "categories": {
+    "utilities": ["git", "fzf", "btop", "ncdu"]
+  }
+}

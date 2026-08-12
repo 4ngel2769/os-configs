@@ -1,1 +1,10 @@
-{"name": "Desktop Minimal (Pick your Desktop)", "platform_class": "desktop", "categories": {}}
+{
+  "name": "Desktop Minimal (Pick your Desktop)",
+  "platform_class": "desktop",
+  "categories": {
+    "browser": ["firefox"],
+    "utilities": ["git", "fzf", "btop", "ncdu"]
+  },
+  "de_wm_default": "gnome",
+  "dm_default": "gdm"
+}

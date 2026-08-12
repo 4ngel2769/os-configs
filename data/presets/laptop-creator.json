@@ -1,1 +1,15 @@
-{"name": "Laptop Creator", "platform_class": "laptop", "categories": {}}
+{
+  "name": "Laptop Creator",
+  "platform_class": "laptop",
+  "categories": {
+    "browser": ["firefox"],
+    "communication": ["telegram"],
+    "developer": ["git", "vscode"],
+    "creator": ["obs", "gimp"],
+    "media": ["vlc"],
+    "utilities": ["fzf", "btop", "ncdu", "lazygit", "yazi"]
+  },
+  "de_wm_default": "gnome",
+  "dm_default": "gdm",
+  "laptop_tuning": true
+}

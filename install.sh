@@ -47,6 +47,8 @@ source "${ROOT}/lib/detect.sh"
 # shellcheck source=/dev/null
 source "${ROOT}/lib/ui.sh"
 # shellcheck source=/dev/null
+source "${ROOT}/lib/presets.sh"
+# shellcheck source=/dev/null
 source "${ROOT}/lib/flow.sh"
 
 os_configs_detect
