@@ -3,7 +3,7 @@ set -euo pipefail
 
 _deps_lib_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="${REPO_ROOT:-$(cd "${_deps_lib_dir}/.." && pwd)}"
-OS_CONFIGS_CACHE="${OS_CONFIGS_CACHE:-${REPO_ROOT}/.cache}"
+OS_CONFIGS_CACHE="${OS_CONFIGS_CACHE:-${XDG_CACHE_HOME:-${HOME}/.cache}/os-configs}"
 OS_CONFIGS_BIN="${OS_CONFIGS_BIN:-${OS_CONFIGS_CACHE}/bin}"
 
 JQ_VERSION="${OS_CONFIGS_JQ_VERSION:-1.7.1}"

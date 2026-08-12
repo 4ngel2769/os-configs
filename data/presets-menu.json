@@ -1,0 +1,61 @@
+{
+  "presets": [
+    {
+      "id": "server-minimal",
+      "label": "Server Minimal",
+      "platform_class": "server"
+    },
+    {
+      "id": "server-clean",
+      "label": "Server Clean",
+      "platform_class": "server"
+    },
+    {
+      "id": "server-everything",
+      "label": "Server Everything",
+      "platform_class": "server"
+    },
+    {
+      "id": "desktop-minimal",
+      "label": "Desktop Minimal (Pick your Desktop)",
+      "platform_class": "desktop"
+    },
+    {
+      "id": "desktop-workstation",
+      "label": "Desktop Workstation",
+      "platform_class": "desktop"
+    },
+    {
+      "id": "desktop-creator",
+      "label": "Desktop Creator",
+      "platform_class": "desktop"
+    },
+    {
+      "id": "desktop-gaming",
+      "label": "Desktop Gaming (Pick your Desktop)",
+      "platform_class": "desktop",
+      "requires_gaming_gpu": true
+    },
+    {
+      "id": "laptop-minimal",
+      "label": "Laptop Minimal (Light)",
+      "platform_class": "laptop"
+    },
+    {
+      "id": "laptop-workstation",
+      "label": "Laptop Workstation",
+      "platform_class": "laptop"
+    },
+    {
+      "id": "laptop-creator",
+      "label": "Laptop Creator",
+      "platform_class": "laptop"
+    },
+    {
+      "id": "laptop-gaming",
+      "label": "Laptop Gaming",
+      "platform_class": "laptop",
+      "requires_gaming_gpu": true
+    }
+  ]
+}
