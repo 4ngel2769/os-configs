@@ -1,0 +1,26 @@
+{
+  "_meta": "Distro badge foreground colors for gum style --foreground. Confirm hex values before production.",
+  "family_defaults": {
+    "arch": "#1793D1",
+    "debian": "#A80030",
+    "ubuntu": "#E95420",
+    "fedora": "#3C6EB4"
+  },
+  "ids": {
+    "arch": "#1793D1",
+    "debian": "#A80030",
+    "ubuntu": "#E95420",
+    "fedora": "#3C6EB4",
+    "linuxmint": "#87CF3E",
+    "pop": "#48B9C7",
+    "pop-os": "#48B9C7",
+    "zorin": "#15A05B",
+    "kali": "#557C94",
+    "parrot": "#15BEEF",
+    "manjaro": "#35BF5C",
+    "elementary": "#3689DD",
+    "endeavouros": "#7FDBCA",
+    "garuda": "#00A9E0",
+    "neon": "#3DCAE6"
+  }
+}

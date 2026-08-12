@@ -3,6 +3,10 @@
 .env*
 **/.env
 
+# Editor
+AGENTS.md
+PLAN.md
+
 # Keys & credentials
 *.key
 *.pem
