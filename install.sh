@@ -16,9 +16,13 @@ os-configs — post-install setup
 Usage: install.sh [OPTIONS]
 
 Options:
-  --auto       Non-interactive (keep detected platform, pick first preset)
-  --dry-run    Detect + menu flow only (no system changes)
-  --help       Show this help
+  --auto          Non-interactive (keep detected platform, pick first preset)
+  --dry-run       Full flow + confirmation preview (no package installs)
+  --ask-de-wm     Prompt for DE/WM and display manager (default: use preset/config defaults)
+  --help          Show this help
+
+Environment:
+  OS_CONFIGS_ASK_DE_WM=1   Same as --ask-de-wm
 EOF
 }
 
@@ -26,6 +30,7 @@ while [[ $# -gt 0 ]]; do
     case "$1" in
         --auto) AUTO=true; shift ;;
         --dry-run) DRY_RUN=true; shift ;;
+        --ask-de-wm) export OS_CONFIGS_ASK_DE_WM=1; shift ;;
         --help | -h)
             usage
             exit 0
@@ -47,11 +52,22 @@ source "${ROOT}/lib/detect.sh"
 # shellcheck source=/dev/null
 source "${ROOT}/lib/ui.sh"
 # shellcheck source=/dev/null
+source "${ROOT}/lib/registry.sh"
+# shellcheck source=/dev/null
 source "${ROOT}/lib/presets.sh"
+# shellcheck source=/dev/null
+source "${ROOT}/lib/dewm.sh"
+# shellcheck source=/dev/null
+source "${ROOT}/lib/custom.sh"
+# shellcheck source=/dev/null
+source "${ROOT}/lib/confirm.sh"
 # shellcheck source=/dev/null
 source "${ROOT}/lib/flow.sh"
 
 os_configs_detect
+
+export OS_CONFIGS_DRY_RUN="$DRY_RUN"
+export OS_CONFIGS_AUTO="$AUTO"
 
 clear || true
 

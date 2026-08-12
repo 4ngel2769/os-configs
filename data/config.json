@@ -1,0 +1,7 @@
+{
+  "ask_de_wm": false,
+  "custom_defaults": {
+    "de_wm": "gnome",
+    "dm": "gdm"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "communication": {
+    "label": "Communication",
+    "apps": ["telegram"]
+  },
+  "browser": {
+    "label": "Browser",
+    "apps": ["brave", "firefox"]
+  },
+  "developer": {
+    "label": "Developer",
+    "apps": ["vscode", "git"]
+  },
+  "creator": {
+    "label": "Creator",
+    "apps": ["obs", "gimp"]
+  },
+  "gaming": {
+    "label": "Gaming",
+    "apps": ["steam"]
+  },
+  "office": {
+    "label": "Office",
+    "apps": ["libreoffice"]
+  },
+  "media": {
+    "label": "Media",
+    "apps": ["vlc", "gimp"]
+  },
+  "utilities": {
+    "label": "Utilities",
+    "apps": ["btop", "fzf", "ncdu", "lazygit", "glances", "htop", "tmux", "rsync", "yazi"]
+  }
+}

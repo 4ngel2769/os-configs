@@ -1,0 +1,26 @@
+{
+  "gnome": {
+    "label": "GNOME",
+    "type": "de",
+    "default_dm": "gdm",
+    "dotfiles_pkg": "gnome"
+  },
+  "kde": {
+    "label": "KDE Plasma",
+    "type": "de",
+    "default_dm": "sddm",
+    "dotfiles_pkg": "kde"
+  },
+  "hyprland": {
+    "label": "Hyprland",
+    "type": "wm",
+    "default_dm": "sddm",
+    "dotfiles_pkg": "hyprland"
+  },
+  "i3": {
+    "label": "i3",
+    "type": "wm",
+    "default_dm": "lightdm",
+    "dotfiles_pkg": "i3"
+  }
+}

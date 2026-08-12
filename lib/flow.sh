@@ -105,7 +105,7 @@ flow_select_preset_menu() {
     local -a labels=()
     local -a rows=()
     local -a ids=()
-    local choice label id i
+    local choice id i
 
     flow_build_preset_options labels
 
@@ -167,27 +167,10 @@ flow_load_preset() {
     export SELECTED_PRESET_ID SELECTED_PRESET_FILE INSTALL_MODE
 }
 
-flow_stub_custom() {
-    INSTALL_MODE="custom"
-    export INSTALL_MODE
-    ui_style_header "Custom mode"
-    gum style --foreground 245 "Category selection is implemented in Phase 5."
-}
-
-flow_stub_confirm() {
-    ui_style_divider
-    ui_style_header "Next step"
-
-    if [[ "$INSTALL_MODE" == "preset" ]]; then
-        local summary
-        summary="$(preset_summary_line "$SELECTED_PRESET_FILE")"
-        gum style "Preset:    ${summary}"
-        gum style "File:      ${SELECTED_PRESET_FILE}"
-        gum style --foreground 240 "(confirmation + install — Phase 7)"
-    else
-        gum style "Mode:      custom"
-        gum style --foreground 240 "(category flow — Phase 5, then Phase 7)"
-    fi
+flow_run_custom() {
+    local auto="${1:-false}"
+    custom_run_selection "$auto"
+    custom_show_summary
 }
 
 flow_run_entry() {
@@ -197,8 +180,11 @@ flow_run_entry() {
     flow_select_preset_menu "$auto"
 
     if [[ "$INSTALL_MODE" == "custom" ]]; then
-        flow_stub_custom
+        flow_run_custom "$auto"
+        dewm_resolve "$auto" ""
+    else
+        dewm_resolve "$auto" "$SELECTED_PRESET_FILE"
     fi
 
-    flow_stub_confirm
+    confirm_run "$auto" "${OS_CONFIGS_DRY_RUN:-false}"
 }

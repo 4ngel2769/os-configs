@@ -1,0 +1,5 @@
+{
+  "gdm": { "label": "GDM" },
+  "sddm": { "label": "SDDM" },
+  "lightdm": { "label": "LightDM" }
+}
