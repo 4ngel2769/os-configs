@@ -39,8 +39,8 @@ const (
 )
 
 const (
-	footerContinue = iota
-	footerBack
+	footerBack = iota
+	footerContinue
 )
 
 type softwareModel struct {
@@ -48,6 +48,7 @@ type softwareModel struct {
 	catIndex     int
 	appIndex     int
 	focus        focusArea
+	lastPane     focusArea
 	footerButton int
 	selected     map[string]map[string]bool
 	width        int
@@ -113,20 +114,34 @@ func (m softwareModel) totalSelected() int {
 	return n
 }
 
-func (m softwareModel) togglePane() {
+func (m *softwareModel) togglePane() {
 	if m.focus == focusSidebar {
 		m.focus = focusGrid
-		if len(m.currentCategory().Apps) > 0 {
-			if m.appIndex >= len(m.currentCategory().Apps) {
-				m.appIndex = 0
-			}
-		} else {
+		m.lastPane = focusGrid
+		if len(m.currentCategory().Apps) > 0 && m.appIndex >= len(m.currentCategory().Apps) {
 			m.appIndex = 0
 		}
 		return
 	}
 	if m.focus == focusGrid {
 		m.focus = focusSidebar
+		m.lastPane = focusSidebar
+	}
+}
+
+func (m *softwareModel) tabFooter() {
+	if m.focus == focusFooter {
+		m.focus = m.lastPane
+		if m.focus != focusSidebar && m.focus != focusGrid {
+			m.focus = focusSidebar
+			m.lastPane = focusSidebar
+		}
+		return
+	}
+	if m.focus == focusSidebar || m.focus == focusGrid {
+		m.lastPane = m.focus
+		m.focus = focusFooter
+		m.footerButton = footerBack
 	}
 }
 
@@ -149,7 +164,10 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c", "q":
 			m.quitting = true
 			return m, tea.Quit
-		case "tab", "enter":
+		case "tab":
+			m.tabFooter()
+			return m, nil
+		case "enter":
 			switch m.focus {
 			case focusSidebar, focusGrid:
 				m.togglePane()
@@ -172,7 +190,7 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					m.appIndex--
 				}
 			case focusFooter:
-				m.footerButton = footerContinue
+				m.footerButton = footerBack
 			}
 			return m, nil
 		case "right", "l":
@@ -185,7 +203,7 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					m.appIndex++
 				}
 			case focusFooter:
-				m.footerButton = footerBack
+				m.footerButton = footerContinue
 			}
 			return m, nil
 		case "up", "k":
@@ -200,8 +218,6 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				if m.appIndex >= cols {
 					m.appIndex -= cols
 				}
-			case focusFooter:
-				m.focus = focusGrid
 			}
 			return m, nil
 		case "down", "j":
@@ -216,8 +232,6 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				cat := m.currentCategory()
 				if m.appIndex+cols < len(cat.Apps) {
 					m.appIndex += cols
-				} else {
-					m.focus = focusFooter
 				}
 			}
 			return m, nil
@@ -340,21 +354,21 @@ func (m softwareModel) renderFooter() string {
 		Padding(0, 2).
 		Foreground(lipgloss.Color("117"))
 
-	if m.focus == focusFooter && m.footerButton == footerContinue {
-		continueStyle = continueStyle.Bold(true).BorderForeground(lipgloss.Color("10"))
-	} else {
-		continueStyle = continueStyle.BorderForeground(lipgloss.Color("240"))
-	}
-
 	if m.focus == focusFooter && m.footerButton == footerBack {
 		backStyle = backStyle.Bold(true).BorderForeground(lipgloss.Color("117"))
 	} else {
 		backStyle = backStyle.BorderForeground(lipgloss.Color("240"))
 	}
 
-	continueBtn := continueStyle.Render("Continue")
+	if m.focus == focusFooter && m.footerButton == footerContinue {
+		continueStyle = continueStyle.Bold(true).BorderForeground(lipgloss.Color("10"))
+	} else {
+		continueStyle = continueStyle.BorderForeground(lipgloss.Color("240"))
+	}
+
 	backBtn := backStyle.Render("Back")
-	return lipgloss.JoinHorizontal(lipgloss.Top, continueBtn, gap, backBtn)
+	continueBtn := continueStyle.Render("Continue")
+	return lipgloss.JoinHorizontal(lipgloss.Top, backBtn, gap, continueBtn)
 }
 
 func (m softwareModel) View() string {
@@ -382,7 +396,7 @@ func (m softwareModel) View() string {
 		Align(lipgloss.Center).
 		Width(m.width).
 		Foreground(lipgloss.Color("245")).
-		Render("↑↓ categories/apps · ←→ grid · Space toggle · Tab/Enter switch pane · c continue · b back")
+		Render("↑↓ categories · ←→ apps grid · Enter enter/leave category · Space toggle · Tab footer · Enter activate button")
 
 	body := lipgloss.JoinVertical(
 		lipgloss.Center,
@@ -452,7 +466,8 @@ func runSoftwarePicker(catalogPath, outputPath string) error {
 		categories:   cats,
 		selected:     selected,
 		focus:        focusSidebar,
-		footerButton: footerContinue,
+		lastPane:     focusSidebar,
+		footerButton: footerBack,
 	}
 
 	p := tea.NewProgram(m, tea.WithAltScreen())
