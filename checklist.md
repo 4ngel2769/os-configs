@@ -3,5 +3,5 @@
 
 ## banner
 
-[ choice ] [ choice ] [ choice ]
-[ distro ] [ distro ] [ distro ]
+/ choice \ / choice \ / choice \
+\ distro / \ distro / \ distro /
