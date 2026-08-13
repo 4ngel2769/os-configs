@@ -16,11 +16,15 @@ type presetOption struct {
 }
 
 type presetInput struct {
-	DistroID     string         `json:"distro_id"`
-	DistroLabel  string         `json:"distro_label"`
-	DistroColor  string         `json:"distro_color"`
-	Presets      []presetOption `json:"presets"`
-	Custom       presetOption   `json:"custom"`
+	DistroID      string         `json:"distro_id"`
+	DistroLabel   string         `json:"distro_label"`
+	DistroColor   string         `json:"distro_color"`
+	Banner        *bannerInfo    `json:"banner,omitempty"`
+	Title         string         `json:"title,omitempty"`
+	Subtitle      string         `json:"subtitle,omitempty"`
+	IncludeCustom bool           `json:"include_custom,omitempty"`
+	Presets       []presetOption `json:"presets"`
+	Custom        presetOption   `json:"custom"`
 }
 
 type presetOutput struct {
@@ -231,18 +235,40 @@ func (m presetModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m presetModel) View() string {
 	if m.itemCount() == 0 {
-		return "No presets available.\n"
+		return "No options available.\n"
 	}
 
-	title := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center).Width(m.width).Render("os-configs")
-	subTitle := lipgloss.NewStyle().Align(lipgloss.Center).Width(m.width).Foreground(lipgloss.Color("245")).Render("Post-install setup")
-	header := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center).Width(m.width).Foreground(lipgloss.Color("86")).Render("Choose a preset")
+	titleText := m.input.Title
+	if titleText == "" {
+		titleText = "Choose a preset"
+	}
+
+	var headerBlock string
+	if m.input.Banner != nil {
+		banner := renderBanner(m.width, *m.input.Banner)
+		header := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center).Width(m.width).Foreground(lipgloss.Color("86")).Render(titleText)
+		sub := ""
+		if m.input.Subtitle != "" {
+			sub = lipgloss.NewStyle().Align(lipgloss.Center).Width(m.width).Foreground(lipgloss.Color("245")).Render(m.input.Subtitle)
+		}
+		parts := []string{banner, "", header}
+		if sub != "" {
+			parts = append(parts, sub)
+		}
+		headerBlock = lipgloss.JoinVertical(lipgloss.Center, parts...)
+	} else {
+		title := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center).Width(m.width).Render("os-configs")
+		subTitle := lipgloss.NewStyle().Align(lipgloss.Center).Width(m.width).Foreground(lipgloss.Color("245")).Render("A post-install setup tool")
+		header := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center).Width(m.width).Foreground(lipgloss.Color("86")).Render(titleText)
+		headerBlock = lipgloss.JoinVertical(lipgloss.Center, title, subTitle, "", header)
+	}
+
 	hint := lipgloss.NewStyle().Align(lipgloss.Center).Width(m.width).Foreground(lipgloss.Color("245")).Render("← → ↑ ↓ move · Tab select · Enter confirm · q quit")
 
 	grid := m.renderGrid()
 	gridBlock := lipgloss.Place(m.width, lipgloss.Height(grid), lipgloss.Center, lipgloss.Center, grid)
 
-	body := lipgloss.JoinVertical(lipgloss.Center, title, subTitle, "", header, "", gridBlock)
+	body := lipgloss.JoinVertical(lipgloss.Center, headerBlock, "", gridBlock)
 
 	contentH := lipgloss.Height(body) + lipgloss.Height(hint) + 2
 	topPad := (m.height - contentH) / 2
@@ -265,10 +291,12 @@ func runPresetPicker(inputPath, outputPath string) error {
 	}
 
 	items := append([]presetOption{}, in.Presets...)
-	if in.Custom.ID != "" {
-		items = append(items, in.Custom)
-	} else {
-		items = append(items, presetOption{ID: "custom", Label: "Custom", Subtitle: "pick your apps"})
+	if in.IncludeCustom || in.Custom.ID != "" {
+		if in.Custom.ID != "" {
+			items = append(items, in.Custom)
+		} else {
+			items = append(items, presetOption{ID: "custom", Label: "Custom", Subtitle: "pick your apps"})
+		}
 	}
 
 	m := presetModel{

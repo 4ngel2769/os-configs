@@ -40,9 +40,9 @@ shell_profile_id_from_choice() {
     local shell_id="$1"
     local choice="$2"
     local label="${choice%% — *}"
-    jq -r --arg sh "$shell_id" --arg label "$label" '
+    jq -r --arg sh "$shell_id" --arg lbl "$label" '
         .profiles | to_entries[]
-        | select(.value.shell == $sh and .value.label == $label)
+        | select(.value.shell == $sh and .value.label == $lbl)
         | .key
     ' "$_shell_profiles_file" | head -1
 }

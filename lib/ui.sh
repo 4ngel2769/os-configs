@@ -51,18 +51,53 @@ ui_gpu_label() {
     esac
 }
 
+ui_machine_arch() {
+    local machine
+    machine="$(uname -m)"
+    case "$machine" in
+        x86_64 | amd64) echo "x86_64" ;;
+        aarch64 | arm64) echo "aarch64" ;;
+        i686 | i386) echo "i686" ;;
+        armv7l | armv6l) echo "arm32" ;;
+        *) echo "$machine" ;;
+    esac
+}
+
 ui_platform_pick() {
-    local picked items_json
+    local picked input_file result_file items_json
 
     items_json='[
-        {"id":"server","label":"Server"},
-        {"id":"desktop","label":"Desktop"},
-        {"id":"laptop","label":"Laptop"}
+        {"id":"server","label":"Server","subtitle":"Headless · no desktop session"},
+        {"id":"desktop","label":"Desktop","subtitle":"Workstation with DE/WM"},
+        {"id":"laptop","label":"Laptop","subtitle":"Portable · power-aware defaults"}
     ]'
 
-    if picked="$(ui_picker_menu_list "Platform" "Override detected platform" "$items_json")"; then
-        printf '%s' "$picked"
-        return 0
+    if ui_picker_can_run; then
+        input_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-platform-in.XXXXXX")"
+        result_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-platform-out.XXXXXX")"
+
+        jq -n \
+            --argjson banner "$(picker_banner_json)" \
+            --arg title "Choose platform" \
+            --arg subtitle "Override detected platform" \
+            --argjson presets "$items_json" \
+            '{
+                banner: $banner,
+                title: $title,
+                subtitle: $subtitle,
+                include_custom: false,
+                presets: $presets
+            }' >"$input_file"
+
+        if card_picker_run "$result_file" "$input_file"; then
+            picked="$(jq -r '.choice // empty' "$result_file")"
+            rm -f "$input_file" "$result_file"
+            if [[ -n "$picked" ]]; then
+                printf '%s' "$picked"
+                return 0
+            fi
+        fi
+        rm -f "$input_file" "$result_file"
     fi
 
     ui_require_gum || return 1

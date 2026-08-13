@@ -93,9 +93,10 @@ _bootstrap_sync_repo() {
 
     if [[ -d "${dest}/.git" ]]; then
         _bootstrap_msg "updating ${dest} (${OS_CONFIGS_REF})..."
-        git -C "$dest" fetch --depth 1 origin "$OS_CONFIGS_REF"
-        git -C "$dest" checkout -f "$OS_CONFIGS_REF" 2>/dev/null || git -C "$dest" checkout -f -B "$OS_CONFIGS_REF" "origin/${OS_CONFIGS_REF}"
-        git -C "$dest" reset --hard "origin/${OS_CONFIGS_REF}"
+        git -C "$dest" fetch --depth 1 origin "$OS_CONFIGS_REF" >/dev/null 2>&1
+        git -C "$dest" checkout -f "$OS_CONFIGS_REF" >/dev/null 2>&1 \
+            || git -C "$dest" checkout -f -B "$OS_CONFIGS_REF" "origin/${OS_CONFIGS_REF}" >/dev/null 2>&1
+        git -C "$dest" reset --hard "origin/${OS_CONFIGS_REF}" >/dev/null 2>&1
         return 0
     fi
 
@@ -115,8 +116,6 @@ _bootstrap_fetch_remote() {
         _bootstrap_msg "install.sh not found after fetching ${OS_CONFIGS_DIR}"
         return 1
     fi
-
-    printf '%s\n' "$OS_CONFIGS_DIR"
 }
 
 _bootstrap_repo_root() {
@@ -127,7 +126,8 @@ _bootstrap_repo_root() {
         return 0
     fi
 
-    _bootstrap_fetch_remote
+    _bootstrap_fetch_remote || return 1
+    printf '%s\n' "$OS_CONFIGS_DIR"
 }
 
 main() {

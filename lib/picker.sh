@@ -39,14 +39,18 @@ picker_banner_json() {
     fi
 
     jq -n \
+        --arg distro_id "${DISTRO_ID:-unknown}" \
         --arg distro_label "$(ui_distro_label)" \
         --arg distro_color "$(ui_distro_color)" \
+        --arg machine_arch "$(ui_machine_arch)" \
         --arg platform_label "$(ui_platform_label "${PLATFORM_CLASS:-desktop}")" \
         --arg gpu_label "$(ui_gpu_label "${GPU_CLASS:-none}")" \
         --argjson show_gpu "$show_gpu" \
         '{
+            distro_id: $distro_id,
             distro_label: $distro_label,
             distro_color: $distro_color,
+            machine_arch: $machine_arch,
             platform_label: $platform_label,
             gpu_label: $gpu_label,
             show_gpu: $show_gpu
@@ -231,6 +235,32 @@ preset_picker_run() {
 
     if ! picker_has_tty; then
         echo "picker: preset grid requires a TTY (use: ssh -t host ...)" >&2
+        return 1
+    fi
+
+    "$picker" --presets "$input_file" --output "$out_file"
+}
+
+# Card-grid picker (preset-style) for short option sets — platform, etc.
+card_picker_run() {
+    local out_file="$1"
+    local input_file="$2"
+    local picker
+
+    picker="$(picker_binary)"
+
+    if [[ ! -f "$input_file" ]]; then
+        echo "picker: card input not found: ${input_file}" >&2
+        return 1
+    fi
+
+    if [[ ! -x "$picker" ]]; then
+        echo "picker: os-configs-picker not found at ${picker}" >&2
+        return 1
+    fi
+
+    if ! picker_has_tty; then
+        echo "picker: card picker requires a TTY (use: ssh -t host ...)" >&2
         return 1
     fi
 

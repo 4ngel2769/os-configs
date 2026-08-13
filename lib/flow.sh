@@ -65,8 +65,8 @@ flow_list_preset_ids() {
 }
 
 flow_label_to_preset_id() {
-    local label="$1"
-    jq -r --arg label "$label" '.presets[] | select(.label == $label) | .id' "$_flow_menu_file" | head -1
+    local lbl="$1"
+    jq -r --arg lbl "$lbl" '.presets[] | select(.label == $lbl) | .id' "$_flow_menu_file" | head -1
 }
 
 flow_show_detection_summary() {
@@ -93,7 +93,7 @@ flow_platform_override() {
         flow_show_detection_summary
     fi
 
-    if ui_picker_menu_confirm "Keep detected platform '$(ui_platform_label "$PLATFORM_CLASS")'?" true; then
+    if ui_picker_menu_confirm "Keep detected platform '$(ui_platform_label "$PLATFORM_CLASS")'?" true "Platform"; then
         return 0
     fi
 
@@ -132,15 +132,20 @@ flow_select_preset_menu() {
         result_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-presets-out.XXXXXX")"
 
         jq -n \
+            --argjson banner "$(picker_banner_json)" \
             --arg distro_id "${DISTRO_ID}" \
             --arg distro_label "$(ui_distro_label)" \
             --arg distro_color "$(ui_distro_color)" \
+            --arg title "Choose a preset" \
             --argjson labels "$(printf '%s\n' "${labels[@]}" | jq -R . | jq -s .)" \
             --argjson ids "$(printf '%s\n' "${ids[@]}" | jq -R . | jq -s .)" \
             '{
+                banner: $banner,
                 distro_id: $distro_id,
                 distro_label: $distro_label,
                 distro_color: $distro_color,
+                title: $title,
+                include_custom: true,
                 presets: [range($labels | length) as $i | {id: $ids[$i], label: $labels[$i]}],
                 custom: {id: "custom", label: "Custom", subtitle: "pick your apps"}
             }' >"$input_file"

@@ -89,7 +89,7 @@ dewm_pick_de_wm_interactive() {
 
     ui_style_header "Desktop environments"
     picked="$(gum choose "${de_opts[@]}")"
-    jq -r --arg label "$picked" 'to_entries[] | select(.value.label == $label) | .key' "$_dewm_map" | head -1
+    jq -r --arg lbl "$picked" 'to_entries[] | select(.value.label == $lbl) | .key' "$_dewm_map" | head -1
 }
 
 dewm_pick_wm_interactive() {
@@ -110,7 +110,7 @@ dewm_pick_wm_interactive() {
 
     ui_style_header "Window managers"
     picked="$(gum choose "${wm_opts[@]}")"
-    jq -r --arg label "$picked" 'to_entries[] | select(.value.label == $label) | .key' "$_dewm_map" | head -1
+    jq -r --arg lbl "$picked" 'to_entries[] | select(.value.label == $lbl) | .key' "$_dewm_map" | head -1
 }
 
 dewm_pick_de_wm_menu() {
@@ -165,7 +165,7 @@ dewm_pick_dm_interactive() {
     ui_style_header "Display manager"
     ui_style_subheader "Default for this session: $(dewm_dm_label "$default_dm")"
     picked="$(gum choose "${opts[@]}")"
-    jq -r --arg label "$picked" 'to_entries[] | select(.value.label == $label) | .key' "$_dewm_dms" | head -1
+    jq -r --arg lbl "$picked" 'to_entries[] | select(.value.label == $lbl) | .key' "$_dewm_dms" | head -1
 }
 
 dewm_prompt_interactive() {
