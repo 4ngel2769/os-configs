@@ -30,6 +30,13 @@ picker_build_catalog() {
         --arg family "${DISTRO_FAMILY:?}" \
         --arg pc "${PLATFORM_CLASS:-desktop}" \
         --arg gpu "${GPU_CLASS:-none}" \
+        --arg distro_id "${DISTRO_ID:-unknown}" \
+        --arg distro_label "$(ui_distro_label)" \
+        --arg distro_color "$(ui_distro_color)" \
+        --arg machine_arch "$(uname -m 2>/dev/null || true)" \
+        --arg platform_label "$(ui_platform_label "${PLATFORM_CLASS:-desktop}")" \
+        --arg gpu_label "$(ui_gpu_label "${GPU_CLASS:-none}")" \
+        --argjson show_gpu "$( [[ "${PLATFORM_CLASS:-}" != "server" ]] && echo true || echo false )" \
         --slurpfile reg "$reg_tmp" \
         --slurpfile cats "$cats_tmp" \
         '
@@ -50,6 +57,15 @@ picker_build_catalog() {
             $reg[$app].label // ($app | gsub("-"; " ") | split(" ") | map(.[0:1] + .[1:]) | join(" "));
 
         {
+            banner: {
+                distro_id: $distro_id,
+                distro_label: $distro_label,
+                distro_color: $distro_color,
+                machine_arch: $machine_arch,
+                platform_label: $platform_label,
+                gpu_label: $gpu_label,
+                show_gpu: $show_gpu
+            },
             categories: [
                 $cats | to_entries[]
                 | . as $entry
@@ -121,6 +137,58 @@ picker_apply_selections() {
             CUSTOM_SELECTION["$cat_id"]="${apps[*]}"
         fi
     done < <(jq -r '.selections | keys[]?' "$json_file")
+}
+
+picker_banner_json() {
+    local gpu_label show_gpu="false"
+
+    if [[ "${PLATFORM_CLASS:-}" != "server" ]]; then
+        gpu_label="$(ui_gpu_label "${GPU_CLASS:-none}")"
+        show_gpu="true"
+    fi
+
+    jq -n \
+        --arg distro_id "${DISTRO_ID:-unknown}" \
+        --arg distro_label "$(ui_distro_label)" \
+        --arg distro_color "$(ui_distro_color)" \
+        --arg machine_arch "$(uname -m 2>/dev/null || true)" \
+        --arg platform_label "$(ui_platform_label "${PLATFORM_CLASS:-desktop}")" \
+        --arg gpu_label "$gpu_label" \
+        --argjson show_gpu "$show_gpu" \
+        '{
+            distro_id: $distro_id,
+            distro_label: $distro_label,
+            distro_color: $distro_color,
+            machine_arch: $machine_arch,
+            platform_label: $platform_label,
+            gpu_label: $gpu_label,
+            show_gpu: $show_gpu
+        }'
+}
+
+menu_picker_run() {
+    local out_file="$1"
+    local input_file="$2"
+    local picker
+
+    picker="$(picker_binary)"
+
+    if [[ ! -f "$input_file" ]]; then
+        echo "picker: menu input not found: ${input_file}" >&2
+        return 1
+    fi
+
+    if [[ ! -x "$picker" ]]; then
+        echo "picker: os-configs-picker not found at ${picker}" >&2
+        return 1
+    fi
+
+    if ! picker_has_tty; then
+        echo "picker: menu picker requires a TTY (use: ssh -t host ...)" >&2
+        return 1
+    fi
+
+    "$picker" --menu "$input_file" --output "$out_file"
 }
 
 # Writes preset choice JSON { "choice": "<id>|custom" } to $1 using input JSON at $2.

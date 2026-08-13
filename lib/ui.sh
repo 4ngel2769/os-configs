@@ -140,6 +140,106 @@ ui_confirm_plain() {
     [[ "${answer:-Y}" =~ ^[Yy]?$ ]]
 }
 
+ui_picker_menu_confirm() {
+    local message="$1"
+    local default_yes="${2:-true}"
+    local title="${3:-Confirm}"
+    local body="${4:-}"
+    local input_file result_file confirmed default_json
+
+    if picker_can_run; then
+        input_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-menu-in.XXXXXX")"
+        result_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-menu-out.XXXXXX")"
+        default_json="false"
+        [[ "$default_yes" == "true" ]] && default_json="true"
+
+        jq -n \
+            --argjson banner "$(picker_banner_json)" \
+            --arg mode "confirm" \
+            --arg title "$title" \
+            --arg message "$message" \
+            --arg body "$body" \
+            --argjson default_yes "$default_json" \
+            '{banner: $banner, mode: $mode, title: $title, message: $message, body: $body, default_yes: $default_yes}' \
+            >"$input_file"
+
+        if menu_picker_run "$result_file" "$input_file"; then
+            confirmed="$(jq -r '.confirmed // false' "$result_file")"
+            rm -f "$input_file" "$result_file"
+            [[ "$confirmed" == "true" ]]
+            return $?
+        fi
+        rm -f "$input_file" "$result_file"
+    fi
+
+    ui_show_banner
+    if [[ "${PLATFORM_CLASS:-}" != "server" ]]; then
+        ui_style_centered "GPU: $(ui_gpu_label "${GPU_CLASS:-none}")"
+        ui_style_divider
+    fi
+    ui_confirm "$message" "$default_yes"
+}
+
+ui_picker_menu_list() {
+    local title="$1"
+    local subtitle="$2"
+    local items_json="$3"
+    local input_file result_file choice
+
+    if picker_can_run; then
+        input_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-menu-in.XXXXXX")"
+        result_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-menu-out.XXXXXX")"
+
+        jq -n \
+            --argjson banner "$(picker_banner_json)" \
+            --arg mode "list" \
+            --arg title "$title" \
+            --arg subtitle "$subtitle" \
+            --argjson items "$items_json" \
+            '{banner: $banner, mode: "list", title: $title, subtitle: $subtitle, items: $items}' \
+            >"$input_file"
+
+        if menu_picker_run "$result_file" "$input_file"; then
+            choice="$(jq -r '.choice // empty' "$result_file")"
+            rm -f "$input_file" "$result_file"
+            if [[ -n "$choice" ]]; then
+                printf '%s' "$choice"
+                return 0
+            fi
+        fi
+        rm -f "$input_file" "$result_file"
+    fi
+
+    return 1
+}
+
+ui_picker_menu_info() {
+    local title="$1"
+    local body="$2"
+    local input_file result_file
+
+    if picker_can_run; then
+        input_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-menu-in.XXXXXX")"
+        result_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-menu-out.XXXXXX")"
+
+        jq -n \
+            --argjson banner "$(picker_banner_json)" \
+            --arg mode "info" \
+            --arg title "$title" \
+            --arg body "$body" \
+            '{banner: $banner, mode: "info", title: $title, body: $body}' \
+            >"$input_file"
+
+        if menu_picker_run "$result_file" "$input_file"; then
+            rm -f "$input_file" "$result_file"
+            return 0
+        fi
+        rm -f "$input_file" "$result_file"
+    fi
+
+    return 1
+}
+
 ui_menu() {
     local multi=false
 

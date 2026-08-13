@@ -24,7 +24,7 @@ func renderBanner(width int, b bannerInfo) string {
 
 	title := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center).Width(width).Render("os-configs")
 	sub := lipgloss.NewStyle().Align(lipgloss.Center).Width(width).Foreground(lipgloss.Color("245")).
-		Render("A post-install setup tool")
+		Render("Post-install setup")
 	divWidth := clamp(width-4, 20, 100)
 	div := lipgloss.NewStyle().Align(lipgloss.Center).Width(width).Foreground(lipgloss.Color("240")).
 		Render(strings.Repeat("─", divWidth))
@@ -39,26 +39,106 @@ func renderBanner(width int, b bannerInfo) string {
 	arch := strings.TrimSpace(b.MachineArch)
 	distroLine := b.DistroLabel
 	if arch != "" {
-		distroLine = fmt.Sprintf("%s %s", b.DistroLabel, arch)
+		distroLine = fmt.Sprintf("%s · %s", b.DistroLabel, arch)
 	}
 
 	labelStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("245"))
 	valueStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("252")).Bold(true)
 
 	var infoRows []string
-	infoRows = append(infoRows, labelStyle.Render("Detected Distribution: ")+valueStyle.Render(distroLine))
-	infoRows = append(infoRows, labelStyle.Render("Platform: ")+valueStyle.Render(b.PlatformLabel))
+	infoRows = append(infoRows, labelStyle.Render("Distribution")+valueStyle.Render("  "+distroLine))
+	infoRows = append(infoRows, labelStyle.Render("Platform")+valueStyle.Render("     "+b.PlatformLabel))
 	if b.ShowGPU && b.GPULabel != "" {
-		infoRows = append(infoRows, labelStyle.Render("GPU: ")+valueStyle.Render(b.GPULabel))
+		infoRows = append(infoRows, labelStyle.Render("GPU")+valueStyle.Render("          "+b.GPULabel))
 	}
 	infoBlock := lipgloss.JoinVertical(lipgloss.Left, infoRows...)
 
-	// Join logo and info side-by-side with clean spacing
 	gap := lipgloss.NewStyle().Width(4).Render("")
 	row := lipgloss.JoinHorizontal(lipgloss.Center, artBlock, gap, infoBlock)
 	rowCentered := lipgloss.NewStyle().Width(width).Align(lipgloss.Center).Render(row)
 
 	return lipgloss.JoinVertical(lipgloss.Top, title, sub, div, rowCentered, div)
+}
+
+// renderDetectionStrip is a one-line summary for dense layouts (software picker).
+func renderDetectionStrip(width int, b bannerInfo) string {
+	if width < 40 {
+		width = 40
+	}
+	color := lipgloss.Color("252")
+	if b.DistroColor != "" {
+		color = lipgloss.Color(b.DistroColor)
+	}
+	parts := []string{
+		lipgloss.NewStyle().Foreground(color).Bold(true).Render(b.DistroLabel),
+		b.PlatformLabel,
+	}
+	if b.ShowGPU && b.GPULabel != "" {
+		parts = append(parts, b.GPULabel)
+	}
+	line := strings.Join(parts, lipgloss.NewStyle().Foreground(lipgloss.Color("240")).Render(" · "))
+	return lipgloss.NewStyle().Align(lipgloss.Center).Width(width).Foreground(lipgloss.Color("245")).Render(line)
+}
+
+type borderedPanel struct {
+	title    string
+	lines    []string
+	width    int
+	height   int
+	focused  bool
+	subtitle string
+}
+
+func (p borderedPanel) render() string {
+	borderColor := lipgloss.Color("240")
+	if p.focused {
+		borderColor = lipgloss.Color("86")
+	}
+
+	innerW := p.width - 4
+	if innerW < 8 {
+		innerW = 8
+	}
+	innerH := p.height - 2
+	if innerH < 3 {
+		innerH = 3
+	}
+
+	titleLine := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("86")).Width(innerW).Render(p.title)
+	if p.subtitle != "" {
+		titleLine = lipgloss.JoinHorizontal(
+			lipgloss.Top,
+			titleLine,
+			lipgloss.NewStyle().Foreground(lipgloss.Color("245")).Render("  "+p.subtitle),
+		)
+	}
+
+	bodyLines := innerH - 1
+	if bodyLines < 1 {
+		bodyLines = 1
+	}
+	content := padLines(p.lines, bodyLines)
+	inner := lipgloss.JoinVertical(lipgloss.Left, titleLine, strings.Join(content, "\n"))
+
+	return lipgloss.NewStyle().
+		Width(p.width).
+		Height(p.height).
+		Border(lipgloss.RoundedBorder()).
+		BorderForeground(borderColor).
+		Padding(0, 1).
+		Render(inner)
+}
+
+func padLines(lines []string, count int) []string {
+	out := make([]string, count)
+	for i := 0; i < count; i++ {
+		if i < len(lines) {
+			out[i] = lines[i]
+		} else {
+			out[i] = ""
+		}
+	}
+	return out
 }
 
 func clamp(v, lo, hi int) int {

@@ -84,14 +84,13 @@ flow_show_detection_summary() {
 flow_platform_override() {
     local auto="${1:-false}"
 
-    flow_show_detection_summary
-
     if [[ "$auto" == "true" ]]; then
+        flow_show_detection_summary
         ui_style_subheader "(auto) keeping detected platform: $(ui_platform_label "$PLATFORM_CLASS")"
         return 0
     fi
 
-    if ui_confirm "Keep detected platform '$(ui_platform_label "$PLATFORM_CLASS")'?"; then
+    if ui_picker_menu_confirm "Keep detected platform '$(ui_platform_label "$PLATFORM_CLASS")'?" true "Platform"; then
         return 0
     fi
 
