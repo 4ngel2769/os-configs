@@ -12,6 +12,10 @@ PICKER_VERSION="${OS_CONFIGS_PICKER_VERSION:-5}"
 
 _deps_msg() { printf '[deps] %s\n' "$*" >&2; }
 
+_deps_ensure_bin_dir() {
+    mkdir -p "$OS_CONFIGS_BIN"
+}
+
 _deps_arch() {
     local machine
     machine="$(uname -m)"
@@ -54,6 +58,8 @@ _deps_install_jq() {
         return 0
     fi
 
+    _deps_ensure_bin_dir
+
     _deps_msg "fetching jq ${JQ_VERSION} (${arch})..."
     _deps_download "$url" "$dest"
     chmod +x "$dest"
@@ -68,6 +74,8 @@ _deps_install_gum() {
     if [[ -x "$dest" ]]; then
         return 0
     fi
+
+    _deps_ensure_bin_dir
 
     case "$arch" in
         amd64)
@@ -207,7 +215,7 @@ _deps_install_picker() {
         return 0
     fi
 
-    mkdir -p "$OS_CONFIGS_BIN"
+    _deps_ensure_bin_dir
 
     if [[ -f "$bundled" ]] && _deps_picker_valid_elf "$bundled"; then
         _deps_msg "installing bundled os-configs-picker (${arch})..."
