@@ -80,55 +80,6 @@ func renderDetectionStrip(width int, b bannerInfo) string {
 	return lipgloss.NewStyle().Align(lipgloss.Center).Width(width).Foreground(lipgloss.Color("245")).Render(line)
 }
 
-type borderedPanel struct {
-	title    string
-	lines    []string
-	width    int
-	height   int
-	focused  bool
-	subtitle string
-}
-
-func (p borderedPanel) render() string {
-	borderColor := lipgloss.Color("240")
-	if p.focused {
-		borderColor = lipgloss.Color("86")
-	}
-
-	innerW := p.width - 4
-	if innerW < 8 {
-		innerW = 8
-	}
-	innerH := p.height - 2
-	if innerH < 3 {
-		innerH = 3
-	}
-
-	titleLine := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("86")).Width(innerW).Render(p.title)
-	if p.subtitle != "" {
-		titleLine = lipgloss.JoinHorizontal(
-			lipgloss.Top,
-			titleLine,
-			lipgloss.NewStyle().Foreground(lipgloss.Color("245")).Render("  "+p.subtitle),
-		)
-	}
-
-	bodyLines := innerH - 1
-	if bodyLines < 1 {
-		bodyLines = 1
-	}
-	content := padLines(p.lines, bodyLines)
-	inner := lipgloss.JoinVertical(lipgloss.Left, titleLine, strings.Join(content, "\n"))
-
-	return lipgloss.NewStyle().
-		Width(p.width).
-		Height(p.height).
-		Border(lipgloss.RoundedBorder()).
-		BorderForeground(borderColor).
-		Padding(0, 1).
-		Render(inner)
-}
-
 func padLines(lines []string, count int) []string {
 	out := make([]string, count)
 	for i := 0; i < count; i++ {
