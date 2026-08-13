@@ -30,10 +30,27 @@ _bootstrap_local_root() {
     printf '%s\n' "$dir"
 }
 
+_bootstrap_require_sudo() {
+    if [[ "${EUID:-$(id -u)}" -eq 0 ]]; then
+        _bootstrap_msg "do not run bootstrap as root — run as your normal user"
+        return 1
+    fi
+
+    if ! command -v sudo &>/dev/null; then
+        _bootstrap_msg "sudo is required but was not found"
+        return 1
+    fi
+
+    _bootstrap_msg "sudo may be required to install git and packages — enter your password when prompted"
+    sudo -v
+}
+
 _bootstrap_ensure_git() {
     if command -v git &>/dev/null; then
         return 0
     fi
+
+    _bootstrap_require_sudo || return 1
 
     _bootstrap_msg "git not found — installing..."
 
@@ -115,6 +132,17 @@ _bootstrap_repo_root() {
 
 main() {
     local root
+    local skip_sudo=false
+
+    for arg in "$@"; do
+        case "$arg" in
+            --validate-user | --help | -h) skip_sudo=true ;;
+        esac
+    done
+
+    if [[ "$skip_sudo" == "false" ]]; then
+        _bootstrap_require_sudo || exit 1
+    fi
 
     root="$(_bootstrap_repo_root)"
     if [[ ! -f "${root}/install.sh" ]]; then

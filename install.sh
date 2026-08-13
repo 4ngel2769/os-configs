@@ -62,6 +62,20 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+if [[ "$VALIDATE_USER" == "true" ]]; then
+    # shellcheck source=/dev/null
+    source "${ROOT}/lib/deps.sh"
+    os_configs_ensure_jq
+    # shellcheck source=/dev/null
+    source "${ROOT}/lib/registry.sh"
+    registry_validate_user
+    exit $?
+fi
+
+# shellcheck source=/dev/null
+source "${ROOT}/lib/sudo.sh"
+os_configs_require_sudo
+
 # shellcheck source=/dev/null
 source "${ROOT}/lib/deps.sh"
 os_configs_ensure_deps
@@ -92,11 +106,6 @@ export OS_CONFIGS_AUTO="$AUTO"
 export OS_CONFIGS_SKIP_DOTFILES="$SKIP_DOTFILES"
 export OS_CONFIGS_SKIP_POSTLOGIN="$SKIP_POSTLOGIN"
 export OS_CONFIGS_SKIP_REBOOT="$SKIP_REBOOT"
-
-if [[ "$VALIDATE_USER" == "true" ]]; then
-    registry_validate_user
-    exit $?
-fi
 
 clear || true
 

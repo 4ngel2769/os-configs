@@ -109,7 +109,7 @@ custom_run_selection() {
         picker_apply_selections "$pick_file" || picker_fallback_gum false
     else
         if [[ ! -x "$(picker_binary)" ]]; then
-            ui_style_subheader "(fallback) build os-configs-picker for the full catalog UI"
+            ui_style_subheader "(fallback) os-configs-picker missing — pull the latest repo or re-run install.sh"
         elif ! picker_has_tty; then
             ui_style_subheader "(fallback) no TTY — use ssh -t for the full picker"
         fi

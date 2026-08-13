@@ -2,9 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
-	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -92,7 +90,6 @@ func (m presetModel) renderCard(idx int) string {
 
 	borderColor := lipgloss.Color("240")
 	nameColor := lipgloss.Color("252")
-	subColor := lipgloss.Color("245")
 
 	if selected {
 		borderColor = lipgloss.Color("86")

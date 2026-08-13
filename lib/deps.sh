@@ -8,6 +8,7 @@ OS_CONFIGS_BIN="${OS_CONFIGS_BIN:-${OS_CONFIGS_CACHE}/bin}"
 
 JQ_VERSION="${OS_CONFIGS_JQ_VERSION:-1.7.1}"
 GUM_VERSION="${OS_CONFIGS_GUM_VERSION:-0.14.5}"
+PICKER_VERSION="${OS_CONFIGS_PICKER_VERSION:-1}"
 
 _deps_msg() { printf '[deps] %s\n' "$*" >&2; }
 
@@ -122,47 +123,67 @@ os_configs_ensure_deps() {
     _deps_prepend_path
 }
 
-_deps_picker_needs_rebuild() {
-    local dest="$1"
-    local src="${REPO_ROOT}/tools/picker"
-    local f
-
-    [[ ! -x "$dest" ]] && return 0
-    [[ ! -d "$src" ]] && return 1
-
-    for f in "${src}"/*.go "${src}"/go.mod; do
-        [[ -f "$f" && "$f" -nt "$dest" ]] && return 0
-    done
-    return 1
+_deps_picker_bundled() {
+    echo "${REPO_ROOT}/tools/picker/bin/linux-${1}/os-configs-picker"
 }
 
-_deps_install_picker() {
-    local dest src
-    dest="${OS_CONFIGS_BIN}/os-configs-picker"
-    src="${REPO_ROOT}/tools/picker"
+_deps_picker_cached() {
+    local dest="$1"
+    local stamp="${OS_CONFIGS_BIN}/.os-configs-picker.version"
 
-    if [[ -x "$dest" ]] && ! _deps_picker_needs_rebuild "$dest"; then
-        return 0
-    fi
+    [[ -x "$dest" && -f "$stamp" && "$(cat "$stamp")" == "$PICKER_VERSION" ]]
+}
+
+_deps_install_picker_from_source() {
+    local dest="$1"
+    local src="${REPO_ROOT}/tools/picker"
 
     if ! command -v go &>/dev/null; then
         if [[ -x "${HOME}/go/bin/go" ]]; then
             export PATH="${HOME}/go/bin:${PATH}"
         else
-            _deps_msg "go not installed — picker will fall back to gum choose"
-            return 0
+            return 1
         fi
     fi
 
-    if [[ ! -f "${src}/main.go" ]]; then
-        _deps_msg "picker source missing at ${src}"
+    [[ -f "${src}/main.go" ]] || return 1
+
+    _deps_msg "building os-configs-picker from source (dev)..."
+    (cd "$src" && go mod tidy >/dev/null 2>&1 && go build -trimpath -ldflags "-s -w" -o "$dest" .)
+    chmod +x "$dest"
+    printf '%s\n' "$PICKER_VERSION" >"${OS_CONFIGS_BIN}/.os-configs-picker.version"
+    _deps_msg "picker built to ${dest}"
+}
+
+_deps_install_picker() {
+    local dest arch bundled
+    dest="${OS_CONFIGS_BIN}/os-configs-picker"
+    arch="$(_deps_arch)"
+    bundled="$(_deps_picker_bundled "$arch")"
+
+    if _deps_picker_cached "$dest"; then
         return 0
     fi
 
-    _deps_msg "building os-configs-picker..."
-    (cd "$src" && go mod tidy >/dev/null 2>&1 && go build -o "$dest" .)
-    chmod +x "$dest"
-    _deps_msg "picker installed to ${dest}"
+    mkdir -p "$OS_CONFIGS_BIN"
+
+    if [[ -f "$bundled" ]]; then
+        _deps_msg "installing bundled os-configs-picker (${arch})..."
+        cp "$bundled" "$dest"
+        chmod +x "$dest"
+        printf '%s\n' "$PICKER_VERSION" >"${OS_CONFIGS_BIN}/.os-configs-picker.version"
+        _deps_msg "picker installed to ${dest}"
+        return 0
+    fi
+
+    if [[ "${OS_CONFIGS_PICKER_BUILD:-}" == "1" ]]; then
+        _deps_install_picker_from_source "$dest"
+        return $?
+    fi
+
+    echo "deps: prebuilt os-configs-picker not found for ${arch}: ${bundled}" >&2
+    echo "deps: pull the latest repo or set OS_CONFIGS_PICKER_BUILD=1 with Go installed to build locally" >&2
+    return 1
 }
 
 os_configs_ensure_picker() {
