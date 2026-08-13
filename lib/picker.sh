@@ -19,9 +19,8 @@ picker_can_run() {
     local bin
     bin="$(picker_binary)"
     [[ -x "$bin" ]] || return 1
-    # Reject wrong-format binaries (e.g. Windows PE copied to Linux cache).
-    if declare -F _deps_picker_runnable &>/dev/null; then
-        _deps_picker_runnable "$bin"
+    if declare -F _deps_picker_valid_elf &>/dev/null; then
+        _deps_picker_valid_elf "$bin"
         return $?
     fi
     return 0

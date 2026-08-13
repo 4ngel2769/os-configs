@@ -136,20 +136,30 @@ _deps_picker_cached() {
 }
 
 # Bundled/cached picker must be a Linux ELF for this host arch (not a Windows PE accidentally committed).
+_deps_picker_valid_elf() {
+    local bin="$1"
+
+    [[ -f "$bin" ]] || return 1
+
+    if command -v file &>/dev/null; then
+        file -b "$bin" 2>/dev/null | grep -qiE 'ELF.*(x86-64|aarch64|ARM aarch64|Intel 80386)' && return 0
+        return 1
+    fi
+
+    local magic
+    magic="$(head -c 4 "$bin" 2>/dev/null || true)"
+    [[ "$magic" == $'\x7fELF' ]]
+}
+
 _deps_picker_runnable() {
     local bin="$1"
 
     [[ -f "$bin" && -x "$bin" ]] || return 1
+    _deps_picker_valid_elf "$bin"
+}
 
-    if command -v file &>/dev/null; then
-        file -b "$bin" 2>/dev/null | grep -qiE 'ELF.*(x86-64|aarch64|ARM aarch64)' && return 0
-        return 1
-    fi
-
-    # file(1) missing — read ELF magic \x7fELF
-    local magic
-    magic="$(head -c 4 "$bin" 2>/dev/null || true)"
-    [[ "$magic" == $'\x7fELF' ]]
+_deps_picker_try_source_build() {
+    command -v go &>/dev/null || [[ -x "${HOME}/go/bin/go" ]]
 }
 
 _deps_install_picker_from_source() {
@@ -199,7 +209,7 @@ _deps_install_picker() {
 
     mkdir -p "$OS_CONFIGS_BIN"
 
-    if [[ -f "$bundled" ]] && _deps_picker_runnable "$bundled"; then
+    if [[ -f "$bundled" ]] && _deps_picker_valid_elf "$bundled"; then
         _deps_msg "installing bundled os-configs-picker (${arch})..."
         cp "$bundled" "$dest"
         chmod +x "$dest"
@@ -208,9 +218,15 @@ _deps_install_picker() {
         return 0
     fi
 
-    if [[ -f "$bundled" ]] && ! _deps_picker_runnable "$bundled"; then
-        echo "deps: bundled picker is not a Linux ELF binary for ${arch}: ${bundled}" >&2
+    if [[ -f "$bundled" ]] && ! _deps_picker_valid_elf "$bundled"; then
+        echo "deps: bundled picker is not a valid Linux ELF for ${arch}: ${bundled}" >&2
         echo "deps: rebuild with: (cd tools/picker && ./build.sh)" >&2
+    fi
+
+    if _deps_picker_try_source_build; then
+        _deps_msg "building os-configs-picker from source (bundled copy unusable)..."
+        _deps_install_picker_from_source "$dest"
+        return $?
     fi
 
     if [[ "${OS_CONFIGS_PICKER_BUILD:-}" == "1" ]]; then
@@ -218,9 +234,9 @@ _deps_install_picker() {
         return $?
     fi
 
-    echo "deps: prebuilt os-configs-picker not found for ${arch}: ${bundled}" >&2
-    echo "deps: pull the latest repo or set OS_CONFIGS_PICKER_BUILD=1 with Go installed to build locally" >&2
-    return 1
+    echo "deps: os-configs-picker unavailable — gum fallbacks will be used" >&2
+    echo "deps: install Go and re-run, or set OS_CONFIGS_PICKER_BUILD=1" >&2
+    return 0
 }
 
 os_configs_ensure_picker() {
@@ -295,10 +311,10 @@ deps_collect_missing() {
     if ! _deps_has_picker; then
         arch="$(_deps_arch)"
         bundled="$(_deps_picker_bundled "$arch")"
-        if [[ -f "$bundled" ]] || [[ "${OS_CONFIGS_PICKER_BUILD:-}" == "1" ]]; then
+        if [[ -f "$bundled" ]] || _deps_picker_try_source_build || [[ "${OS_CONFIGS_PICKER_BUILD:-}" == "1" ]]; then
             _out+=("tool|picker|os-configs-picker|${OS_CONFIGS_BIN}/os-configs-picker")
         else
-            _out+=("tool|picker|os-configs-picker (missing prebuilt)|not available for ${arch}")
+            _out+=("tool|picker|os-configs-picker (optional)|gum fallback only")
         fi
     fi
 
@@ -377,9 +393,9 @@ deps_install_item() {
         tool:picker)
             if [[ "$note" == *"not available"* ]]; then
                 echo "deps: ${note}" >&2
-                return 1
+                return 0
             fi
-            _deps_install_picker
+            _deps_install_picker || true
             ;;
         system:curl)
             _deps_install_system_pkg "curl"
@@ -449,17 +465,6 @@ os_configs_prepare_deps() {
         return 0
     fi
 
-    # Block early if picker prebuilt is missing.
-    local row kind _id label note
-    for row in "${missing[@]}"; do
-        IFS='|' read -r kind _id label note <<< "$row"
-        if [[ "$kind" == "tool" && "$_id" == "picker" && "$note" == *"not available"* ]]; then
-            echo "deps: ${note}" >&2
-            echo "deps: git pull the latest repo to get prebuilt picker binaries" >&2
-            return 1
-        fi
-    done
-
     if [[ "$auto" == "true" ]]; then
         _deps_msg "installing ${#missing[@]} missing dependencies (--auto)..."
         deps_install_missing "$([[ "$dry_run" == "true" ]] && echo true || echo false)" "${missing[@]}"
@@ -484,10 +489,13 @@ os_configs_prepare_deps() {
         local still=""
         for row in "${missing[@]}"; do
             IFS='|' read -r _kind _id label _note <<< "$row"
+            [[ "$_id" == "picker" ]] && continue
             still+="${still:+, }${label}"
         done
-        echo "deps: still missing after install: ${still}" >&2
-        return 1
+        if [[ -n "$still" ]]; then
+            echo "deps: still missing after install: ${still}" >&2
+            return 1
+        fi
     fi
 }
 
