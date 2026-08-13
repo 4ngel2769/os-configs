@@ -20,7 +20,8 @@ _bootstrap_msg() { printf '[bootstrap] %s\n' "$*" >&2; }
 
 _bootstrap_is_remote() {
     local src="${BASH_SOURCE[0]:-}"
-    [[ -z "$src" || "$src" == "bash" || "$src" == "-" || "$src" == "/dev/stdin" || "$src" == /dev/fd/* ]]
+    [[ -n "$src" && -r "$src" && "$(basename "$src")" == "bootstrap.sh" ]] && return 1
+    return 0
 }
 
 _bootstrap_download() {
