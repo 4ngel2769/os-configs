@@ -313,9 +313,7 @@ os_configs_detect() {
         return 1
     fi
 
-    _detect_read_os_release
-    _detect_distro_family
-    _detect_pkg_manager
+    os_configs_detect_minimal
     _detect_aur_helper
     _detect_gpu_class
     _detect_de_wm
@@ -325,6 +323,15 @@ os_configs_detect() {
 
     export DISTRO_FAMILY DISTRO_ID PKG_MANAGER AUR_HELPER
     export PLATFORM_CLASS GPU_CLASS DE_WM COMPOSITOR INIT_SYSTEM
+}
+
+# Distro + package manager only — no jq. Used before dependency bootstrap.
+os_configs_detect_minimal() {
+    _detect_read_os_release
+    _detect_distro_family
+    _detect_pkg_manager
+
+    export DISTRO_FAMILY DISTRO_ID PKG_MANAGER
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then

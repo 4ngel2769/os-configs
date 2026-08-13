@@ -189,3 +189,268 @@ _deps_install_picker() {
 os_configs_ensure_picker() {
     _deps_install_picker
 }
+
+_deps_has_jq() {
+    command -v jq &>/dev/null || [[ -x "${OS_CONFIGS_BIN}/jq" ]]
+}
+
+_deps_has_gum() {
+    command -v gum &>/dev/null || [[ -x "${OS_CONFIGS_BIN}/gum" ]]
+}
+
+_deps_has_picker() {
+    _deps_picker_cached "${OS_CONFIGS_BIN}/os-configs-picker"
+}
+
+_deps_has_fetcher() {
+    command -v curl &>/dev/null || command -v wget &>/dev/null
+}
+
+_deps_system_pkg_name() {
+    local logical="$1"
+    printf '%s' "$logical"
+}
+
+_deps_install_system_pkg() {
+    local pkg="$1"
+
+    case "${DISTRO_FAMILY:-}" in
+        arch)
+            sudo pacman -S --needed --noconfirm "$pkg"
+            ;;
+        debian | ubuntu)
+            sudo apt-get update -qq
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "$pkg"
+            ;;
+        fedora)
+            sudo dnf install -y "$pkg"
+            ;;
+        *)
+            echo "deps: cannot install system package on unknown family: ${DISTRO_FAMILY:-?}" >&2
+            return 1
+            ;;
+    esac
+}
+
+# Populates _out with rows: kind|id|label|note
+# kind = tool | system
+# tools_only=true skips system packages (used after dry-run bootstrap).
+deps_collect_missing() {
+    local -n _out=$1
+    local skip_dotfiles="${2:-false}"
+    local tools_only="${3:-false}"
+    local arch bundled
+
+    _out=()
+
+    if [[ "$tools_only" != "true" ]] && ! _deps_has_fetcher; then
+        _out+=("system|curl|curl|download installer tools")
+    fi
+
+    if ! _deps_has_jq; then
+        _out+=("tool|jq|jq ${JQ_VERSION}|${OS_CONFIGS_BIN}/jq")
+    fi
+
+    if ! _deps_has_gum; then
+        _out+=("tool|gum|gum ${GUM_VERSION}|${OS_CONFIGS_BIN}/gum")
+    fi
+
+    if ! _deps_has_picker; then
+        arch="$(_deps_arch)"
+        bundled="$(_deps_picker_bundled "$arch")"
+        if [[ -f "$bundled" ]] || [[ "${OS_CONFIGS_PICKER_BUILD:-}" == "1" ]]; then
+            _out+=("tool|picker|os-configs-picker|${OS_CONFIGS_BIN}/os-configs-picker")
+        else
+            _out+=("tool|picker|os-configs-picker (missing prebuilt)|not available for ${arch}")
+        fi
+    fi
+
+    if [[ "$tools_only" != "true" && "$skip_dotfiles" != "true" ]] && ! command -v stow &>/dev/null; then
+        _out+=("system|stow|stow|deploy dotfiles with GNU Stow")
+    fi
+}
+
+deps_format_panel_body() {
+    local -a items=("$@")
+    local item kind _id label note
+    local tool_lines="" sys_lines="" body="" mgr
+
+    mgr="${PKG_MANAGER:-system}"
+
+    for item in "${items[@]}"; do
+        IFS='|' read -r kind _id label note <<< "$item"
+        case "$kind" in
+            tool)
+                tool_lines+="${tool_lines:+$'\n'}  • ${label}"
+                tool_lines+=$'\n'"    ${note}"
+                ;;
+            system)
+                sys_lines+="${sys_lines:+$'\n'}  • ${label}"
+                sys_lines+=$'\n'"    ${note}"
+                ;;
+        esac
+    done
+
+    if [[ -n "$tool_lines" ]]; then
+        body="Installer tools (user cache, no sudo):"$'\n'"${tool_lines}"
+    fi
+    if [[ -n "$sys_lines" ]]; then
+        body+="${body:+$'\n\n'}System packages (sudo · ${mgr}):"$'\n'"${sys_lines}"
+    fi
+    printf '%s' "$body"
+}
+
+deps_show_install_panel() {
+    local -a missing=("$@")
+    local body extra=""
+
+    body="$(deps_format_panel_body "${missing[@]}")"
+
+    if [[ "${OS_CONFIGS_DRY_RUN:-false}" == "true" ]]; then
+        extra=$'\n\n'"Dry-run: installer tools will still be fetched to run the TUI. System packages are listed but not installed until a real run."
+    fi
+
+    if command -v gum &>/dev/null; then
+        gum style --bold --align center --width "$(ui_term_width)" --margin "1 0 0 0" "Dependencies"
+    else
+        printf '\nDependencies\n\n'
+    fi
+    ui_panel "The following will be installed" "${body}${extra}"
+}
+
+deps_install_item() {
+    local row="$1"
+    local defer_system="${2:-false}"
+    local kind _id label note
+
+    IFS='|' read -r kind _id label note <<< "$row"
+
+    if [[ "$kind" == "system" && "$defer_system" == "true" && "$_id" != "curl" ]]; then
+        _deps_msg "skipping system package ${_id} (dry-run)"
+        return 0
+    fi
+
+    case "${kind}|${_id}" in
+        tool|jq)
+            _deps_install_jq
+            ;;
+        tool|gum)
+            _deps_install_gum
+            ;;
+        tool|picker)
+            if [[ "$note" == *"not available"* ]]; then
+                echo "deps: ${note}" >&2
+                return 1
+            fi
+            _deps_install_picker
+            ;;
+        system|curl)
+            _deps_install_system_pkg "curl"
+            ;;
+        system|stow)
+            _deps_install_system_pkg "stow"
+            ;;
+        system|*)
+            _deps_install_system_pkg "$_id"
+            ;;
+        *)
+            echo "deps: unknown dependency row: ${row}" >&2
+            return 1
+            ;;
+    esac
+}
+
+deps_install_missing() {
+    local defer_system="${1:-false}"
+    shift
+    local -a missing=("$@")
+    local row
+
+    for row in "${missing[@]}"; do
+        [[ "$row" == system|curl* ]] || continue
+        deps_install_item "$row" "$defer_system"
+    done
+    for row in "${missing[@]}"; do
+        [[ "$row" == tool|* ]] || continue
+        deps_install_item "$row" "$defer_system"
+    done
+    for row in "${missing[@]}"; do
+        [[ "$row" == system|* && "$row" != system|curl* ]] || continue
+        deps_install_item "$row" "$defer_system"
+    done
+
+    _deps_prepend_path
+}
+
+deps_confirm_install_prompt() {
+    if command -v gum &>/dev/null; then
+        gum confirm "Install these dependencies now?"
+        return $?
+    fi
+    ui_confirm_plain "Install these dependencies now?"
+}
+
+# Audit, prompt, and install missing deps before the main installer flow.
+os_configs_prepare_deps() {
+    local auto="${1:-false}"
+    local skip_dotfiles="${2:-false}"
+    local dry_run="${3:-false}"
+    local -a missing=()
+
+    if [[ -z "${DISTRO_FAMILY:-}" ]]; then
+        echo "deps: DISTRO_FAMILY not set — run os_configs_detect_minimal first" >&2
+        return 1
+    fi
+
+    deps_collect_missing missing "$skip_dotfiles"
+
+    if [[ ${#missing[@]} -eq 0 ]]; then
+        _deps_prepend_path
+        return 0
+    fi
+
+    # Block early if picker prebuilt is missing.
+    local row kind _id label note
+    for row in "${missing[@]}"; do
+        IFS='|' read -r kind _id label note <<< "$row"
+        if [[ "$kind" == "tool" && "$_id" == "picker" && "$note" == *"not available"* ]]; then
+            echo "deps: ${note}" >&2
+            echo "deps: git pull the latest repo to get prebuilt picker binaries" >&2
+            return 1
+        fi
+    done
+
+    if [[ "$auto" == "true" ]]; then
+        _deps_msg "installing ${#missing[@]} missing dependencies (--auto)..."
+        deps_install_missing "$([[ "$dry_run" == "true" ]] && echo true || echo false)" "${missing[@]}"
+        return 0
+    fi
+
+    deps_show_install_panel "${missing[@]}"
+
+    if ! deps_confirm_install_prompt; then
+        echo "deps: dependency installation cancelled" >&2
+        return 1
+    fi
+
+    deps_install_missing "$([[ "$dry_run" == "true" ]] && echo true || echo false)" "${missing[@]}"
+
+    if [[ "$dry_run" == "true" ]]; then
+        deps_collect_missing missing "$skip_dotfiles" true
+    else
+        deps_collect_missing missing "$skip_dotfiles" false
+    fi
+    if [[ ${#missing[@]} -gt 0 ]]; then
+        local still=""
+        for row in "${missing[@]}"; do
+            IFS='|' read -r _kind _id label _note <<< "$row"
+            still+="${still:+, }${label}"
+        done
+        echo "deps: still missing after install: ${still}" >&2
+        return 1
+    fi
+}
+
+os_configs_ensure_deps() {
+    os_configs_prepare_deps true false false
+}

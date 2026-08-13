@@ -106,6 +106,40 @@ ui_confirm() {
     fi
 }
 
+# Bordered panel for dependency lists and similar summaries.
+ui_panel() {
+    local title="$1"
+    local body="$2"
+    local width
+
+    width="$(ui_term_width)"
+
+    if command -v gum &>/dev/null; then
+        gum style \
+            --align left \
+            --width "$width" \
+            --border rounded \
+            --border-foreground 86 \
+            --padding "1 2" \
+            --margin "1 0" \
+            "$(printf '%s\n\n%s' "$title" "$body")"
+        return 0
+    fi
+
+    printf '\n┌ %s\n' "$title"
+    printf '%s\n' "$body" | sed 's/^/│ /'
+    printf '└────────────────────────────────\n\n'
+}
+
+ui_confirm_plain() {
+    local prompt="${1:-Continue?}"
+    local answer
+
+    printf '%s [Y/n] ' "$prompt"
+    read -r answer
+    [[ "${answer:-Y}" =~ ^[Yy]?$ ]]
+}
+
 ui_menu() {
     local multi=false
 

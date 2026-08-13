@@ -102,6 +102,11 @@ confirm_run() {
 
     install_run_plan "$plan_file" false
     log_print_summary
+
+    if [[ "$skip_dotfiles" != "true" ]] && ! command -v stow &>/dev/null; then
+        os_configs_prepare_deps "$auto" "$skip_dotfiles" false
+    fi
+
     dotfiles_deploy false "$auto" "$skip_dotfiles"
     finish_run "$auto" false "$skip_postlogin" "$skip_reboot"
 }

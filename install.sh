@@ -77,13 +77,20 @@ source "${ROOT}/lib/sudo.sh"
 os_configs_require_sudo
 
 # shellcheck source=/dev/null
-source "${ROOT}/lib/deps.sh"
-os_configs_ensure_deps
+source "${ROOT}/lib/detect.sh"
+os_configs_detect_minimal
 
 # shellcheck source=/dev/null
-source "${ROOT}/lib/detect.sh"
+source "${ROOT}/lib/deps.sh"
 # shellcheck source=/dev/null
 source "${ROOT}/lib/ui.sh"
+
+export OS_CONFIGS_DRY_RUN="$DRY_RUN"
+export OS_CONFIGS_AUTO="$AUTO"
+export OS_CONFIGS_SKIP_DOTFILES="$SKIP_DOTFILES"
+
+os_configs_prepare_deps "$AUTO" "$SKIP_DOTFILES" "$DRY_RUN"
+
 # shellcheck source=/dev/null
 source "${ROOT}/lib/registry.sh"
 # shellcheck source=/dev/null
@@ -101,9 +108,6 @@ source "${ROOT}/lib/flow.sh"
 
 os_configs_detect
 
-export OS_CONFIGS_DRY_RUN="$DRY_RUN"
-export OS_CONFIGS_AUTO="$AUTO"
-export OS_CONFIGS_SKIP_DOTFILES="$SKIP_DOTFILES"
 export OS_CONFIGS_SKIP_POSTLOGIN="$SKIP_POSTLOGIN"
 export OS_CONFIGS_SKIP_REBOOT="$SKIP_REBOOT"
 
