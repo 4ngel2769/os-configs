@@ -145,22 +145,31 @@ ui_picker_menu_confirm() {
     local default_yes="${2:-true}"
     local title="${3:-Confirm}"
     local body="${4:-}"
-    local input_file result_file confirmed default_json
+    local yes_label="${5:-Yes}"
+    local no_label="${6:-No}"
+    local show_banner="${7:-true}"
+    local input_file result_file confirmed default_json banner_json show_banner_json
 
     if picker_can_run; then
         input_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-menu-in.XXXXXX")"
         result_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-menu-out.XXXXXX")"
         default_json="false"
         [[ "$default_yes" == "true" ]] && default_json="true"
+        show_banner_json="true"
+        [[ "$show_banner" == "false" ]] && show_banner_json="false"
+        banner_json="$(picker_banner_json)"
 
         jq -n \
-            --argjson banner "$(picker_banner_json)" \
+            --argjson banner "$banner_json" \
             --arg mode "confirm" \
             --arg title "$title" \
             --arg message "$message" \
             --arg body "$body" \
+            --arg yes_label "$yes_label" \
+            --arg no_label "$no_label" \
             --argjson default_yes "$default_json" \
-            '{banner: $banner, mode: $mode, title: $title, message: $message, body: $body, default_yes: $default_yes}' \
+            --argjson show_banner "$show_banner_json" \
+            '{banner: $banner, mode: $mode, title: $title, message: $message, body: $body, yes_label: $yes_label, no_label: $no_label, default_yes: $default_yes, show_banner: $show_banner}' \
             >"$input_file"
 
         if menu_picker_run "$result_file" "$input_file"; then
@@ -178,6 +187,23 @@ ui_picker_menu_confirm() {
         ui_style_divider
     fi
     ui_confirm "$message" "$default_yes"
+}
+
+ui_picker_menu_offer() {
+    if picker_can_run; then
+        ui_picker_menu_confirm \
+            "Would you like to check out more apps?" \
+            true \
+            "More apps" \
+            "Nice software choice, we have more you can choose from." \
+            "Of course" \
+            "No thanks" \
+            false
+        return $?
+    fi
+
+    ui_style_subheader "Nice software choice, we have more you can choose from."
+    ui_confirm "Would you like to check out more apps?" true
 }
 
 ui_picker_menu_list() {

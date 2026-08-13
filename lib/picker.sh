@@ -26,15 +26,39 @@ picker_can_run() {
     return 0
 }
 
+# phase: main (core catalog), arco (extended catalog), all (legacy full merge)
 picker_build_catalog() {
     local out="$1"
+    local phase="${2:-main}"
     local reg_tmp cats_tmp
+    local title subtitle reg_fn cats_fn
 
     reg_tmp="$(mktemp "${TMPDIR:-/tmp}/os-configs-reg.XXXXXX")"
     cats_tmp="$(mktemp "${TMPDIR:-/tmp}/os-configs-cats.XXXXXX")"
 
-    registry_merged_json >"$reg_tmp"
-    categories_merged_json >"$cats_tmp"
+    case "$phase" in
+        arco)
+            reg_fn=registry_merged_json
+            cats_fn=categories_arco_json
+            title="More apps"
+            subtitle="Extended catalog"
+            ;;
+        all)
+            reg_fn=registry_merged_json
+            cats_fn=categories_merged_json
+            title="Custom software"
+            subtitle=""
+            ;;
+        main | *)
+            reg_fn=registry_main_json
+            cats_fn=categories_main_json
+            title="Custom software"
+            subtitle=""
+            ;;
+    esac
+
+    "$reg_fn" >"$reg_tmp"
+    "$cats_fn" >"$cats_tmp"
 
     jq -n \
         --arg family "${DISTRO_FAMILY:?}" \
@@ -46,6 +70,8 @@ picker_build_catalog() {
         --arg machine_arch "$(uname -m 2>/dev/null || true)" \
         --arg platform_label "$(ui_platform_label "${PLATFORM_CLASS:-desktop}")" \
         --arg gpu_label "$(ui_gpu_label "${GPU_CLASS:-none}")" \
+        --arg title "$title" \
+        --arg subtitle "$subtitle" \
         --argjson show_gpu "$( [[ "${PLATFORM_CLASS:-}" != "server" ]] && echo true || echo false )" \
         --slurpfile reg "$reg_tmp" \
         --slurpfile cats "$cats_tmp" \
@@ -76,6 +102,8 @@ picker_build_catalog() {
                 gpu_label: $gpu_label,
                 show_gpu: $show_gpu
             },
+            title: $title,
+            subtitle: $subtitle,
             categories: [
                 $cats | to_entries[]
                 | . as $entry
@@ -98,15 +126,27 @@ picker_build_catalog() {
     rm -f "$reg_tmp" "$cats_tmp"
 }
 
+picker_arco_has_apps() {
+    local tmp count
+    [[ -f "${REPO_ROOT}/data/catalog/categories-arco.json" ]] || return 1
+    tmp="$(mktemp "${TMPDIR:-/tmp}/os-configs-arco-check.XXXXXX")"
+    picker_build_catalog "$tmp" arco
+    count="$(jq '[.categories[].apps | length] | add // 0' "$tmp")"
+    rm -f "$tmp"
+    [[ "${count:-0}" -gt 0 ]]
+}
+
 # Writes selections JSON to $1. Do not redirect picker stdout — the TUI renders there.
+# Optional 2nd arg: catalog phase (main|arco).
 picker_run() {
     local out_file="$1"
+    local phase="${2:-main}"
     local catalog picker
 
     catalog="$(mktemp "${TMPDIR:-/tmp}/os-configs-catalog.XXXXXX")"
     picker="$(picker_binary)"
 
-    picker_build_catalog "$catalog"
+    picker_build_catalog "$catalog" "$phase"
 
     if [[ ! -x "$picker" ]]; then
         echo "picker: os-configs-picker not found at ${picker}" >&2
@@ -147,6 +187,51 @@ picker_apply_selections() {
             CUSTOM_SELECTION["$cat_id"]="${apps[*]}"
         fi
     done < <(jq -r '.selections | keys[]?' "$json_file")
+}
+
+picker_merge_selections() {
+    local json_file="$1"
+    local cat_id
+
+    if ! jq -e '.selections' "$json_file" >/dev/null 2>&1; then
+        echo "picker: invalid selections JSON in ${json_file}" >&2
+        return 1
+    fi
+
+    while IFS= read -r cat_id; do
+        [[ -n "$cat_id" ]] || continue
+        local -a apps=() merged=() existing
+        mapfile -t apps < <(jq -r --arg cat "$cat_id" '.selections[$cat][]?' "$json_file")
+        [[ ${#apps[@]} -gt 0 ]] || continue
+
+        existing="${CUSTOM_SELECTION[$cat_id]:-}"
+        if [[ -n "$existing" ]]; then
+            read -r -a merged <<<"$existing"
+            merged+=("${apps[@]}")
+            mapfile -t merged < <(printf '%s\n' "${merged[@]}" | awk '!seen[$0]++')
+            CUSTOM_SELECTION["$cat_id"]="${merged[*]}"
+        else
+            CUSTOM_SELECTION["$cat_id"]="${apps[*]}"
+        fi
+    done < <(jq -r '.selections | keys[]?' "$json_file")
+}
+
+picker_offer_arco_catalog() {
+    local auto="${1:-false}"
+    local pick_file
+
+    [[ "$auto" == "true" ]] && return 1
+    picker_arco_has_apps || return 1
+    ui_picker_menu_offer || return 1
+
+    pick_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-pick-arco.XXXXXX")"
+    if picker_run "$pick_file" arco; then
+        picker_merge_selections "$pick_file"
+        rm -f "$pick_file"
+        return 0
+    fi
+    rm -f "$pick_file"
+    return 1
 }
 
 picker_banner_json() {
@@ -231,7 +316,15 @@ picker_fallback_gum() {
     local auto="${1:-false}"
     local key
 
-    for key in $(custom_category_keys); do
-        custom_pick_category "$key" "$auto"
+    for key in $(custom_main_category_keys); do
+        custom_pick_category "$key" "$auto" main
     done
+
+    if [[ "$auto" != "true" ]] && picker_arco_has_apps; then
+        if ui_picker_menu_offer; then
+            for key in $(custom_arco_category_keys); do
+                custom_pick_category "$key" false arco
+            done
+        fi
+    fi
 }

@@ -19,6 +19,8 @@ const (
 
 type catalogFile struct {
 	Banner     *bannerInfo `json:"banner,omitempty"`
+	Title      string      `json:"title,omitempty"`
+	Subtitle   string      `json:"subtitle,omitempty"`
 	Categories []category  `json:"categories"`
 }
 
@@ -53,6 +55,8 @@ const (
 
 type softwareModel struct {
 	banner       *bannerInfo
+	title        string
+	subtitle     string
 	categories   []category
 	catIndex     int
 	catScroll    int
@@ -104,9 +108,20 @@ func (m softwareModel) currentCategory() category {
 
 func (m softwareModel) headerView() string {
 	w := m.termW()
+	titleText := strings.TrimSpace(m.title)
+	if titleText == "" {
+		titleText = "Custom software"
+	}
+	subtitleText := strings.TrimSpace(m.subtitle)
+	if subtitleText == "" {
+		subtitleText = fmt.Sprintf("%d selected", m.totalSelected())
+	} else {
+		subtitleText = fmt.Sprintf("%s · %d selected", subtitleText, m.totalSelected())
+	}
+
 	title := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center).Width(w).Render("os-configs")
 	sub := lipgloss.NewStyle().Align(lipgloss.Center).Width(w).Foreground(lipgloss.Color("245")).
-		Render(fmt.Sprintf("Custom software · %d selected", m.totalSelected()))
+		Render(fmt.Sprintf("%s · %s", titleText, subtitleText))
 	div := lipgloss.NewStyle().Align(lipgloss.Center).Width(w).Foreground(lipgloss.Color("240")).
 		Render(strings.Repeat("─", clamp(w-4, 20, 100)))
 
@@ -481,16 +496,16 @@ func (m softwareModel) View() string {
 	return lipgloss.JoinVertical(lipgloss.Top, header, body, footer, hint)
 }
 
-func loadCatalog(path string) ([]category, *bannerInfo, error) {
+func loadCatalog(path string) ([]category, *bannerInfo, string, string, error) {
 	raw, err := os.ReadFile(path)
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, "", "", err
 	}
 	var cf catalogFile
 	if err := json.Unmarshal(raw, &cf); err != nil {
-		return nil, nil, err
+		return nil, nil, "", "", err
 	}
-	return cf.Categories, cf.Banner, nil
+	return cf.Categories, cf.Banner, cf.Title, cf.Subtitle, nil
 }
 
 func writeSoftwareOutput(m softwareModel, dest *os.File) error {
@@ -513,7 +528,7 @@ func writeSoftwareOutput(m softwareModel, dest *os.File) error {
 }
 
 func runSoftwarePicker(catalogPath, outputPath string) error {
-	cats, banner, err := loadCatalog(catalogPath)
+	cats, banner, title, subtitle, err := loadCatalog(catalogPath)
 	if err != nil {
 		return err
 	}
@@ -525,6 +540,8 @@ func runSoftwarePicker(catalogPath, outputPath string) error {
 
 	m := softwareModel{
 		banner:       banner,
+		title:        title,
+		subtitle:     subtitle,
 		categories:   cats,
 		selected:     selected,
 		focus:        focusSidebar,

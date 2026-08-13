@@ -8,6 +8,8 @@ SELECTED_CUSTOM_FILE=""
 declare -A CUSTOM_SELECTION=()
 
 _custom_merged_categories=""
+_custom_main_categories=""
+_custom_arco_categories=""
 
 custom_merged_categories_path() {
     if [[ -z "$_custom_merged_categories" || ! -f "$_custom_merged_categories" ]]; then
@@ -18,39 +20,83 @@ custom_merged_categories_path() {
     echo "$_custom_merged_categories"
 }
 
+custom_main_categories_path() {
+    if [[ -z "$_custom_main_categories" || ! -f "$_custom_main_categories" ]]; then
+        _custom_main_categories="${OS_CONFIGS_CACHE:-${HOME}/.cache}/os-configs/categories-main.json"
+        mkdir -p "$(dirname "$_custom_main_categories")"
+        categories_main_json >"$_custom_main_categories"
+    fi
+    echo "$_custom_main_categories"
+}
+
+custom_arco_categories_path() {
+    if [[ -z "$_custom_arco_categories" || ! -f "$_custom_arco_categories" ]]; then
+        _custom_arco_categories="${OS_CONFIGS_CACHE:-${HOME}/.cache}/os-configs/categories-arco-merged.json"
+        mkdir -p "$(dirname "$_custom_arco_categories")"
+        categories_arco_json >"$_custom_arco_categories"
+    fi
+    echo "$_custom_arco_categories"
+}
+
 custom_category_keys() {
     jq -r 'keys[] | select(startswith("_") | not)' "$(custom_merged_categories_path)"
 }
 
+custom_main_category_keys() {
+    jq -r 'keys[] | select(startswith("_") | not)' "$(custom_main_categories_path)"
+}
+
+custom_arco_category_keys() {
+    jq -r 'keys[] | select(startswith("_") | not)' "$(custom_arco_categories_path)"
+}
+
 custom_category_label() {
-    jq -r --arg key "$1" '.[$key].label' "$(custom_merged_categories_path)"
+    local key="$1"
+    local phase="${2:-all}"
+    local cats_file
+
+    case "$phase" in
+        main) cats_file="$(custom_main_categories_path)" ;;
+        arco) cats_file="$(custom_arco_categories_path)" ;;
+        *) cats_file="$(custom_merged_categories_path)" ;;
+    esac
+
+    jq -r --arg key "$key" '.[$key].label' "$cats_file"
 }
 
 custom_category_apps() {
     local key="$1"
-    local app
+    local phase="${2:-all}"
+    local app cats_file
+
+    case "$phase" in
+        main) cats_file="$(custom_main_categories_path)" ;;
+        arco) cats_file="$(custom_arco_categories_path)" ;;
+        *) cats_file="$(custom_merged_categories_path)" ;;
+    esac
 
     while IFS= read -r app; do
         [[ -n "$app" ]] || continue
         if registry_app_visible "$app"; then
             echo "$app"
         fi
-    done < <(jq -r --arg key "$key" '.[$key].apps[]?' "$(custom_merged_categories_path)")
+    done < <(jq -r --arg key "$key" '.[$key].apps[]?' "$cats_file")
 }
 
 custom_pick_category() {
     local key="$1"
     local auto="${2:-false}"
+    local phase="${3:-all}"
     local label
     local -a apps=() picked=()
 
-    mapfile -t apps < <(custom_category_apps "$key")
+    mapfile -t apps < <(custom_category_apps "$key" "$phase")
 
     if [[ ${#apps[@]} -eq 0 ]]; then
         return 0
     fi
 
-    label="$(custom_category_label "$key")"
+    label="$(custom_category_label "$key" "$phase")"
     ui_style_header "$label"
 
     if [[ "$auto" == "true" ]]; then
@@ -60,7 +106,14 @@ custom_pick_category() {
 
     mapfile -t picked < <(gum choose --no-limit "${apps[@]}")
     if [[ ${#picked[@]} -gt 0 ]]; then
-        CUSTOM_SELECTION["$key"]="${picked[*]}"
+        if [[ -n "${CUSTOM_SELECTION[$key]:-}" ]]; then
+            read -r -a merged <<<"${CUSTOM_SELECTION[$key]}"
+            merged+=("${picked[@]}")
+            mapfile -t merged < <(printf '%s\n' "${merged[@]}" | awk '!seen[$0]++')
+            CUSTOM_SELECTION["$key"]="${merged[*]}"
+        else
+            CUSTOM_SELECTION["$key"]="${picked[*]}"
+        fi
     fi
 }
 
@@ -105,8 +158,9 @@ custom_run_selection() {
 
     if [[ "$auto" == "true" ]]; then
         picker_fallback_gum true
-    elif picker_can_run && picker_run "$pick_file"; then
+    elif picker_can_run && picker_run "$pick_file" main; then
         picker_apply_selections "$pick_file" || picker_fallback_gum false
+        picker_offer_arco_catalog "$auto" || true
     else
         if [[ ! -x "$(picker_binary)" ]]; then
             ui_style_subheader "(fallback) os-configs-picker missing — pull the latest repo or re-run install.sh"

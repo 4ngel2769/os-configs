@@ -31,17 +31,31 @@ categories_fragment_files() {
     done
 }
 
-registry_merged_json() {
-    local -a files=()
-    while IFS= read -r f; do
-        files+=("$f")
-    done < <(registry_fragment_files)
+categories_main_fragment_files() {
+    local f
+    for f in \
+        "$CATEGORIES_FILE" \
+        "${CATALOG_DIR}/categories-extras.json" \
+        "$USER_CATEGORIES_FILE"; do
+        [[ -f "$f" ]] && printf '%s\n' "$f"
+    done
+}
 
-    if [[ ${#files[@]} -eq 0 ]]; then
-        echo '{}'
-        return 0
-    fi
+categories_arco_fragment_files() {
+    [[ -f "${CATALOG_DIR}/categories-arco.json" ]] && printf '%s\n' "${CATALOG_DIR}/categories-arco.json"
+}
 
+registry_main_fragment_files() {
+    local f
+    for f in \
+        "$REGISTRY_FILE" \
+        "${CATALOG_DIR}/extras.json" \
+        "$USER_REGISTRY_FILE"; do
+        [[ -f "$f" ]] && printf '%s\n' "$f"
+    done
+}
+
+_registry_merge_jq() {
     jq -s '
         def merge_app($a; $b):
             ($a | keys) + ($b | keys) | unique | map(select(startswith("_") | not)) | map(
@@ -58,7 +72,35 @@ registry_merged_json() {
             ) | add // {};
         reduce .[] as $item ({}; merge_app(.; $item))
         | with_entries(select(.key | startswith("_") | not))
-    ' "${files[@]}"
+    ' "$@"
+}
+
+registry_merged_json() {
+    local -a files=()
+    while IFS= read -r f; do
+        files+=("$f")
+    done < <(registry_fragment_files)
+
+    if [[ ${#files[@]} -eq 0 ]]; then
+        echo '{}'
+        return 0
+    fi
+
+    _registry_merge_jq "${files[@]}"
+}
+
+registry_main_json() {
+    local -a files=()
+    while IFS= read -r f; do
+        files+=("$f")
+    done < <(registry_main_fragment_files)
+
+    if [[ ${#files[@]} -eq 0 ]]; then
+        echo '{}'
+        return 0
+    fi
+
+    _registry_merge_jq "${files[@]}"
 }
 
 registry_entry_json() {
@@ -141,17 +183,7 @@ registry_lookup() {
         | "\(.key)=\(.value)"' <<<"$entry"
 }
 
-categories_merged_json() {
-    local -a files=()
-    while IFS= read -r f; do
-        files+=("$f")
-    done < <(categories_fragment_files)
-
-    if [[ ${#files[@]} -eq 0 ]]; then
-        echo '{}'
-        return 0
-    fi
-
+_categories_merge_jq() {
     jq -s '
         def merge_cats($base; $user):
             ($base | keys) + ($user | keys) | unique | map(
@@ -185,7 +217,49 @@ categories_merged_json() {
             end;
         reduce .[] as $item ({}; merge_cats(.; $item))
         | normalize(.)
-    ' "${files[@]}"
+    ' "$@"
+}
+
+categories_merged_json() {
+    local -a files=()
+    while IFS= read -r f; do
+        files+=("$f")
+    done < <(categories_fragment_files)
+
+    if [[ ${#files[@]} -eq 0 ]]; then
+        echo '{}'
+        return 0
+    fi
+
+    _categories_merge_jq "${files[@]}"
+}
+
+categories_main_json() {
+    local -a files=()
+    while IFS= read -r f; do
+        files+=("$f")
+    done < <(categories_main_fragment_files)
+
+    if [[ ${#files[@]} -eq 0 ]]; then
+        echo '{}'
+        return 0
+    fi
+
+    _categories_merge_jq "${files[@]}"
+}
+
+categories_arco_json() {
+    local -a files=()
+    while IFS= read -r f; do
+        files+=("$f")
+    done < <(categories_arco_fragment_files)
+
+    if [[ ${#files[@]} -eq 0 ]]; then
+        echo '{}'
+        return 0
+    fi
+
+    _categories_merge_jq "${files[@]}"
 }
 
 registry_validate_user() {
