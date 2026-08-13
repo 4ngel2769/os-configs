@@ -48,6 +48,12 @@ const (
 	footerContinue
 )
 
+const (
+	softwareCellW = 20
+	softwareCellH = 2
+	softwareSideW = 24
+)
+
 type softwareModel struct {
 	categories    []category
 	catIndex      int
@@ -59,6 +65,8 @@ type softwareModel struct {
 	width         int
 	height        int
 	marqueeOffset int
+	gridScrollRow int
+	sidebarScroll int
 	quitting      bool
 	done          bool
 	err           error
@@ -75,14 +83,21 @@ func (m softwareModel) currentCategory() category {
 	return m.categories[m.catIndex]
 }
 
+func (m softwareModel) paneHeight() int {
+	// title(2) + gap + footer(3) + hint(1) + padding(2)
+	h := m.height - 10
+	if h < 8 {
+		return 8
+	}
+	return h
+}
+
 func (m softwareModel) gridCols() int {
-	const cellW = 20
-	sidebarW := 24
-	avail := m.width - sidebarW - 4
-	if avail < cellW {
+	avail := m.width - softwareSideW - 6
+	if avail < softwareCellW {
 		return 1
 	}
-	cols := avail / cellW
+	cols := avail / softwareCellW
 	if cols < 1 {
 		cols = 1
 	}
@@ -92,12 +107,86 @@ func (m softwareModel) gridCols() int {
 	return cols
 }
 
+func (m softwareModel) gridVisibleRows() int {
+	body := m.paneHeight() - 2 // grid title + spacer
+	if body < softwareCellH {
+		return 1
+	}
+	return body / softwareCellH
+}
+
+func (m softwareModel) sidebarVisibleRows() int {
+	body := m.paneHeight() - 1 // "Categories" header
+	if body < 1 {
+		return 1
+	}
+	return body
+}
+
+func (m softwareModel) gridTotalRows() int {
+	cols := m.gridCols()
+	cat := m.currentCategory()
+	if cols < 1 || len(cat.Apps) == 0 {
+		return 0
+	}
+	return (len(cat.Apps) + cols - 1) / cols
+}
+
 func (m softwareModel) appRowCol() (row, col int) {
 	cols := m.gridCols()
 	if cols < 1 {
 		return 0, 0
 	}
 	return m.appIndex / cols, m.appIndex % cols
+}
+
+func (m *softwareModel) ensureGridScroll() {
+	cols := m.gridCols()
+	if cols < 1 {
+		return
+	}
+	cursorRow := m.appIndex / cols
+	visible := m.gridVisibleRows()
+	total := m.gridTotalRows()
+	if visible < 1 {
+		visible = 1
+	}
+	if cursorRow < m.gridScrollRow {
+		m.gridScrollRow = cursorRow
+	}
+	if cursorRow >= m.gridScrollRow+visible {
+		m.gridScrollRow = cursorRow - visible + 1
+	}
+	maxScroll := total - visible
+	if maxScroll < 0 {
+		maxScroll = 0
+	}
+	if m.gridScrollRow > maxScroll {
+		m.gridScrollRow = maxScroll
+	}
+}
+
+func (m *softwareModel) ensureSidebarScroll() {
+	visible := m.sidebarVisibleRows()
+	if m.catIndex < m.sidebarScroll {
+		m.sidebarScroll = m.catIndex
+	}
+	if m.catIndex >= m.sidebarScroll+visible {
+		m.sidebarScroll = m.catIndex - visible + 1
+	}
+	maxScroll := len(m.categories) - visible
+	if maxScroll < 0 {
+		maxScroll = 0
+	}
+	if m.sidebarScroll > maxScroll {
+		m.sidebarScroll = maxScroll
+	}
+}
+
+func (m *softwareModel) resetCategoryView() {
+	m.appIndex = 0
+	m.gridScrollRow = 0
+	m.marqueeOffset = 0
 }
 
 func (m softwareModel) selectedCount(catID string) int {
@@ -129,6 +218,7 @@ func (m *softwareModel) togglePane() {
 		if len(m.currentCategory().Apps) > 0 && m.appIndex >= len(m.currentCategory().Apps) {
 			m.appIndex = 0
 		}
+		m.ensureGridScroll()
 		return
 	}
 	if m.focus == focusGrid {
@@ -166,6 +256,8 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.WindowSizeMsg:
 		m.width = msg.Width
 		m.height = msg.Height
+		m.ensureGridScroll()
+		m.ensureSidebarScroll()
 		return m, nil
 	case tickMsg:
 		if m.focus == focusGrid {
@@ -212,6 +304,7 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				if col > 0 {
 					m.appIndex--
 					m.marqueeOffset = 0
+					m.ensureGridScroll()
 				}
 			case focusFooter:
 				m.footerButton = footerBack
@@ -226,6 +319,7 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				if col < cols-1 && m.appIndex+1 < len(cat.Apps) {
 					m.appIndex++
 					m.marqueeOffset = 0
+					m.ensureGridScroll()
 				}
 			case focusFooter:
 				m.footerButton = footerContinue
@@ -236,14 +330,15 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			case focusSidebar:
 				if m.catIndex > 0 {
 					m.catIndex--
-					m.appIndex = 0
-					m.marqueeOffset = 0
+					m.resetCategoryView()
+					m.ensureSidebarScroll()
 				}
 			case focusGrid:
 				cols := m.gridCols()
 				if m.appIndex >= cols {
 					m.appIndex -= cols
 					m.marqueeOffset = 0
+					m.ensureGridScroll()
 				}
 			}
 			return m, nil
@@ -252,8 +347,8 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			case focusSidebar:
 				if m.catIndex < len(m.categories)-1 {
 					m.catIndex++
-					m.appIndex = 0
-					m.marqueeOffset = 0
+					m.resetCategoryView()
+					m.ensureSidebarScroll()
 				}
 			case focusGrid:
 				cols := m.gridCols()
@@ -261,6 +356,7 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				if m.appIndex+cols < len(cat.Apps) {
 					m.appIndex += cols
 					m.marqueeOffset = 0
+					m.ensureGridScroll()
 				}
 			}
 			return m, nil
@@ -298,7 +394,16 @@ func (m softwareModel) renderSidebar() string {
 	}
 	b.WriteString("\n")
 
-	for i, c := range m.categories {
+	visible := m.sidebarVisibleRows()
+	start := m.sidebarScroll
+	end := start + visible
+	if end > len(m.categories) {
+		end = len(m.categories)
+	}
+	rowsBelow := len(m.categories) - end
+
+	for vi, i := range seq(start, end) {
+		c := m.categories[i]
 		count := m.selectedCount(c.ID)
 		label := c.Label
 		if count > 0 {
@@ -309,24 +414,63 @@ func (m softwareModel) renderSidebar() string {
 			prefix = "▸ "
 		}
 		line := prefix + label
+		fade := verticalFadeColor(vi, end-start, rowsBelow)
 		switch {
 		case i == m.catIndex && m.focus == focusSidebar:
 			line = active.Render(line)
 		case i == m.catIndex:
 			line = idle.Render(line)
+		case fade != "":
+			line = applyFadeStyle(line, fade)
 		default:
 			line = muted.Render(line)
 		}
 		b.WriteString(line)
 		b.WriteString("\n")
 	}
+
+	// Pad to fixed height.
+	for i := end - start; i < visible; i++ {
+		b.WriteString("\n")
+	}
 	return b.String()
 }
 
-func (m softwareModel) renderAppCell(i int, app app, cat category) string {
-	const cellW = 20
-	const cellH = 2
+func stripANSI(s string) string {
+	// Simple fallback: rebuild from runes if already plain.
+	if !strings.Contains(s, "\x1b") {
+		return s
+	}
+	var b strings.Builder
+	esc := false
+	for _, r := range s {
+		if esc {
+			if r == 'm' {
+				esc = false
+			}
+			continue
+		}
+		if r == '\x1b' {
+			esc = true
+			continue
+		}
+		b.WriteRune(r)
+	}
+	return b.String()
+}
 
+func seq(start, end int) []int {
+	if end <= start {
+		return nil
+	}
+	out := make([]int, end-start)
+	for i := range out {
+		out[i] = start + i
+	}
+	return out
+}
+
+func (m softwareModel) renderAppCell(i int, app app, cat category, rowFade lipgloss.Color) string {
 	selected := m.selected[cat.ID][app.ID]
 	marker := "[ ]"
 	if selected {
@@ -336,11 +480,11 @@ func (m softwareModel) renderAppCell(i int, app app, cat category) string {
 	cursorExtra := 0
 	isCursor := m.focus == focusGrid && i == m.appIndex
 	if isCursor {
-		cursorExtra = 2 // "▸ "
+		cursorExtra = 2
 	}
 
 	prefix := marker + " "
-	labelW := cellW - runewidth.StringWidth(prefix) - cursorExtra
+	labelW := softwareCellW - runewidth.StringWidth(prefix) - cursorExtra
 	if labelW < 4 {
 		labelW = 4
 	}
@@ -354,16 +498,22 @@ func (m softwareModel) renderAppCell(i int, app app, cat category) string {
 
 	line1 := prefix + labelText
 	if isCursor {
-		line1 = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("229")).Render("▸ "+prefix+labelText)
+		line1 = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("229")).Render("▸ " + prefix + stripANSI(labelText))
+	} else if rowFade != "" {
+		line1 = applyFadeStyle(prefix+truncateRunes(app.Label, labelW), rowFade)
 	}
 
 	noteLine := " "
 	if app.Note != "" {
-		noteLine = lipgloss.NewStyle().Foreground(lipgloss.Color("240")).Render(fadeText(app.Note, cellW))
+		if rowFade != "" {
+			noteLine = applyFadeStyle(truncateRunes(app.Note, softwareCellW), rowFade)
+		} else {
+			noteLine = lipgloss.NewStyle().Foreground(lipgloss.Color("240")).Render(fadeText(app.Note, softwareCellW))
+		}
 	}
 
 	cell := lipgloss.JoinVertical(lipgloss.Left, line1, noteLine)
-	return lipgloss.NewStyle().Width(cellW).Height(cellH).Render(cell)
+	return lipgloss.NewStyle().Width(softwareCellW).Height(softwareCellH).Render(cell)
 }
 
 func (m softwareModel) renderGrid() string {
@@ -372,6 +522,8 @@ func (m softwareModel) renderGrid() string {
 
 	cat := m.currentCategory()
 	cols := m.gridCols()
+	visibleRows := m.gridVisibleRows()
+	totalRows := m.gridTotalRows()
 
 	var b strings.Builder
 	title := cat.Label
@@ -386,18 +538,42 @@ func (m softwareModel) renderGrid() string {
 
 	if len(cat.Apps) == 0 {
 		b.WriteString(subStyle.Render("No apps in this category for your distro/platform."))
+		for i := 0; i < visibleRows-1; i++ {
+			b.WriteString("\n")
+		}
 		return b.String()
 	}
 
-	for i, app := range cat.Apps {
-		b.WriteString(m.renderAppCell(i, app, cat))
-		if (i+1)%cols == 0 {
+	rowsBelow := totalRows - (m.gridScrollRow + visibleRows)
+	if rowsBelow < 0 {
+		rowsBelow = 0
+	}
+
+	for vr := 0; vr < visibleRows; vr++ {
+		actualRow := m.gridScrollRow + vr
+		rowFade := verticalFadeColor(vr, visibleRows, rowsBelow)
+
+		if actualRow >= totalRows {
+			b.WriteString(strings.Repeat(" ", cols*softwareCellW))
+			if vr < visibleRows-1 {
+				b.WriteString("\n")
+			}
+			continue
+		}
+
+		for col := 0; col < cols; col++ {
+			idx := actualRow*cols + col
+			if idx >= len(cat.Apps) {
+				b.WriteString(lipgloss.NewStyle().Width(softwareCellW).Render(""))
+			} else {
+				b.WriteString(m.renderAppCell(idx, cat.Apps[idx], cat, rowFade))
+			}
+		}
+		if vr < visibleRows-1 {
 			b.WriteString("\n")
 		}
 	}
-	if len(cat.Apps)%cols != 0 {
-		b.WriteString("\n")
-	}
+
 	return b.String()
 }
 
@@ -439,44 +615,40 @@ func (m softwareModel) View() string {
 		return "No compatible software for this category.\n"
 	}
 
+	paneH := m.paneHeight()
+
 	title := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center).Width(m.width).Render("os-configs")
 	subTitle := lipgloss.NewStyle().Align(lipgloss.Center).Width(m.width).Foreground(lipgloss.Color("245")).
 		Render(fmt.Sprintf("Custom software · %d selected", m.totalSelected()))
 
-	sidebar := lipgloss.NewStyle().Width(24).Padding(0, 1).Render(m.renderSidebar())
-	grid := lipgloss.NewStyle().Padding(0, 1).Render(m.renderGrid())
-	panes := lipgloss.JoinHorizontal(lipgloss.Top, sidebar, grid)
+	sidebar := lipgloss.NewStyle().
+		Width(softwareSideW).
+		Height(paneH).
+		Padding(0, 1).
+		Render(m.renderSidebar())
 
+	grid := lipgloss.NewStyle().
+		Height(paneH).
+		Padding(0, 1).
+		Render(m.renderGrid())
+
+	panes := lipgloss.JoinHorizontal(lipgloss.Top, sidebar, grid)
 	paneBlock := lipgloss.NewStyle().Width(m.width).Align(lipgloss.Center).Render(panes)
 
 	footer := m.renderFooter()
-	footerBlock := lipgloss.Place(m.width, lipgloss.Height(footer)+1, lipgloss.Center, lipgloss.Center, footer)
+	footerBlock := lipgloss.NewStyle().Width(m.width).Align(lipgloss.Center).Margin(1, 0).Render(footer)
 
 	hint := lipgloss.NewStyle().
 		Align(lipgloss.Center).
 		Width(m.width).
 		Foreground(lipgloss.Color("245")).
-		Render("↑↓ categories · ←→ apps grid · Enter enter/leave category · Space toggle · Tab footer · Enter activate button")
+		Render("↑↓ navigate · ←→ move · Enter enter/leave · Space toggle · Tab footer")
 
-	body := lipgloss.JoinVertical(
-		lipgloss.Center,
-		title,
-		subTitle,
-		"",
-		paneBlock,
-	)
-
-	contentH := lipgloss.Height(body) + lipgloss.Height(footerBlock) + lipgloss.Height(hint) + 2
-	topPad := (m.height - contentH) / 2
-	if topPad < 0 {
-		topPad = 0
-	}
-
-	main := lipgloss.JoinVertical(lipgloss.Center, body, "", footerBlock, "", hint)
+	main := lipgloss.JoinVertical(lipgloss.Center, title, subTitle, "", paneBlock, footerBlock, hint)
 	return lipgloss.NewStyle().
 		Width(m.width).
 		Height(m.height).
-		Padding(topPad, 0, 1, 0).
+		Padding(1, 0, 0, 0).
 		Render(main)
 }
 

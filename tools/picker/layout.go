@@ -33,12 +33,7 @@ func renderBanner(width int, b bannerInfo) string {
 		badgeColor = lipgloss.Color(b.DistroColor)
 	}
 
-	artLines := distroArt(b.DistroID)
-	var styledArt []string
-	for _, line := range artLines {
-		styledArt = append(styledArt, lipgloss.NewStyle().Foreground(badgeColor).Bold(true).Render(line))
-	}
-	artBlock := lipgloss.JoinVertical(lipgloss.Left, styledArt...)
+	artBlock := renderArtBlock(badgeColor, distroArt(b.DistroID))
 
 	arch := strings.TrimSpace(b.MachineArch)
 	distroLine := b.DistroLabel
