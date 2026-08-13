@@ -39,7 +39,14 @@ _dry_run() {
         -e TERM=dumb \
         -e "OS_CONFIGS_FORCE_PLATFORM=${platform}" \
         "$(_image "$family")" \
-        bash -c 'bash install.sh --auto --dry-run --skip-reboot </dev/null'
+        bash -c '
+            case "'"${family}"'" in
+                debian|ubuntu) apt-get update -qq && apt-get install -y -qq wget ca-certificates bash ;;
+                fedora) dnf install -y -q wget bash ca-certificates ;;
+                arch) pacman -Sy --noconfirm --needed wget bash 2>/dev/null || true ;;
+            esac
+            bash install.sh --auto --dry-run --skip-reboot </dev/null
+        '
     echo "[ok] $family/$platform dry-run"
 }
 
