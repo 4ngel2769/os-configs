@@ -137,7 +137,11 @@ func (m softwareModel) footerView() string {
 	backLabel := tuiString("button_back", "Back")
 	continueLabel := tuiString("button_continue", "Continue")
 	buttons := renderButtonRow(backLabel, continueLabel, m.focus == focusFooter && m.footerButton == footerBack, buttonSecondary, buttonPrimary, 4)
-	return centerBlock(w, buttons)
+	btnH := lipgloss.Height(buttons)
+	if btnH < 1 {
+		btnH = 1
+	}
+	return lipgloss.Place(w, btnH, lipgloss.Center, lipgloss.Top, buttons)
 }
 
 func (m softwareModel) hintView() string {

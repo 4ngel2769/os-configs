@@ -145,24 +145,6 @@ func (t themeConfig) success() lipgloss.Color  { return tuiColor(t.Success, "10"
 func (t themeConfig) secondary() lipgloss.Color { return tuiColor(t.Secondary, "117") }
 func (t themeConfig) selected() lipgloss.Color { return tuiColor(t.Selected, "229") }
 
-// centerBlock pads every line of a multi-line block by the same amount so bordered
-// JoinHorizontal rows stay aligned (Width+Align per line breaks rounded borders).
-func centerBlock(termW int, block string) string {
-	if termW < 1 || block == "" {
-		return block
-	}
-	blockW := lipgloss.Width(block)
-	if blockW <= 0 || blockW >= termW {
-		return block
-	}
-	prefix := strings.Repeat(" ", (termW-blockW)/2)
-	lines := strings.Split(block, "\n")
-	for i, line := range lines {
-		lines[i] = prefix + line
-	}
-	return strings.Join(lines, "\n")
-}
-
 type buttonVariant int
 
 const (

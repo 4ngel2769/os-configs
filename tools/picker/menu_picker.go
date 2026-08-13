@@ -169,8 +169,7 @@ func (m menuModel) renderConfirm() string {
 	yesLabel, noLabel := m.confirmLabels()
 	buttons := renderButtonPair(yesLabel, noLabel, m.confirmYes, 3)
 	maxW := min(m.width-8, 64)
-	dialog := renderDialog(title, strings.TrimSpace(m.in.Body), strings.TrimSpace(m.in.Message), buttons, maxW)
-	return centerBlock(m.width, dialog)
+	return renderDialog(title, strings.TrimSpace(m.in.Body), strings.TrimSpace(m.in.Message), buttons, maxW)
 }
 
 func (m menuModel) renderInfo() string {
@@ -195,10 +194,15 @@ func (m menuModel) renderInfo() string {
 
 	parts := []string{header}
 	if body != "" {
-		parts = append(parts, "", centerBlock(m.width, body))
+		parts = append(parts, "", body)
 	}
-	parts = append(parts, centerBlock(m.width, btn))
-	return lipgloss.JoinVertical(lipgloss.Center, parts...)
+	parts = append(parts, btn)
+	block := lipgloss.JoinVertical(lipgloss.Center, parts...)
+	blockH := lipgloss.Height(block)
+	if blockH < 1 {
+		blockH = 1
+	}
+	return lipgloss.Place(m.width, blockH, lipgloss.Center, lipgloss.Top, block)
 }
 
 func (m menuModel) View() string {
