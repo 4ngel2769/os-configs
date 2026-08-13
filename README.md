@@ -1,64 +1,99 @@
 # os-configs
 
-System Restore & Dotfile Manager for my personal machines.
+Post-install setup for Linux — pick a preset or choose your own software, DE/WM, display manager, and dotfiles. One command on an already-booted system (not live media, not disk partitioning).
 
-This repository holds automated bootstrap scripts, dotfiles, and system configurations for various Linux environments. It provides a single entry point to provision a fresh machine.
-
-## Quick Start
-
-Post-install setup (presets, custom software picker, dotfiles):
+## Quick start
 
 ```bash
-# curl
-bash <(curl -fsSL https://raw.githubusercontent.com/4ngel2769/os-configs/main/bootstrap.sh)
-
 # wget
 wget -qO- https://raw.githubusercontent.com/4ngel2769/os-configs/main/bootstrap.sh | bash
 
-# options (dry-run, non-interactive, etc.)
-curl -fsSL https://raw.githubusercontent.com/4ngel2769/os-configs/main/bootstrap.sh | bash -s -- --dry-run --auto
+# curl
+bash <(curl -fsSL https://raw.githubusercontent.com/4ngel2769/os-configs/main/bootstrap.sh)
 ```
 
-The bootstrap script installs `git` if needed, clones or updates **`~/.os-configs`**, then runs `install.sh`.
-Override the checkout with `OS_CONFIGS_DIR`, branch with `OS_CONFIGS_REF`.
+`bootstrap.sh` installs `git` if needed, clones or updates **`~/.os-configs`**, then runs `install.sh`.
 
-Already have a clone? Run `./install.sh` from the repo root.
-
-### Legacy profile dispatch
-
-Per-distro bootstrap profiles (Fedora workstation, Ubuntu server, …):
+### Options
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/4ngel2769/os-configs/main/setup.sh)
+# preview everything, change nothing
+wget -qO- .../bootstrap.sh | bash -s -- --dry-run
+
+# non-interactive (first preset for detected platform)
+wget -qO- .../bootstrap.sh | bash -s -- --auto
+
+# pick DE/WM and display manager interactively
+wget -qO- .../bootstrap.sh | bash -s -- --ask-de-wm
 ```
 
-Add `--auto` for non-interactive mode.
+Use **`ssh -t`** for the full Custom software picker (Bubble Tea sidebar + grid).
 
-## Profiles
+### Environment
 
-Current system profiles managed in this repository (see `index.yaml` for details):
+| Variable | Purpose |
+|----------|---------|
+| `OS_CONFIGS_DIR` | Checkout path (default `~/.os-configs`) |
+| `OS_CONFIGS_REF` | Git branch or tag (default `main`) |
+| `OS_CONFIGS_ASK_DE_WM=1` | Same as `--ask-de-wm` |
 
-* **Fedora Workstation** (`fedora-workstation`)
-  * **Role**: Daily driver
-  * **Environment**: GNOME, Ghostty terminal, full development stack
-  * **Status**: Complete
+## What it does
 
-* **Ubuntu Server** (`ubuntu-server`)
-  * **Role**: Headless home server
-  * **Environment**: Docker/Portainer stack with external storage
-  * **Status**: In-Progress
+1. **Detect** — distro family (Arch / Debian / Ubuntu / Fedora), laptop vs desktop vs server, GPU class
+2. **Preset or Custom** — curated bundles or pick apps by category (600+ in catalog)
+3. **DE / WM / DM** — defaults from preset, or choose GNOME, KDE, Hyprland, i3, etc.
+4. **Confirm** — shows real package names before installing
+5. **Install** — native packages, AUR, third-party repos, Flatpak, GitHub releases
+6. **Dotfiles** — backs up existing configs to `~/.os-configs-backup/<timestamp>/`, then Stow deploy
+7. **Finish** — reboot prompt + one-shot post-login “install more?” (runs once, then removes itself)
 
-* **Debian Desktop** / **Arch Desktop**
-  * *Stubs for future environments*
+## Presets
 
-## Structure
+| Platform | Presets |
+|----------|---------|
+| **Server** | Minimal, Clean, Everything |
+| **Desktop** | Minimal, Workstation, Creator, Gaming (if GPU qualifies) |
+| **Laptop** | Minimal, Workstation, Creator, Gaming (if GPU qualifies) |
 
-* `setup.sh`: Top-level dispatcher. Detects OS and calls the correct bootstrap.
-* `fedora-workstation/`: Fedora-specific scripts, configurations, and dotfiles.
-* `ubuntu-server/`: Ubuntu server-specific setup.
-* `shared/`: Common configs and scripts shared across environments.
-* `index.yaml`: Machine catalog and profile metadata.
+**Custom** is always available — walk categories or use the visual picker.
 
-## Maintenance
+## Supported distros
+
+Logic branches on **`DISTRO_FAMILY`**: `arch`, `debian`, `ubuntu`, `fedora`. Derivatives (Zorin, Mint, EndeavourOS, etc.) map to their base family automatically.
+
+## Adding apps
+
+See [ADD-APPS.md](ADD-APPS.md). User overlays go in `data/user/` (gitignored).
+
+## Repo layout
+
+```
+bootstrap.sh          # wget/curl entry
+install.sh            # main installer
+lib/                  # detect, UI, registry, install, dotfiles, post-login
+data/
+  registry.json       # base app → package map
+  catalog/            # Arco catalog + extras (merged automatically)
+  presets/            # preset definitions
+  categories.json     # custom-mode categories
+  de-wm.json          # DE/WM + default DM + dotfiles package
+dotfiles/             # Stow packages (shared + per-DE/WM)
+test/                 # checkpoint scripts
+```
+
+## Checkpoints
+
+```bash
+./install.sh --dry-run --auto
+bash test/phase4-checkpoint.sh    # preset registry coverage
+bash test/extras-checkpoint.sh    # extras package map
+bash test/live-checkpoint.sh      # dotfiles backup + post-login once-only
+bash test/run-in-container.sh all # cross-distro registry validation
+```
+
+## Out of scope
+
+- Disk partitioning, bootloaders, live ISO
+- Fleet / unattended imaging (use `--auto` to re-run a known profile, not to image machines)
 
 Maintained by [4ngel2769](https://github.com/4ngel2769/os-configs).

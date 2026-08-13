@@ -44,7 +44,7 @@ registry_merged_json() {
 
     jq -s '
         def merge_app($a; $b):
-            ($a | keys) + ($b | keys) | unique | map(
+            ($a | keys) + ($b | keys) | unique | map(select(startswith("_") | not)) | map(
                 . as $name |
                 {
                     ($name): (
@@ -57,6 +57,7 @@ registry_merged_json() {
                 }
             ) | add // {};
         reduce .[] as $item ({}; merge_app(.; $item))
+        | with_entries(select(.key | startswith("_") | not))
     ' "${files[@]}"
 }
 

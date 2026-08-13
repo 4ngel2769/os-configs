@@ -10,7 +10,10 @@
   "librewolf": {
     "label": "LibreWolf",
     "platforms": ["desktop", "laptop"],
-    "arch": { "manager": "aur", "package": "librewolf-bin" }
+    "arch": { "manager": "aur", "package": "librewolf-bin" },
+    "debian": { "manager": "flatpak", "package": "io.gitlab.librewolf-community" },
+    "ubuntu": { "manager": "flatpak", "package": "io.gitlab.librewolf-community" },
+    "fedora": { "manager": "flatpak", "package": "io.gitlab.librewolf-community" }
   },
   "vivaldi": {
     "label": "Vivaldi",
@@ -31,7 +34,10 @@
   "zen-browser": {
     "label": "Zen Browser",
     "platforms": ["desktop", "laptop"],
-    "arch": { "manager": "aur", "package": "zen-browser-bin" }
+    "arch": { "manager": "aur", "package": "zen-browser-bin" },
+    "debian": { "manager": "flatpak", "package": "io.github.zen_browser.zen" },
+    "ubuntu": { "manager": "flatpak", "package": "io.github.zen_browser.zen" },
+    "fedora": { "manager": "flatpak", "package": "io.github.zen_browser.zen" }
   },
   "floorp": {
     "label": "Floorp",
@@ -47,8 +53,9 @@
     "label": "Waterfox",
     "platforms": ["desktop", "laptop"],
     "arch": { "manager": "aur", "package": "waterfox" },
-    "debian": { "manager": "apt", "package": "waterfox-g-kpe" },
-    "ubuntu": { "manager": "apt", "package": "waterfox-g-kpe" }
+    "debian": { "manager": "flatpak", "package": "net.waterfox.waterfox" },
+    "ubuntu": { "manager": "flatpak", "package": "net.waterfox.waterfox" },
+    "fedora": { "manager": "flatpak", "package": "net.waterfox.waterfox" }
   },
   "mullvad-browser": {
     "label": "Mullvad Browser",
@@ -67,6 +74,8 @@
     "label": "Vesktop",
     "platforms": ["desktop", "laptop"],
     "arch": { "manager": "aur", "package": "vesktop" },
+    "debian": { "manager": "flatpak", "package": "dev.vencord.Vesktop" },
+    "ubuntu": { "manager": "flatpak", "package": "dev.vencord.Vesktop" },
     "fedora": { "manager": "dnf", "package": "vesktop" }
   },
   "equibop": {
@@ -115,15 +124,16 @@
     "label": "Discord",
     "platforms": ["desktop", "laptop"],
     "arch": { "manager": "aur", "package": "discord" },
-    "debian": { "manager": "apt", "package": "discord", "source": "discord" },
-    "ubuntu": { "manager": "apt", "package": "discord", "source": "discord" },
-    "fedora": { "manager": "dnf", "package": "discord", "source": "discord" }
+    "debian": { "manager": "flatpak", "package": "com.discordapp.Discord" },
+    "ubuntu": { "manager": "flatpak", "package": "com.discordapp.Discord" },
+    "fedora": { "manager": "flatpak", "package": "com.discordapp.Discord" }
   },
   "signal": {
     "label": "Signal",
     "platforms": ["desktop", "laptop"],
     "arch": { "manager": "aur", "package": "signal-desktop" },
     "debian": { "manager": "apt", "package": "signal-desktop", "source": "signal" },
-    "ubuntu": { "manager": "apt", "package": "signal-desktop", "source": "signal" }
+    "ubuntu": { "manager": "apt", "package": "signal-desktop", "source": "signal" },
+    "fedora": { "manager": "flatpak", "package": "org.signal.Signal" }
   }
 }

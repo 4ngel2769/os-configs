@@ -31,6 +31,8 @@ Options:
   --ask-de-wm         Prompt for DE/WM and display manager (default: use preset/config defaults)
   --help              Show this help
 
+Package managers: pacman, apt, dnf, aur, flatpak, github, brew, bun
+
 Environment:
   OS_CONFIGS_ASK_DE_WM=1   Same as --ask-de-wm
   OS_CONFIGS_FORCE_PLATFORM  Override detected platform (server|desktop|laptop; testing)

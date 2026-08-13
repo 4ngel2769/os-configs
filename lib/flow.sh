@@ -70,20 +70,15 @@ flow_label_to_preset_id() {
 }
 
 flow_show_detection_summary() {
-    local badge platform_label gpu_label
-    badge="$(ui_distro_badge)"
-    platform_label="$(ui_platform_label "$PLATFORM_CLASS")"
+    local gpu_label
 
-    ui_style_header "os-configs"
-    ui_style_subheader "Post-install setup"
-    ui_style_divider
-    gum style "Distro:    ${badge} (${DISTRO_FAMILY})"
-    gum style "Platform:  ${platform_label}"
+    ui_show_banner
+
     if [[ "$PLATFORM_CLASS" != "server" ]]; then
         gpu_label="$(ui_gpu_label "$GPU_CLASS")"
         gum style "GPU:       ${gpu_label}"
+        ui_style_divider
     fi
-    ui_style_divider
 }
 
 flow_platform_override() {
@@ -126,7 +121,7 @@ flow_select_preset_menu() {
         id="$(flow_label_to_preset_id "$label")"
         ids+=("$id")
     done
-    rows+=("Custom")
+    rows+=("$(ui_format_custom_row)")
 
     ui_style_header "Choose a preset"
 
@@ -137,7 +132,7 @@ flow_select_preset_menu() {
         choice="$(gum choose "${rows[@]}")"
     fi
 
-    if [[ "$choice" == "Custom" ]]; then
+    if [[ "$choice" == *"Custom"* ]]; then
         INSTALL_MODE="custom"
         export INSTALL_MODE
         return 0

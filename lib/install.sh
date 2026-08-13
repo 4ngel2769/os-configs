@@ -11,6 +11,8 @@ source "${_install_lib_dir}/log.sh"
 source "${_install_lib_dir}/github-install.sh"
 # shellcheck source=/dev/null
 source "${_install_lib_dir}/tools-install.sh"
+# shellcheck source=/dev/null
+source "${_install_lib_dir}/sources.sh"
 
 install_parse_lookup() {
     local lookup="$1"
@@ -64,6 +66,9 @@ install_format_label() {
     case "$INSTALL_MANAGER" in
         github)
             printf '%s → github:%s (%s)' "$simple_name" "$INSTALL_REPO" "${INSTALL_METHOD:-release}"
+            ;;
+        flatpak)
+            printf '%s → flatpak:%s' "$simple_name" "$INSTALL_PACKAGE"
             ;;
         brew | bun | bunx)
             printf '%s → %s:%s' "$simple_name" "$INSTALL_MANAGER" "$INSTALL_PACKAGE"
@@ -141,6 +146,9 @@ install_app() {
     install_note_prereq "$simple_name"
     label="$(install_format_label "$simple_name")"
 
+    [[ -n "$INSTALL_COMPONENT" ]] && sources_ensure_component "$INSTALL_COMPONENT" "$dry_run"
+    [[ -n "$INSTALL_SOURCE" ]] && sources_ensure "$INSTALL_SOURCE" "$dry_run"
+
     case "$INSTALL_MANAGER" in
         pacman)
             cmd=(sudo pacman -S --needed --noconfirm "$INSTALL_PACKAGE")
@@ -150,6 +158,10 @@ install_app() {
             ;;
         dnf)
             cmd=(sudo dnf install -y "$INSTALL_PACKAGE")
+            ;;
+        flatpak)
+            flatpak_ensure "$dry_run"
+            cmd=(flatpak install -y flathub "$INSTALL_PACKAGE")
             ;;
         aur)
             if [[ -z "${AUR_HELPER:-}" ]]; then

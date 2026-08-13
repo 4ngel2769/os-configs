@@ -158,14 +158,38 @@ ui_distro_badge() {
     gum style --foreground "$color" "$label"
 }
 
+ui_show_banner() {
+    local badge platform_label color
+
+    ui_require_gum || return 1
+    badge="$(ui_distro_label)"
+    color="$(ui_distro_color)"
+    platform_label="$(ui_platform_label "${PLATFORM_CLASS:-desktop}")"
+
+    gum style --bold --align center --width 52 --margin "1 0" "os-configs"
+    gum style --align center --width 52 --foreground 245 "Post-install setup"
+    ui_style_divider
+    gum style --align center --width 52 --foreground "$color" "/ ${badge} · ${platform_label} \\"
+    ui_style_divider
+}
+
 ui_format_preset_row() {
     local preset_name="$1"
     local distro_id="${2:-${DISTRO_ID:-unknown}}"
     local family="${3:-${DISTRO_FAMILY:-}}"
+    local color badge
 
     ui_require_gum || return 1
 
-    local badge
-    badge="$(ui_distro_badge "$distro_id" "$family")"
-    printf '%s  %s\n' "$preset_name" "$badge"
+    color="$(ui_distro_color "$distro_id" "$family")"
+    badge="$(ui_distro_label "$distro_id")"
+
+    gum style --border normal --padding "0 2" --border-foreground "$color" \
+        "/ ${preset_name} \\" "\\ ${badge} /"
+}
+
+ui_format_custom_row() {
+    ui_require_gum || return 1
+    gum style --border normal --padding "0 2" --border-foreground 245 \
+        "/ Custom \\" "\\ pick your apps /"
 }

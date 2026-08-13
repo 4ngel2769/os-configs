@@ -23,6 +23,18 @@ AUR on Arch: `"manager": "aur", "package": "package-name"`
 
 Third-party repos: add `"source": "brave"` or `"component": "multiverse"` when needed (same as base registry).
 
+**Flatpak** (Flathub):
+
+```json
+"my-flatpak-app": {
+  "debian": { "manager": "flatpak", "package": "com.example.App" },
+  "ubuntu": { "manager": "flatpak", "package": "com.example.App" },
+  "fedora": { "manager": "flatpak", "package": "com.example.App" }
+}
+```
+
+`package` is the Flathub app ID. Flathub is added automatically if missing.
+
 ---
 
 ## 2. GitHub apps
