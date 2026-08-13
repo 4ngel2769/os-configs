@@ -66,7 +66,7 @@ flow_list_preset_ids() {
 
 flow_label_to_preset_id() {
     local label="$1"
-    jq -r --arg label "$label" '.presets[] | select(.label == $label) | .id' "$_flow_menu_file" | head -1
+    jq -r --arg lbl "$label" '.presets[] | select(.label == $lbl) | .id' "$_flow_menu_file" | head -1
 }
 
 flow_show_detection_summary() {
