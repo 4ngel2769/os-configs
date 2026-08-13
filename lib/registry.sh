@@ -178,7 +178,7 @@ categories_merged_json() {
                 $cats
             end;
         reduce .[] as $item ({}; merge_cats(.; $item))
-        | normalize
+        | normalize(.)
     ' "${files[@]}"
 }
 
