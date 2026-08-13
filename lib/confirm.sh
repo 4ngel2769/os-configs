@@ -62,6 +62,60 @@ confirm_show_plan() {
     fi
 }
 
+confirm_plan_body() {
+    local plan_file="$1"
+    local -a lines=()
+    local app badge platform_label summary
+
+    badge="$(ui_distro_label)"
+    platform_label="$(ui_platform_label "$PLATFORM_CLASS")"
+
+    lines+=("Distro:     ${badge} (${DISTRO_FAMILY})")
+    lines+=("Platform:   ${platform_label}")
+    if [[ "$PLATFORM_CLASS" != "server" ]]; then
+        lines+=("GPU:        $(ui_gpu_label "$GPU_CLASS")")
+    fi
+
+    if [[ "$INSTALL_MODE" == "preset" ]]; then
+        summary="$(preset_summary_line "$plan_file")"
+        lines+=("Preset:     ${summary}")
+    else
+        lines+=("Mode:       custom")
+    fi
+
+    if [[ -n "${SELECTED_DE_WM:-}" ]]; then
+        lines+=("DE/WM:      $(dewm_label "$SELECTED_DE_WM")")
+        lines+=("DM:         $(dewm_dm_label "$SELECTED_DM")")
+    fi
+
+    if [[ -n "${SELECTED_SHELL:-}" ]]; then
+        lines+=("Shell:      $(shell_label "$SELECTED_SHELL") (default)")
+        if [[ "${SHELL_APPLY_DOTFILES:-false}" == "true" && -n "${SELECTED_SHELL_PROFILE:-}" ]]; then
+            lines+=("Shell cfg:  $(shell_profile_label "$SELECTED_SHELL_PROFILE")")
+            lines+=("            $(shell_profile_field "$SELECTED_SHELL_PROFILE" "credit")")
+        fi
+    fi
+
+    lines+=("")
+    lines+=("Packages to install:")
+    while IFS= read -r app; do
+        [[ -n "$app" ]] || continue
+        if lookup="$(registry_lookup "$app" 2>/dev/null)"; then
+            install_parse_lookup "$lookup"
+            lines+=("  $(install_format_label "$app")")
+        else
+            lines+=("  ${app}  (missing registry entry)")
+        fi
+    done < <(preset_flatten_apps "$plan_file")
+
+    if [[ "${OS_CONFIGS_DRY_RUN:-false}" == "true" ]]; then
+        lines+=("")
+        lines+=("(dry-run — commands below are preview only)")
+    fi
+
+    printf '%s\n' "${lines[@]}"
+}
+
 confirm_run() {
     local auto="${1:-false}"
     local dry_run="${2:-false}"
@@ -82,7 +136,9 @@ confirm_run() {
         return 1
     fi
 
-    confirm_show_plan "$plan_file"
+    if [[ "$dry_run" == "true" || "$auto" == "true" ]]; then
+        confirm_show_plan "$plan_file"
+    fi
 
     if [[ "$dry_run" == "true" ]]; then
         install_run_plan "$plan_file" true
@@ -94,10 +150,12 @@ confirm_run() {
     fi
 
     if [[ "$auto" != "true" ]]; then
-        ui_confirm "Proceed with installation?" || {
+        local plan_body
+        plan_body="$(confirm_plan_body "$plan_file")"
+        if ! ui_picker_menu_confirm "Proceed with installation?" true "Confirm installation" "$plan_body"; then
             gum style --foreground 245 "Installation cancelled."
             return 0
-        }
+        fi
     else
         ui_style_subheader "(auto) proceeding with installation"
     fi
@@ -128,7 +186,9 @@ confirm_custom_install() {
         return 1
     fi
 
-    confirm_show_plan "$plan_file"
+    if [[ "$dry_run" == "true" || "$auto" == "true" ]]; then
+        confirm_show_plan "$plan_file"
+    fi
 
     if [[ "$dry_run" == "true" ]]; then
         install_run_plan "$plan_file" true
@@ -137,7 +197,9 @@ confirm_custom_install() {
     fi
 
     if [[ "$auto" != "true" ]]; then
-        ui_confirm "Proceed with installation?" || return 0
+        local plan_body
+        plan_body="$(confirm_plan_body "$plan_file")"
+        ui_picker_menu_confirm "Proceed with installation?" true "Confirm installation" "$plan_body" || return 0
     fi
 
     install_run_plan "$plan_file" false

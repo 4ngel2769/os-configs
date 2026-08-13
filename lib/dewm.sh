@@ -72,31 +72,65 @@ dewm_apply_custom_defaults() {
 }
 
 dewm_pick_de_wm_interactive() {
-    local -a de_opts=() choice
+    local items_json choice
 
+    items_json="$(jq -c '[to_entries[] | select(.value.type == "de") | {id: .key, label: .value.label}]' "$_dewm_map")"
+
+    if choice="$(ui_picker_menu_list "Custom selection" "Desktop environments" "$items_json")"; then
+        printf '%s' "$choice"
+        return 0
+    fi
+
+    local -a de_opts=()
+    local label picked
     while IFS= read -r label; do
         [[ -n "$label" ]] && de_opts+=("$label")
     done < <(jq -r '.[] | select(.type == "de") | .label' "$_dewm_map")
 
     ui_style_header "Desktop environments"
-    choice="$(gum choose "${de_opts[@]}")"
-    jq -r --arg label "$choice" 'to_entries[] | select(.value.label == $label) | .key' "$_dewm_map" | head -1
+    picked="$(gum choose "${de_opts[@]}")"
+    jq -r --arg label "$picked" 'to_entries[] | select(.value.label == $label) | .key' "$_dewm_map" | head -1
 }
 
 dewm_pick_wm_interactive() {
-    local -a wm_opts=() choice id
+    local items_json choice
 
+    items_json="$(jq -c '[to_entries[] | select(.value.type == "wm") | {id: .key, label: .value.label}]' "$_dewm_map")"
+
+    if choice="$(ui_picker_menu_list "Custom selection" "Window managers" "$items_json")"; then
+        printf '%s' "$choice"
+        return 0
+    fi
+
+    local -a wm_opts=()
+    local label picked
     while IFS= read -r label; do
         [[ -n "$label" ]] && wm_opts+=("$label")
     done < <(jq -r '.[] | select(.type == "wm") | .label' "$_dewm_map")
 
     ui_style_header "Window managers"
-    choice="$(gum choose "${wm_opts[@]}")"
-    jq -r --arg label "$choice" 'to_entries[] | select(.value.label == $label) | .key' "$_dewm_map" | head -1
+    picked="$(gum choose "${wm_opts[@]}")"
+    jq -r --arg label "$picked" 'to_entries[] | select(.value.label == $label) | .key' "$_dewm_map" | head -1
 }
 
 dewm_pick_de_wm_menu() {
-    local mode choice id
+    local items_json mode choice id
+
+    items_json='[
+        {"id":"de","label":"Desktop environment"},
+        {"id":"wm","label":"Window manager"}
+    ]'
+
+    if choice="$(ui_picker_menu_list "Custom selection" "Choose" "$items_json")"; then
+        if [[ "$choice" == "de" ]]; then
+            id="$(dewm_pick_de_wm_interactive)"
+        else
+            id="$(dewm_pick_wm_interactive)"
+        fi
+        [[ -n "$id" ]] || return 1
+        printf '%s' "$id"
+        return 0
+    fi
 
     ui_style_header "Session type"
     mode="$(gum choose "Desktop environment" "Window manager")"
@@ -108,22 +142,30 @@ dewm_pick_de_wm_menu() {
     fi
 
     [[ -n "$id" ]] || return 1
-    echo "$id"
+    printf '%s' "$id"
 }
 
 dewm_pick_dm_interactive() {
     local default_dm="$1"
-    local -a opts=() choice id label
+    local items_json choice
 
+    items_json="$(jq -c '[to_entries[] | {id: .key, label: .value.label}]' "$_dewm_dms")"
+
+    if choice="$(ui_picker_menu_list "Custom selection" "Display manager · default: $(dewm_dm_label "$default_dm")" "$items_json")"; then
+        printf '%s' "$choice"
+        return 0
+    fi
+
+    local -a opts=()
+    local label picked
     while IFS= read -r label; do
         [[ -n "$label" ]] && opts+=("$label")
     done < <(jq -r '.[].label' "$_dewm_dms")
 
     ui_style_header "Display manager"
     ui_style_subheader "Default for this session: $(dewm_dm_label "$default_dm")"
-
-    choice="$(gum choose "${opts[@]}")"
-    jq -r --arg label "$choice" 'to_entries[] | select(.value.label == $label) | .key' "$_dewm_dms" | head -1
+    picked="$(gum choose "${opts[@]}")"
+    jq -r --arg label "$picked" 'to_entries[] | select(.value.label == $label) | .key' "$_dewm_dms" | head -1
 }
 
 dewm_prompt_interactive() {

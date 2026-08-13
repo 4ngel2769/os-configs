@@ -6,9 +6,11 @@ import (
 	"os"
 	"sort"
 	"strings"
+	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/mattn/go-runewidth"
 )
 
 type catalogFile struct {
@@ -24,7 +26,10 @@ type category struct {
 type app struct {
 	ID    string `json:"id"`
 	Label string `json:"label"`
+	Note  string `json:"note,omitempty"`
 }
+
+type tickMsg struct{}
 
 type softwareOutput struct {
 	Selections map[string][]string `json:"selections"`
@@ -44,21 +49,24 @@ const (
 )
 
 type softwareModel struct {
-	categories   []category
-	catIndex     int
-	appIndex     int
-	focus        focusArea
-	lastPane     focusArea
-	footerButton int
-	selected     map[string]map[string]bool
-	width        int
-	height       int
-	quitting     bool
-	done         bool
-	err          error
+	categories    []category
+	catIndex      int
+	appIndex      int
+	focus         focusArea
+	lastPane      focusArea
+	footerButton  int
+	selected      map[string]map[string]bool
+	width         int
+	height        int
+	marqueeOffset int
+	quitting      bool
+	done          bool
+	err           error
 }
 
-func (m softwareModel) Init() tea.Cmd { return nil }
+func (m softwareModel) Init() tea.Cmd {
+	return tea.Tick(120*time.Millisecond, func(time.Time) tea.Msg { return tickMsg{} })
+}
 
 func (m softwareModel) currentCategory() category {
 	if len(m.categories) == 0 {
@@ -159,6 +167,11 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.width = msg.Width
 		m.height = msg.Height
 		return m, nil
+	case tickMsg:
+		if m.focus == focusGrid {
+			m.marqueeOffset++
+		}
+		return m, tea.Tick(120*time.Millisecond, func(time.Time) tea.Msg { return tickMsg{} })
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "ctrl+c", "q":
@@ -198,6 +211,7 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				_, col := m.appRowCol()
 				if col > 0 {
 					m.appIndex--
+					m.marqueeOffset = 0
 				}
 			case focusFooter:
 				m.footerButton = footerBack
@@ -211,6 +225,7 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				_, col := m.appRowCol()
 				if col < cols-1 && m.appIndex+1 < len(cat.Apps) {
 					m.appIndex++
+					m.marqueeOffset = 0
 				}
 			case focusFooter:
 				m.footerButton = footerContinue
@@ -222,11 +237,13 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				if m.catIndex > 0 {
 					m.catIndex--
 					m.appIndex = 0
+					m.marqueeOffset = 0
 				}
 			case focusGrid:
 				cols := m.gridCols()
 				if m.appIndex >= cols {
 					m.appIndex -= cols
+					m.marqueeOffset = 0
 				}
 			}
 			return m, nil
@@ -236,12 +253,14 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				if m.catIndex < len(m.categories)-1 {
 					m.catIndex++
 					m.appIndex = 0
+					m.marqueeOffset = 0
 				}
 			case focusGrid:
 				cols := m.gridCols()
 				cat := m.currentCategory()
 				if m.appIndex+cols < len(cat.Apps) {
 					m.appIndex += cols
+					m.marqueeOffset = 0
 				}
 			}
 			return m, nil
@@ -304,11 +323,52 @@ func (m softwareModel) renderSidebar() string {
 	return b.String()
 }
 
+func (m softwareModel) renderAppCell(i int, app app, cat category) string {
+	const cellW = 20
+	const cellH = 2
+
+	selected := m.selected[cat.ID][app.ID]
+	marker := "[ ]"
+	if selected {
+		marker = "[x]"
+	}
+
+	cursorExtra := 0
+	isCursor := m.focus == focusGrid && i == m.appIndex
+	if isCursor {
+		cursorExtra = 2 // "▸ "
+	}
+
+	prefix := marker + " "
+	labelW := cellW - runewidth.StringWidth(prefix) - cursorExtra
+	if labelW < 4 {
+		labelW = 4
+	}
+
+	var labelText string
+	if isCursor {
+		labelText = marqueeText(app.Label, labelW, m.marqueeOffset)
+	} else {
+		labelText = fadeText(app.Label, labelW)
+	}
+
+	line1 := prefix + labelText
+	if isCursor {
+		line1 = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("229")).Render("▸ "+prefix+labelText)
+	}
+
+	noteLine := " "
+	if app.Note != "" {
+		noteLine = lipgloss.NewStyle().Foreground(lipgloss.Color("240")).Render(fadeText(app.Note, cellW))
+	}
+
+	cell := lipgloss.JoinVertical(lipgloss.Left, line1, noteLine)
+	return lipgloss.NewStyle().Width(cellW).Height(cellH).Render(cell)
+}
+
 func (m softwareModel) renderGrid() string {
 	headerStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("86"))
 	subStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("245"))
-	cursorStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("86"))
-	cellW := 20
 
 	cat := m.currentCategory()
 	cols := m.gridCols()
@@ -330,17 +390,7 @@ func (m softwareModel) renderGrid() string {
 	}
 
 	for i, app := range cat.Apps {
-		selected := m.selected[cat.ID][app.ID]
-		marker := "[ ]"
-		if selected {
-			marker = "[x]"
-		}
-		cell := fmt.Sprintf("%s %s", marker, app.Label)
-		isCursor := m.focus == focusGrid && i == m.appIndex
-		if isCursor {
-			cell = cursorStyle.Render("▸ " + cell)
-		}
-		b.WriteString(lipgloss.NewStyle().Width(cellW).Render(cell))
+		b.WriteString(m.renderAppCell(i, app, cat))
 		if (i+1)%cols == 0 {
 			b.WriteString("\n")
 		}

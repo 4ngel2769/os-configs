@@ -52,7 +52,18 @@ ui_gpu_label() {
 }
 
 ui_platform_pick() {
-    local picked
+    local picked items_json
+
+    items_json='[
+        {"id":"server","label":"Server"},
+        {"id":"desktop","label":"Desktop"},
+        {"id":"laptop","label":"Laptop"}
+    ]'
+
+    if picked="$(ui_picker_menu_list "Platform" "Override detected platform" "$items_json")"; then
+        printf '%s' "$picked"
+        return 0
+    fi
 
     ui_require_gum || return 1
     picked="$(gum choose "Server" "Desktop" "Laptop")"
@@ -93,9 +104,138 @@ ui_style() {
     gum style "$@"
 }
 
+ui_picker_can_run() {
+    picker_can_run
+}
+
+ui_picker_menu_list() {
+    local title="$1"
+    local subtitle="${2:-}"
+    local items_json="$3"
+    local input_file result_file choice
+
+    if ! ui_picker_can_run; then
+        return 1
+    fi
+
+    input_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-menu-in.XXXXXX")"
+    result_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-menu-out.XXXXXX")"
+
+    jq -n \
+        --argjson banner "$(picker_banner_json)" \
+        --arg title "$title" \
+        --arg subtitle "$subtitle" \
+        --argjson items "$items_json" \
+        '{
+            banner: $banner,
+            mode: "list",
+            title: $title,
+            subtitle: $subtitle,
+            items: $items
+        }' >"$input_file"
+
+    if menu_picker_run "$result_file" "$input_file"; then
+        choice="$(jq -r '.choice // empty' "$result_file")"
+        rm -f "$input_file" "$result_file"
+        if [[ -n "$choice" ]]; then
+            printf '%s' "$choice"
+            return 0
+        fi
+    fi
+
+    rm -f "$input_file" "$result_file"
+    return 1
+}
+
+ui_picker_menu_confirm() {
+    local message="$1"
+    local default="${2:-true}"
+    local title="${3:-}"
+    local body="${4:-}"
+    local input_file result_file confirmed
+
+    if ! ui_picker_can_run; then
+        return 1
+    fi
+
+    input_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-menu-in.XXXXXX")"
+    result_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-menu-out.XXXXXX")"
+
+    jq -n \
+        --argjson banner "$(picker_banner_json)" \
+        --arg mode "confirm" \
+        --arg title "${title:-Confirm}" \
+        --arg message "$message" \
+        --arg body "$body" \
+        --argjson default_yes "$( [[ "$default" == "true" ]] && echo true || echo false )" \
+        '{
+            banner: $banner,
+            mode: "confirm",
+            title: $title,
+            body: $body,
+            message: $message,
+            default_yes: $default_yes
+        }' >"$input_file"
+
+    if menu_picker_run "$result_file" "$input_file"; then
+        confirmed="$(jq -r '.confirmed // false' "$result_file")"
+        rm -f "$input_file" "$result_file"
+        [[ "$confirmed" == "true" ]]
+        return $?
+    fi
+
+    rm -f "$input_file" "$result_file"
+
+    ui_require_gum || return 1
+    if [[ -n "$body" ]]; then
+        ui_panel "$title" "$body"
+    fi
+    if [[ "$default" == "true" ]]; then
+        gum confirm "$message"
+    else
+        gum confirm --default=false "$message"
+    fi
+}
+
+ui_picker_menu_info() {
+    local title="$1"
+    local body="$2"
+    local input_file result_file
+
+    if ! ui_picker_can_run; then
+        return 1
+    fi
+
+    input_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-menu-in.XXXXXX")"
+    result_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-menu-out.XXXXXX")"
+
+    jq -n \
+        --argjson banner "$(picker_banner_json)" \
+        --arg title "$title" \
+        --arg body "$body" \
+        '{
+            banner: $banner,
+            mode: "info",
+            title: $title,
+            body: $body
+        }' >"$input_file"
+
+    if menu_picker_run "$result_file" "$input_file"; then
+        rm -f "$input_file" "$result_file"
+        return 0
+    fi
+
+    rm -f "$input_file" "$result_file"
+    return 1
+}
+
 ui_confirm() {
     local prompt="${1:-Continue?}"
     local default="${2:-true}"
+
+    if ui_picker_menu_confirm "$prompt" "$default"; then
+        return 0
+    fi
 
     ui_require_gum || return 1
 

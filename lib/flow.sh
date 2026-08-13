@@ -84,14 +84,16 @@ flow_show_detection_summary() {
 flow_platform_override() {
     local auto="${1:-false}"
 
-    flow_show_detection_summary
-
     if [[ "$auto" == "true" ]]; then
         ui_style_subheader "(auto) keeping detected platform: $(ui_platform_label "$PLATFORM_CLASS")"
         return 0
     fi
 
-    if ui_confirm "Keep detected platform '$(ui_platform_label "$PLATFORM_CLASS")'?"; then
+    if ! picker_can_run; then
+        flow_show_detection_summary
+    fi
+
+    if ui_picker_menu_confirm "Keep detected platform '$(ui_platform_label "$PLATFORM_CLASS")'?" true; then
         return 0
     fi
 
@@ -99,7 +101,6 @@ flow_platform_override() {
     picked="$(ui_platform_pick)"
     PLATFORM_CLASS="$picked"
     export PLATFORM_CLASS
-    ui_style_subheader "Platform overridden to: $(ui_platform_label "$PLATFORM_CLASS")"
 }
 
 flow_select_preset_menu() {

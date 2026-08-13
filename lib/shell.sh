@@ -48,9 +48,18 @@ shell_profile_id_from_choice() {
 }
 
 shell_pick_interactive() {
-    local -a options=() ids=() line
-    local choice picked_label i
+    local items_json choice picked_label i
+    local -a ids=()
 
+    items_json="$(jq -c '[.shells[] | {id: .id, label: .label, subtitle: .tagline}]' "$_shells_file")"
+
+    if choice="$(ui_picker_menu_list "Choose your shell" "Installed if needed and set as your default login shell" "$items_json")"; then
+        SELECTED_SHELL="$choice"
+        export SELECTED_SHELL
+        return 0
+    fi
+
+    local -a options=() line
     while IFS= read -r line; do
         [[ -n "$line" ]] || continue
         ids+=("$(jq -r '.id' <<<"$line")")
@@ -77,20 +86,30 @@ shell_pick_interactive() {
 
 shell_pick_profile_interactive() {
     local shell_id="$1"
-    local -a options=()
-    local choice profile credit credit_url desc
+    local items_json choice profile credit credit_url desc body
 
-    mapfile -t options < <(shell_list_profile_choices "$shell_id")
-    if [[ ${#options[@]} -eq 0 ]]; then
-        echo "shell: no profiles for ${shell_id}" >&2
-        return 1
+    items_json="$(jq -c --arg sh "$shell_id" '
+        [.profiles | to_entries[]
+         | select(.value.shell == $sh)
+         | {id: .key, label: .value.label, subtitle: .value.description}
+        ]' "$_shell_profiles_file")"
+
+    if choice="$(ui_picker_menu_list "Shell configuration" "Themes, plugins, and rc files" "$items_json")"; then
+        profile="$choice"
+    else
+        local -a options=()
+        local picked
+        mapfile -t options < <(shell_list_profile_choices "$shell_id")
+        if [[ ${#options[@]} -eq 0 ]]; then
+            echo "shell: no profiles for ${shell_id}" >&2
+            return 1
+        fi
+
+        ui_style_header "Shell configuration"
+        ui_style_subheader "Themes, plugins, and rc files — credits shown in each option"
+        picked="$(gum choose "${options[@]}")"
+        profile="$(shell_profile_id_from_choice "$shell_id" "$picked")"
     fi
-
-    ui_style_header "Shell configuration"
-    ui_style_subheader "Themes, plugins, and rc files — credits shown in each option"
-
-    choice="$(gum choose "${options[@]}")"
-    profile="$(shell_profile_id_from_choice "$shell_id" "$choice")"
 
     if [[ -z "$profile" ]]; then
         echo "shell: could not resolve profile" >&2
@@ -101,8 +120,11 @@ shell_pick_profile_interactive() {
     credit="$(shell_profile_field "$profile" "credit")"
     credit_url="$(shell_profile_field "$profile" "credit_url")"
     desc="$(shell_profile_field "$profile" "description")"
+    body="${desc}"$'\n\n'"Credit: ${credit}"$'\n'"${credit_url}"
 
-    ui_panel "Configuration credit" "${desc}"$'\n\n'"Credit: ${credit}"$'\n'"${credit_url}"
+    if ! ui_picker_menu_info "Configuration credit" "$body"; then
+        ui_panel "Configuration credit" "$body"
+    fi
 
     export SELECTED_SHELL_PROFILE
 }
@@ -152,7 +174,7 @@ shell_resolve() {
     shell_pick_interactive
     ui_style_centered "Selected: $(shell_label "$SELECTED_SHELL")"
 
-    if ui_confirm "Apply a custom shell configuration (themes, plugins, rc file)?"; then
+    if ui_picker_menu_confirm "Apply a custom shell configuration (themes, plugins, rc file)?" true "Shell configuration"; then
         shell_pick_profile_interactive "$SELECTED_SHELL"
         shell_apply_selection "$SELECTED_SHELL" "$SELECTED_SHELL_PROFILE" "true"
     else
