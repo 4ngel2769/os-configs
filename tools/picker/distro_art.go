@@ -77,7 +77,7 @@ var distroArtLines = map[string][]string{
 	"ubuntu": {
 		"       _",
 		"   ---(_)",
-		"_/  ---  \\",
+		" _/  --- \\",
 		"(_) |   |",
 		"  \\  --- _/",
 		"     ---(_)",
