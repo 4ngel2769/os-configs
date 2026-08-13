@@ -9,6 +9,8 @@ source "${_install_lib_dir}/registry.sh"
 source "${_install_lib_dir}/log.sh"
 # shellcheck source=/dev/null
 source "${_install_lib_dir}/github-install.sh"
+# shellcheck source=/dev/null
+source "${_install_lib_dir}/tools-install.sh"
 
 install_parse_lookup() {
     local lookup="$1"
@@ -26,6 +28,8 @@ install_parse_lookup() {
     INSTALL_CLONE_DIR=""
     INSTALL_BUILD_CMD=""
     INSTALL_BUILD_PACKAGES=""
+    INSTALL_OPTIONAL="false"
+    INSTALL_ENSURE_TOOL="false"
 
     while IFS= read -r line; do
         case "$line" in
@@ -43,13 +47,15 @@ install_parse_lookup() {
             clone_dir=*) INSTALL_CLONE_DIR="${line#clone_dir=}" ;;
             build_cmd=*) INSTALL_BUILD_CMD="${line#build_cmd=}" ;;
             build_packages=*) INSTALL_BUILD_PACKAGES="${line#build_packages=}" ;;
+            optional=*) INSTALL_OPTIONAL="${line#optional=}" ;;
+            ensure_tool=*) INSTALL_ENSURE_TOOL="${line#ensure_tool=}" ;;
         esac
     done <<<"$lookup"
 
     export INSTALL_MANAGER INSTALL_PACKAGE INSTALL_SOURCE INSTALL_COMPONENT
     export INSTALL_REPO INSTALL_METHOD INSTALL_ASSET_PATTERN INSTALL_BIN
     export INSTALL_INSTALL_DIR INSTALL_SCRIPT_PATH INSTALL_REF INSTALL_CLONE_DIR
-    export INSTALL_BUILD_CMD INSTALL_BUILD_PACKAGES
+    export INSTALL_BUILD_CMD INSTALL_BUILD_PACKAGES INSTALL_OPTIONAL INSTALL_ENSURE_TOOL
 }
 
 install_format_label() {
@@ -58,6 +64,9 @@ install_format_label() {
     case "$INSTALL_MANAGER" in
         github)
             printf '%s → github:%s (%s)' "$simple_name" "$INSTALL_REPO" "${INSTALL_METHOD:-release}"
+            ;;
+        brew | bun | bunx)
+            printf '%s → %s:%s' "$simple_name" "$INSTALL_MANAGER" "$INSTALL_PACKAGE"
             ;;
         *)
             printf '%s → %s:%s' "$simple_name" "$INSTALL_MANAGER" "$INSTALL_PACKAGE"
@@ -86,10 +95,41 @@ install_load_build_packages() {
     export INSTALL_BUILD_PACKAGES
 }
 
+install_load_flags() {
+    local simple_name="$1"
+    local entry
+
+    entry="$(registry_entry_json "$simple_name" "${DISTRO_FAMILY}")"
+    INSTALL_OPTIONAL="$(jq -r '.optional // false' <<<"$entry")"
+    INSTALL_ENSURE_TOOL="$(jq -r '.ensure_tool // false' <<<"$entry")"
+    export INSTALL_OPTIONAL INSTALL_ENSURE_TOOL
+}
+
+install_try_tool_manager() {
+    local simple_name="$1"
+    local dry_run="$2"
+    local label="$3"
+
+    install_load_flags "$simple_name"
+
+    if ! tools_manager_ready "$INSTALL_MANAGER" "$INSTALL_ENSURE_TOOL" "$dry_run"; then
+        if [[ "$INSTALL_OPTIONAL" == "true" ]]; then
+            if [[ "$dry_run" == "true" ]]; then
+                echo "[dry-run] ${label} (skipped — optional, ${INSTALL_MANAGER} not available)"
+            fi
+            log_record_skipped "${label} (optional — ${INSTALL_MANAGER} not available)"
+            return 2
+        fi
+        log_record_failure "${label} (${INSTALL_MANAGER} not available; set ensure_tool or optional)"
+        return 1
+    fi
+    return 0
+}
+
 install_app() {
     local simple_name="$1"
     local dry_run="${2:-false}"
-    local lookup cmd label
+    local lookup cmd label tool_rc
 
     if ! lookup="$(registry_lookup "$simple_name" 2>&1)"; then
         log_record_failure "${simple_name} (registry lookup failed)"
@@ -97,6 +137,7 @@ install_app() {
     fi
 
     install_parse_lookup "$lookup"
+    install_load_flags "$simple_name"
     install_note_prereq "$simple_name"
     label="$(install_format_label "$simple_name")"
 
@@ -116,6 +157,18 @@ install_app() {
                 return 1
             fi
             cmd=(sudo "$AUR_HELPER" -S --needed --noconfirm "$INSTALL_PACKAGE")
+            ;;
+        brew)
+            install_try_tool_manager "$simple_name" "$dry_run" "$label" || return $?
+            cmd=(brew install "$INSTALL_PACKAGE")
+            ;;
+        bun)
+            install_try_tool_manager "$simple_name" "$dry_run" "$label" || return $?
+            cmd=(bun install -g "$INSTALL_PACKAGE")
+            ;;
+        bunx)
+            install_try_tool_manager "$simple_name" "$dry_run" "$label" || return $?
+            cmd=(bunx "$INSTALL_PACKAGE")
             ;;
         github)
             install_load_build_packages "$simple_name"
@@ -160,13 +213,17 @@ install_app() {
 install_run_plan() {
     local plan_file="$1"
     local dry_run="${2:-false}"
-    local app
+    local app rc
 
     log_reset
 
     while IFS= read -r app; do
         [[ -n "$app" ]] || continue
-        install_app "$app" "$dry_run" || true
+        install_app "$app" "$dry_run" || {
+            rc=$?
+            [[ "$rc" -eq 2 ]] && continue
+            true
+        }
     done < <(preset_flatten_apps "$plan_file")
 }
 

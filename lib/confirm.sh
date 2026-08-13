@@ -9,6 +9,8 @@ source "${_confirm_lib_dir}/presets.sh"
 source "${_confirm_lib_dir}/install.sh"
 # shellcheck source=/dev/null
 source "${_confirm_lib_dir}/dotfiles.sh"
+# shellcheck source=/dev/null
+source "${_confirm_lib_dir}/finish.sh"
 
 confirm_format_app_line() {
     local simple_name="$1"
@@ -63,6 +65,8 @@ confirm_run() {
     local auto="${1:-false}"
     local dry_run="${2:-false}"
     local skip_dotfiles="${3:-false}"
+    local skip_postlogin="${4:-false}"
+    local skip_reboot="${5:-false}"
     local plan_file
 
     plan_file="$(flow_active_plan_file)"
@@ -83,6 +87,7 @@ confirm_run() {
         install_run_plan "$plan_file" true
         log_print_summary
         dotfiles_deploy true "$auto" "$skip_dotfiles"
+        finish_run "$auto" true "$skip_postlogin" true
         return 0
     fi
 
@@ -98,4 +103,35 @@ confirm_run() {
     install_run_plan "$plan_file" false
     log_print_summary
     dotfiles_deploy false "$auto" "$skip_dotfiles"
+    finish_run "$auto" false "$skip_postlogin" "$skip_reboot"
+}
+
+confirm_custom_install() {
+    local plan_file="$1"
+    local dry_run="${2:-false}"
+    local auto="${3:-false}"
+
+    if [[ ! -f "$plan_file" ]]; then
+        echo "confirm: custom plan not found" >&2
+        return 1
+    fi
+
+    if ! preset_validate_registry "$plan_file" "$DISTRO_FAMILY"; then
+        return 1
+    fi
+
+    confirm_show_plan "$plan_file"
+
+    if [[ "$dry_run" == "true" ]]; then
+        install_run_plan "$plan_file" true
+        log_print_summary
+        return 0
+    fi
+
+    if [[ "$auto" != "true" ]]; then
+        ui_confirm "Proceed with installation?" || return 0
+    fi
+
+    install_run_plan "$plan_file" false
+    log_print_summary
 }

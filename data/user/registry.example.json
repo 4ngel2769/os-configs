@@ -1,6 +1,6 @@
 {
   "_schema": "User registry overlay — merged on top of data/registry.json. Keys are simple-names.",
-  "_comment": "Use \"*\" as family key when the same entry applies to all distros (e.g. github). User entries override base entries per field.",
+  "_comment": "Use \"*\" as family key when the same entry applies to all distros. See ADD-APPS.md.",
   "my-editor": {
     "ubuntu": { "manager": "apt", "package": "micro" },
     "debian": { "manager": "apt", "package": "micro" },
@@ -35,6 +35,28 @@
       "ref": "main",
       "build_cmd": "make && make install PREFIX=$HOME/.local",
       "build_packages": ["git", "build-essential"]
+    }
+  },
+  "ripgrep-brew": {
+    "*": {
+      "manager": "brew",
+      "package": "ripgrep",
+      "optional": true
+    }
+  },
+  "my-bun-cli": {
+    "*": {
+      "manager": "bun",
+      "package": "some-npm-package",
+      "optional": true,
+      "ensure_tool": true
+    }
+  },
+  "my-bunx-tool": {
+    "*": {
+      "manager": "bunx",
+      "package": "some-cli-package",
+      "optional": true
     }
   }
 }

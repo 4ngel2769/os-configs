@@ -3,6 +3,7 @@ set -euo pipefail
 
 _log_success=()
 _log_failed=()
+_log_skipped=()
 
 log_record_success() {
     _log_success+=("$1")
@@ -12,6 +13,10 @@ log_record_failure() {
     _log_failed+=("$1")
 }
 
+log_record_skipped() {
+    _log_skipped+=("$1")
+}
+
 log_print_summary() {
     ui_style_divider
     ui_style_header "Install summary"
@@ -19,6 +24,11 @@ log_print_summary() {
     if [[ ${#_log_success[@]} -gt 0 ]]; then
         gum style --foreground 10 "Succeeded (${#_log_success[@]}):"
         printf '  %s\n' "${_log_success[@]}"
+    fi
+
+    if [[ ${#_log_skipped[@]} -gt 0 ]]; then
+        gum style --foreground 245 "Skipped (${#_log_skipped[@]}):"
+        printf '  %s\n' "${_log_skipped[@]}"
     fi
 
     if [[ ${#_log_failed[@]} -gt 0 ]]; then
@@ -34,4 +44,5 @@ log_print_summary() {
 log_reset() {
     _log_success=()
     _log_failed=()
+    _log_skipped=()
 }
