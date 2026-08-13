@@ -35,9 +35,9 @@ ui_style_divider
 ui_style_header "Server presets"
 
 options=(
-    "$(ui_format_preset_row "Server Minimal")"
-    "$(ui_format_preset_row "Server Clean")"
-    "$(ui_format_preset_row "Server Everything")"
+    "Server Minimal"
+    "Server Clean"
+    "Server Everything"
     "Custom"
 )
 

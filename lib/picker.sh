@@ -123,6 +123,32 @@ picker_apply_selections() {
     done < <(jq -r '.selections | keys[]?' "$json_file")
 }
 
+# Writes preset choice JSON { "choice": "<id>|custom" } to $1 using input JSON at $2.
+preset_picker_run() {
+    local out_file="$1"
+    local input_file="$2"
+    local picker
+
+    picker="$(picker_binary)"
+
+    if [[ ! -f "$input_file" ]]; then
+        echo "picker: preset input not found: ${input_file}" >&2
+        return 1
+    fi
+
+    if [[ ! -x "$picker" ]]; then
+        echo "picker: os-configs-picker not found at ${picker}" >&2
+        return 1
+    fi
+
+    if ! picker_has_tty; then
+        echo "picker: preset grid requires a TTY (use: ssh -t host ...)" >&2
+        return 1
+    fi
+
+    "$picker" --presets "$input_file" --output "$out_file"
+}
+
 picker_fallback_gum() {
     local auto="${1:-false}"
     local key

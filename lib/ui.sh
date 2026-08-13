@@ -172,24 +172,3 @@ ui_show_banner() {
     gum style --align center --width 52 --foreground "$color" "/ ${badge} · ${platform_label} \\"
     ui_style_divider
 }
-
-ui_format_preset_row() {
-    local preset_name="$1"
-    local distro_id="${2:-${DISTRO_ID:-unknown}}"
-    local family="${3:-${DISTRO_FAMILY:-}}"
-    local color badge
-
-    ui_require_gum || return 1
-
-    color="$(ui_distro_color "$distro_id" "$family")"
-    badge="$(ui_distro_label "$distro_id")"
-
-    gum style --border normal --padding "0 2" --border-foreground "$color" \
-        "/ ${preset_name} \\" "\\ ${badge} /"
-}
-
-ui_format_custom_row() {
-    ui_require_gum || return 1
-    gum style --border normal --padding "0 2" --border-foreground 245 \
-        "/ Custom \\" "\\ pick your apps /"
-}

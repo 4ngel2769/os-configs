@@ -105,9 +105,9 @@ flow_platform_override() {
 flow_select_preset_menu() {
     local auto="${1:-false}"
     local -a labels=()
-    local -a rows=()
     local -a ids=()
     local choice id i
+    local input_file result_file
 
     flow_build_preset_options labels
 
@@ -117,30 +117,61 @@ flow_select_preset_menu() {
     fi
 
     for label in "${labels[@]}"; do
-        rows+=("$(ui_format_preset_row "$label")")
-        id="$(flow_label_to_preset_id "$label")"
-        ids+=("$id")
+        ids+=("$(flow_label_to_preset_id "$label")")
     done
-    rows+=("$(ui_format_custom_row)")
-
-    ui_style_header "Choose a preset"
 
     if [[ "$auto" == "true" ]]; then
-        choice="${rows[0]}"
-        ui_style_subheader "(auto) selected: ${choice}"
-    else
-        choice="$(gum choose "${rows[@]}")"
+        ui_style_subheader "(auto) selected: ${labels[0]}"
+        flow_load_preset "${ids[0]}"
+        return 0
     fi
 
-    if [[ "$choice" == *"Custom"* ]]; then
+    if picker_can_run; then
+        input_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-presets-in.XXXXXX")"
+        result_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-presets-out.XXXXXX")"
+
+        jq -n \
+            --arg distro_id "${DISTRO_ID}" \
+            --arg distro_label "$(ui_distro_label)" \
+            --arg distro_color "$(ui_distro_color)" \
+            --argjson labels "$(printf '%s\n' "${labels[@]}" | jq -R . | jq -s .)" \
+            --argjson ids "$(printf '%s\n' "${ids[@]}" | jq -R . | jq -s .)" \
+            '{
+                distro_id: $distro_id,
+                distro_label: $distro_label,
+                distro_color: $distro_color,
+                presets: [range($labels | length) as $i | {id: $ids[$i], label: $labels[$i]}],
+                custom: {id: "custom", label: "Custom", subtitle: "pick your apps"}
+            }' >"$input_file"
+
+        if preset_picker_run "$result_file" "$input_file"; then
+            choice="$(jq -r '.choice // empty' "$result_file")"
+            rm -f "$input_file" "$result_file"
+            if [[ "$choice" == "custom" ]]; then
+                INSTALL_MODE="custom"
+                export INSTALL_MODE
+                return 0
+            fi
+            if [[ -n "$choice" ]]; then
+                flow_load_preset "$choice"
+                return 0
+            fi
+        fi
+        rm -f "$input_file" "$result_file"
+    fi
+
+    ui_style_header "Choose a preset"
+    choice="$(gum choose "${labels[@]}" "Custom")"
+
+    if [[ "$choice" == "Custom" ]]; then
         INSTALL_MODE="custom"
         export INSTALL_MODE
         return 0
     fi
 
     id=""
-    for i in "${!rows[@]}"; do
-        if [[ "${rows[$i]}" == "$choice" ]]; then
+    for i in "${!labels[@]}"; do
+        if [[ "${labels[$i]}" == "$choice" ]]; then
             id="${ids[$i]}"
             break
         fi

@@ -122,12 +122,26 @@ os_configs_ensure_deps() {
     _deps_prepend_path
 }
 
+_deps_picker_needs_rebuild() {
+    local dest="$1"
+    local src="${REPO_ROOT}/tools/picker"
+    local f
+
+    [[ ! -x "$dest" ]] && return 0
+    [[ ! -d "$src" ]] && return 1
+
+    for f in "${src}"/*.go "${src}"/go.mod; do
+        [[ -f "$f" && "$f" -nt "$dest" ]] && return 0
+    done
+    return 1
+}
+
 _deps_install_picker() {
     local dest src
     dest="${OS_CONFIGS_BIN}/os-configs-picker"
     src="${REPO_ROOT}/tools/picker"
 
-    if [[ -x "$dest" ]]; then
+    if [[ -x "$dest" ]] && ! _deps_picker_needs_rebuild "$dest"; then
         return 0
     fi
 
@@ -135,7 +149,7 @@ _deps_install_picker() {
         if [[ -x "${HOME}/go/bin/go" ]]; then
             export PATH="${HOME}/go/bin:${PATH}"
         else
-            _deps_msg "go not installed — software picker will fall back to gum choose"
+            _deps_msg "go not installed — picker will fall back to gum choose"
             return 0
         fi
     fi
