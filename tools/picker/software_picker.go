@@ -13,8 +13,8 @@ import (
 )
 
 const (
-	softwareSidebarW = 28
-	softwareGapW     = 2
+	softwareSidebarW = 24
+	softwareGapW     = 3
 )
 
 type catalogFile struct {
@@ -71,6 +71,30 @@ type softwareModel struct {
 
 func (m softwareModel) Init() tea.Cmd { return nil }
 
+func (m softwareModel) termW() int {
+	if m.width < 60 {
+		return 60
+	}
+	return m.width
+}
+
+func (m softwareModel) appsColW() int {
+	w := m.termW() - softwareSidebarW - softwareGapW
+	if w < 28 {
+		return 28
+	}
+	return w
+}
+
+func (m softwareModel) listRows(bodyH int) int {
+	// title + rule + list
+	n := bodyH - 2
+	if n < 4 {
+		return 4
+	}
+	return n
+}
+
 func (m softwareModel) currentCategory() category {
 	if len(m.categories) == 0 {
 		return category{}
@@ -79,10 +103,7 @@ func (m softwareModel) currentCategory() category {
 }
 
 func (m softwareModel) headerView() string {
-	w := m.width
-	if w < 40 {
-		w = 40
-	}
+	w := m.termW()
 	title := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center).Width(w).Render("os-configs")
 	sub := lipgloss.NewStyle().Align(lipgloss.Center).Width(w).Foreground(lipgloss.Color("245")).
 		Render(fmt.Sprintf("Custom software · %d selected", m.totalSelected()))
@@ -97,6 +118,7 @@ func (m softwareModel) headerView() string {
 }
 
 func (m softwareModel) footerView() string {
+	w := m.termW()
 	gap := lipgloss.NewStyle().Width(4).Render("")
 
 	continueStyle := lipgloss.NewStyle().Border(lipgloss.RoundedBorder()).Padding(0, 2).Foreground(lipgloss.Color("10"))
@@ -114,60 +136,47 @@ func (m softwareModel) footerView() string {
 	}
 
 	buttons := lipgloss.JoinHorizontal(lipgloss.Top, backStyle.Render("Back"), gap, continueStyle.Render("Continue"))
-	return lipgloss.NewStyle().Width(m.width).Align(lipgloss.Center).Render(buttons)
+	return lipgloss.NewStyle().Width(w).Align(lipgloss.Center).Render(buttons)
 }
 
 func (m softwareModel) hintView() string {
-	return lipgloss.NewStyle().Align(lipgloss.Center).Width(m.width).Foreground(lipgloss.Color("245")).
+	return lipgloss.NewStyle().Align(lipgloss.Center).Width(m.termW()).Foreground(lipgloss.Color("245")).
 		Render("↑↓ move · Space toggle · Enter switch pane · Tab footer · c continue")
 }
 
-func panelInnerWidth(outerW int) int {
-	// border (2) + horizontal padding (2)
-	return outerW - 4
-}
-
-func panelListRows(panelH int) int {
-	// border (2) + title row (1)
-	n := panelH - 3
-	if n < 1 {
-		return 1
+func padLine(s string, width int) string {
+	if width < 1 {
+		return s
 	}
-	return n
+	vis := runewidth.StringWidth(stripANSI(s))
+	if vis >= width {
+		return s
+	}
+	return s + strings.Repeat(" ", width-vis)
 }
 
-func renderPanel(title string, lines []string, outerW, outerH int, focused bool) string {
-	borderColor := lipgloss.Color("240")
+func renderColumn(title string, lines []string, colW, rows int, focused bool) string {
+	titleColor := lipgloss.Color("245")
 	if focused {
-		borderColor = lipgloss.Color("86")
+		titleColor = lipgloss.Color("86")
 	}
+	titleLine := lipgloss.NewStyle().Bold(true).Foreground(titleColor).
+		Render(padLine(truncateRunes(title, colW), colW))
+	rule := lipgloss.NewStyle().Foreground(lipgloss.Color("240")).
+		Render(strings.Repeat("─", colW))
 
-	innerW := panelInnerWidth(outerW)
-	listRows := panelListRows(outerH)
-
-	titleLine := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("86")).
-		Render(truncateRunes(title, innerW))
-	body := strings.Join(padLines(lines, listRows), "\n")
-	inner := lipgloss.JoinVertical(lipgloss.Left, titleLine, body)
-
-	return lipgloss.NewStyle().
-		Width(outerW).
-		Height(outerH).
-		Border(lipgloss.RoundedBorder()).
-		BorderForeground(borderColor).
-		Padding(0, 1).
-		Render(inner)
+	out := []string{titleLine, rule}
+	for i := 0; i < rows; i++ {
+		line := ""
+		if i < len(lines) {
+			line = lines[i]
+		}
+		out = append(out, padLine(line, colW))
+	}
+	return strings.Join(out, "\n")
 }
 
-func (m softwareModel) appsPanelW() int {
-	w := m.width - softwareSidebarW - softwareGapW
-	if w < 32 {
-		return 32
-	}
-	return w
-}
-
-func (m *softwareModel) clampScroll(listRows, total int, scroll, index *int) {
+func (m *softwareModel) clampScroll(rows, total int, scroll, index *int) {
 	if total <= 0 {
 		*scroll = 0
 		*index = 0
@@ -179,10 +188,10 @@ func (m *softwareModel) clampScroll(listRows, total int, scroll, index *int) {
 	if *index < *scroll {
 		*scroll = *index
 	}
-	if *index >= *scroll+listRows {
-		*scroll = *index - listRows + 1
+	if *index >= *scroll+rows {
+		*scroll = *index - rows + 1
 	}
-	maxScroll := total - listRows
+	maxScroll := total - rows
 	if maxScroll < 0 {
 		maxScroll = 0
 	}
@@ -191,14 +200,13 @@ func (m *softwareModel) clampScroll(listRows, total int, scroll, index *int) {
 	}
 }
 
-func (m softwareModel) sidebarLines(listRows int) []string {
+func (m softwareModel) sidebarLines(rows int) []string {
 	active := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("229"))
 	idle := lipgloss.NewStyle().Foreground(lipgloss.Color("252"))
 	muted := lipgloss.NewStyle().Foreground(lipgloss.Color("245"))
-	innerW := panelInnerWidth(softwareSidebarW)
 
 	var lines []string
-	end := m.catScroll + listRows
+	end := m.catScroll + rows
 	if end > len(m.categories) {
 		end = len(m.categories)
 	}
@@ -212,7 +220,7 @@ func (m softwareModel) sidebarLines(listRows int) []string {
 		if i == m.catIndex {
 			prefix = "▸ "
 		}
-		text := truncateRunes(prefix+label, innerW)
+		text := truncateRunes(prefix+label, softwareSidebarW)
 		switch {
 		case i == m.catIndex && m.focus == focusSidebar:
 			lines = append(lines, active.Render(text))
@@ -225,22 +233,21 @@ func (m softwareModel) sidebarLines(listRows int) []string {
 	return lines
 }
 
-func (m softwareModel) appLines(listRows int) []string {
+func (m softwareModel) appLines(rows int) []string {
 	cat := m.currentCategory()
-	innerW := panelInnerWidth(m.appsPanelW())
+	colW := m.appsColW()
 
 	if len(cat.Apps) == 0 {
 		return []string{
 			lipgloss.NewStyle().Foreground(lipgloss.Color("245")).
-				Render(truncateRunes("No apps for your distro/platform.", innerW)),
+				Render(truncateRunes("No apps for your distro/platform.", colW)),
 		}
 	}
 
 	active := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("229"))
 	idle := lipgloss.NewStyle().Foreground(lipgloss.Color("252"))
-	noteStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("240"))
 
-	end := m.appScroll + listRows
+	end := m.appScroll + rows
 	if end > len(cat.Apps) {
 		end = len(cat.Apps)
 	}
@@ -256,40 +263,18 @@ func (m softwareModel) appLines(listRows int) []string {
 		if m.focus == focusApps && i == m.appIndex {
 			prefix = "▸ " + marker + " "
 		}
-
-		prefixPlain := prefix
-		labelPlain := item.Label
-		notePlain := ""
-		if item.Note != "" {
-			notePlain = " · " + item.Note
-		}
-
-		budget := innerW - runewidth.StringWidth(prefixPlain) - runewidth.StringWidth(notePlain)
-		if budget < 4 {
-			budget = 4
-		}
-		labelPlain = truncateRunes(labelPlain, budget)
-
-		text := prefixPlain + labelPlain + notePlain
-		text = truncateRunes(text, innerW)
-
-		isCursor := m.focus == focusApps && i == m.appIndex
-		switch {
-		case isCursor:
+		text := truncateRunes(prefix+item.Label, colW)
+		if m.focus == focusApps && i == m.appIndex {
 			lines = append(lines, active.Render(text))
-		default:
-			if notePlain != "" {
-				lines = append(lines, idle.Render(prefixPlain+labelPlain)+noteStyle.Render(notePlain))
-			} else {
-				lines = append(lines, idle.Render(text))
-			}
+		} else {
+			lines = append(lines, idle.Render(text))
 		}
 	}
 	return lines
 }
 
 func (m softwareModel) bodyView(bodyH int) string {
-	listRows := panelListRows(bodyH)
+	rows := m.listRows(bodyH)
 
 	cat := m.currentCategory()
 	appTitle := cat.Label
@@ -297,12 +282,12 @@ func (m softwareModel) bodyView(bodyH int) string {
 		appTitle = fmt.Sprintf("%s — %d selected", cat.Label, n)
 	}
 
-	sidebar := renderPanel("Categories", m.sidebarLines(listRows), softwareSidebarW, bodyH, m.focus == focusSidebar)
-	apps := renderPanel(appTitle, m.appLines(listRows), m.appsPanelW(), bodyH, m.focus == focusApps)
-	gap := lipgloss.NewStyle().Width(softwareGapW).Render("")
+	left := renderColumn("Categories", m.sidebarLines(rows), softwareSidebarW, rows, m.focus == focusSidebar)
+	right := renderColumn(appTitle, m.appLines(rows), m.appsColW(), rows, m.focus == focusApps)
+	gap := strings.Repeat(" ", softwareGapW)
 
-	row := lipgloss.JoinHorizontal(lipgloss.Top, sidebar, gap, apps)
-	return lipgloss.NewStyle().Width(m.width).Align(lipgloss.Center).Render(row)
+	row := lipgloss.JoinHorizontal(lipgloss.Top, left, gap, right)
+	return lipgloss.NewStyle().Width(m.termW()).Align(lipgloss.Center).Render(row)
 }
 
 func (m softwareModel) selectedCount(catID string) int {
@@ -364,6 +349,21 @@ func (m softwareModel) activateFooter() {
 	}
 }
 
+func (m softwareModel) bodyHeight() int {
+	h := m.height
+	if h < 18 {
+		h = 18
+	}
+	header := m.headerView()
+	footer := m.footerView()
+	hint := m.hintView()
+	bodyH := h - lipgloss.Height(header) - lipgloss.Height(footer) - lipgloss.Height(hint)
+	if bodyH < 8 {
+		return 8
+	}
+	return bodyH
+}
+
 func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
@@ -371,8 +371,7 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.height = msg.Height
 		return m, nil
 	case tea.KeyMsg:
-		bodyH := m.bodyHeight()
-		listRows := panelListRows(bodyH)
+		rows := m.listRows(m.bodyHeight())
 
 		switch msg.String() {
 		case "ctrl+c", "q":
@@ -422,12 +421,12 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				if m.catIndex > 0 {
 					m.catIndex--
 					m.resetApps()
-					m.clampScroll(listRows, len(m.categories), &m.catScroll, &m.catIndex)
+					m.clampScroll(rows, len(m.categories), &m.catScroll, &m.catIndex)
 				}
 			case focusApps:
 				if m.appIndex > 0 {
 					m.appIndex--
-					m.clampScroll(listRows, len(m.currentCategory().Apps), &m.appScroll, &m.appIndex)
+					m.clampScroll(rows, len(m.currentCategory().Apps), &m.appScroll, &m.appIndex)
 				}
 			}
 			return m, nil
@@ -437,13 +436,13 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				if m.catIndex+1 < len(m.categories) {
 					m.catIndex++
 					m.resetApps()
-					m.clampScroll(listRows, len(m.categories), &m.catScroll, &m.catIndex)
+					m.clampScroll(rows, len(m.categories), &m.catScroll, &m.catIndex)
 				}
 			case focusApps:
 				cat := m.currentCategory()
 				if m.appIndex+1 < len(cat.Apps) {
 					m.appIndex++
-					m.clampScroll(listRows, len(cat.Apps), &m.appScroll, &m.appIndex)
+					m.clampScroll(rows, len(cat.Apps), &m.appScroll, &m.appIndex)
 				}
 			}
 			return m, nil
@@ -464,22 +463,6 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	}
 	return m, nil
-}
-
-func (m softwareModel) bodyHeight() int {
-	h := m.height
-	if h < 18 {
-		h = 18
-	}
-
-	header := m.headerView()
-	footer := m.footerView()
-	hint := m.hintView()
-	bodyH := h - lipgloss.Height(header) - lipgloss.Height(footer) - lipgloss.Height(hint)
-	if bodyH < 8 {
-		return 8
-	}
-	return bodyH
 }
 
 func (m softwareModel) View() string {
