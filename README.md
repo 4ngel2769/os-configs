@@ -47,10 +47,11 @@ wget -qO- .../bootstrap.sh | bash -s -- --dry-run
 1. **Detect** — distro, laptop/desktop/server, GPU class  
 2. **Preset or custom** — curated bundles or pick from 600+ apps by category  
 3. **Session** — DE/WM + display manager (preset defaults or your choice in custom mode)  
-4. **Confirm** — full package list with resolved names before install  
-5. **Install** — pacman, apt, dnf, AUR, Flatpak, GitHub releases, third-party repos  
-6. **Dotfiles** — backup conflicts to `~/.os-configs-backup/<timestamp>/`, then Stow  
-7. **Finish** — optional reboot + one-time post-login “install more?” prompt  
+4. **Shell** — zsh, bash, or fish as default; optional themed config (Oh My Zsh, Powerlevel10k, Tide, Bash-it, …)  
+5. **Confirm** — full package list with resolved names before install  
+6. **Install** — pacman, apt, dnf, AUR, Flatpak, GitHub releases, third-party repos  
+7. **Dotfiles** — backup conflicts to `~/.os-configs-backup/<timestamp>/`, then Stow  
+8. **Finish** — optional reboot + one-time post-login “install more?” prompt  
 
 **Presets:** server (minimal, clean, everything) · desktop/laptop (minimal, workstation, creator, gaming when GPU qualifies) · **custom** always available.
 

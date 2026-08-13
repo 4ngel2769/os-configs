@@ -1,0 +1,80 @@
+{
+  "profiles": {
+    "zsh-oh-my-zsh": {
+      "shell": "zsh",
+      "label": "Oh My Zsh",
+      "description": "Classic plugin framework with robbyrussell theme, autosuggestions, and syntax highlighting",
+      "credit": "ohmyzsh/ohmyzsh (MIT)",
+      "credit_url": "https://github.com/ohmyzsh/ohmyzsh",
+      "stow": "shells/zsh/oh-my-zsh",
+      "setup": "oh-my-zsh"
+    },
+    "zsh-powerlevel10k": {
+      "shell": "zsh",
+      "label": "Powerlevel10k",
+      "description": "Oh My Zsh + Powerlevel10k — fast, informative prompt",
+      "credit": "romkatv/powerlevel10k (MIT)",
+      "credit_url": "https://github.com/romkatv/powerlevel10k",
+      "stow": "shells/zsh/powerlevel10k",
+      "setup": "oh-my-zsh",
+      "setup_extra": "powerlevel10k"
+    },
+    "zsh-spaceship": {
+      "shell": "zsh",
+      "label": "Spaceship",
+      "description": "Oh My Zsh + Spaceship — minimal, git-aware prompt",
+      "credit": "spaceship-prompt/spaceship-prompt (MIT)",
+      "credit_url": "https://github.com/spaceship-prompt/spaceship-prompt",
+      "stow": "shells/zsh/spaceship",
+      "setup": "oh-my-zsh",
+      "setup_extra": "spaceship"
+    },
+    "fish-oh-my-fish": {
+      "shell": "fish",
+      "label": "Oh My Fish",
+      "description": "Plugin manager for Fish with a clean default look",
+      "credit": "oh-my-fish/oh-my-fish (GPL-2.0)",
+      "credit_url": "https://github.com/oh-my-fish/oh-my-fish",
+      "stow": "shells/fish/oh-my-fish",
+      "setup": "oh-my-fish"
+    },
+    "fish-tide": {
+      "shell": "fish",
+      "label": "Tide",
+      "description": "Oh My Fish + Tide — sleek, adaptable prompt",
+      "credit": "IlanCosman/tide (LicenseRef-Tide)",
+      "credit_url": "https://github.com/IlanCosman/tide",
+      "stow": "shells/fish/tide",
+      "setup": "oh-my-fish",
+      "setup_extra": "tide"
+    },
+    "fish-bobthefish": {
+      "shell": "fish",
+      "label": "bobthefish",
+      "description": "Oh My Fish + bobthefish — powerline-style prompt",
+      "credit": "bobthefish/bobthefish (FreeBSD)",
+      "credit_url": "https://github.com/bobthefish/bobthefish",
+      "stow": "shells/fish/bobthefish",
+      "setup": "oh-my-fish",
+      "setup_extra": "bobthefish"
+    },
+    "bash-bash-it": {
+      "shell": "bash",
+      "label": "Bash-it",
+      "description": "Bash framework with themes, aliases, and completions",
+      "credit": "Bash-it/bash-it (MIT)",
+      "credit_url": "https://github.com/Bash-it/bash-it",
+      "stow": "shells/bash/bash-it",
+      "setup": "bash-it"
+    },
+    "bash-minimal": {
+      "shell": "bash",
+      "label": "Minimal",
+      "description": "Lightweight os-configs .bashrc — aliases and safety nets only",
+      "credit": "os-configs (this repo)",
+      "credit_url": "https://github.com/4ngel2769/os-configs",
+      "stow": "shells/bash/minimal",
+      "setup": "none"
+    }
+  }
+}

@@ -17,8 +17,20 @@ dotfiles_collect_packages() {
         for pkg in "${_dotfiles_root}/shared"/*/; do
             [[ -d "$pkg" ]] || continue
             pkg_name="$(basename "$pkg")"
+            if [[ "$pkg_name" == "zsh" && -n "${SELECTED_SHELL:-}" ]]; then
+                continue
+            fi
             _out+=("shared:${pkg_name}")
         done
+    fi
+
+    if [[ "${SHELL_APPLY_DOTFILES:-false}" == "true" && -n "${SELECTED_SHELL_STOW:-}" ]]; then
+        local shell_dir shell_pkg
+        shell_dir="${SELECTED_SHELL_STOW%/*}"
+        shell_pkg="${SELECTED_SHELL_STOW##*/}"
+        if [[ -d "${_dotfiles_root}/${shell_dir}/${shell_pkg}" ]]; then
+            _out+=("${shell_dir}:${shell_pkg}")
+        fi
     fi
 
     if [[ -n "${SELECTED_DOTFILES_PKG:-}" && -d "${_dotfiles_root}/${SELECTED_DOTFILES_PKG}" ]]; then

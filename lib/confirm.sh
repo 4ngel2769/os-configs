@@ -49,6 +49,7 @@ confirm_show_plan() {
     fi
 
     dewm_show_summary
+    shell_show_summary
 
     ui_style_subheader "Packages to install"
     while IFS= read -r app; do
@@ -86,6 +87,7 @@ confirm_run() {
     if [[ "$dry_run" == "true" ]]; then
         install_run_plan "$plan_file" true
         log_print_summary
+        shell_apply true "$auto"
         dotfiles_deploy true "$auto" "$skip_dotfiles"
         finish_run "$auto" true "$skip_postlogin" true
         return 0
@@ -102,6 +104,7 @@ confirm_run() {
 
     install_run_plan "$plan_file" false
     log_print_summary
+    shell_apply false "$auto"
 
     if [[ "$skip_dotfiles" != "true" ]] && ! command -v stow &>/dev/null; then
         os_configs_prepare_deps "$auto" "$skip_dotfiles" false

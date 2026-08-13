@@ -3,5 +3,10 @@
   "custom_defaults": {
     "de_wm": "gnome",
     "dm": "gdm"
+  },
+  "shell_defaults": {
+    "shell": "zsh",
+    "apply_dotfiles": true,
+    "profile": "zsh-oh-my-zsh"
   }
 }

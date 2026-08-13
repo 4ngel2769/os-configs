@@ -1,0 +1,25 @@
+{
+  "shells": [
+    {
+      "id": "zsh",
+      "label": "Zsh",
+      "tagline": "Modern default for power users",
+      "registry_app": "zsh",
+      "set_default": true
+    },
+    {
+      "id": "bash",
+      "label": "Bash",
+      "tagline": "Already on most distros — polish with Bash-it or a minimal rc",
+      "registry_app": null,
+      "set_default": true
+    },
+    {
+      "id": "fish",
+      "label": "Fish",
+      "tagline": "Friendly syntax with autosuggestions out of the box",
+      "registry_app": "fish",
+      "set_default": true
+    }
+  ]
+}

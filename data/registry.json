@@ -171,5 +171,21 @@
     "debian": { "manager": "apt", "package": "stow" },
     "ubuntu": { "manager": "apt", "package": "stow" },
     "fedora": { "manager": "dnf", "package": "stow" }
+  },
+  "zsh": {
+    "label": "Zsh",
+    "platforms": ["server", "desktop", "laptop"],
+    "arch": { "manager": "pacman", "package": "zsh" },
+    "debian": { "manager": "apt", "package": "zsh" },
+    "ubuntu": { "manager": "apt", "package": "zsh" },
+    "fedora": { "manager": "dnf", "package": "zsh" }
+  },
+  "fish": {
+    "label": "Fish",
+    "platforms": ["server", "desktop", "laptop"],
+    "arch": { "manager": "pacman", "package": "fish" },
+    "debian": { "manager": "apt", "package": "fish" },
+    "ubuntu": { "manager": "apt", "package": "fish" },
+    "fedora": { "manager": "dnf", "package": "fish" }
   }
 }

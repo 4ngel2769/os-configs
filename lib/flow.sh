@@ -219,5 +219,7 @@ flow_run_entry() {
         dewm_resolve "$auto" "$SELECTED_PRESET_FILE"
     fi
 
+    shell_resolve "$auto"
+
     confirm_run "$auto" "${OS_CONFIGS_DRY_RUN:-false}" "${OS_CONFIGS_SKIP_DOTFILES:-false}" "${OS_CONFIGS_SKIP_POSTLOGIN:-false}" "${OS_CONFIGS_SKIP_REBOOT:-false}"
 }

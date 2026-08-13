@@ -100,6 +100,8 @@ source "${ROOT}/lib/presets.sh"
 # shellcheck source=/dev/null
 source "${ROOT}/lib/dewm.sh"
 # shellcheck source=/dev/null
+source "${ROOT}/lib/shell.sh"
+# shellcheck source=/dev/null
 source "${ROOT}/lib/custom.sh"
 # shellcheck source=/dev/null
 source "${ROOT}/lib/confirm.sh"
