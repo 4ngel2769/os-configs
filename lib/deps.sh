@@ -330,27 +330,27 @@ deps_install_item() {
         return 0
     fi
 
-    case "${kind}|${_id}" in
-        tool|jq)
+    case "${kind}:${_id}" in
+        tool:jq)
             _deps_install_jq
             ;;
-        tool|gum)
+        tool:gum)
             _deps_install_gum
             ;;
-        tool|picker)
+        tool:picker)
             if [[ "$note" == *"not available"* ]]; then
                 echo "deps: ${note}" >&2
                 return 1
             fi
             _deps_install_picker
             ;;
-        system|curl)
+        system:curl)
             _deps_install_system_pkg "curl"
             ;;
-        system|stow)
+        system:stow)
             _deps_install_system_pkg "stow"
             ;;
-        system|*)
+        system:*)
             _deps_install_system_pkg "$_id"
             ;;
         *)
@@ -364,18 +364,21 @@ deps_install_missing() {
     local defer_system="${1:-false}"
     shift
     local -a missing=("$@")
-    local row
+    local row kind _id
 
     for row in "${missing[@]}"; do
-        [[ "$row" == system|curl* ]] || continue
+        IFS='|' read -r kind _id _ _ <<< "$row"
+        [[ "$kind" == "system" && "$_id" == "curl" ]] || continue
         deps_install_item "$row" "$defer_system"
     done
     for row in "${missing[@]}"; do
-        [[ "$row" == tool|* ]] || continue
+        IFS='|' read -r kind _id _ _ <<< "$row"
+        [[ "$kind" == "tool" ]] || continue
         deps_install_item "$row" "$defer_system"
     done
     for row in "${missing[@]}"; do
-        [[ "$row" == system|* && "$row" != system|curl* ]] || continue
+        IFS='|' read -r kind _id _ _ <<< "$row"
+        [[ "$kind" == "system" && "$_id" != "curl" ]] || continue
         deps_install_item "$row" "$defer_system"
     done
 
