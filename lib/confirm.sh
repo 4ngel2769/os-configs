@@ -35,17 +35,17 @@ confirm_show_plan() {
     badge="$(ui_distro_badge)"
     platform_label="$(ui_platform_label "$PLATFORM_CLASS")"
 
-    gum style "Distro:     ${badge} (${DISTRO_FAMILY})"
-    gum style "Platform:   ${platform_label}"
+    ui_style_centered "Distro:     ${badge} (${DISTRO_FAMILY})"
+    ui_style_centered "Platform:   ${platform_label}"
     if [[ "$PLATFORM_CLASS" != "server" ]]; then
-        gum style "GPU:        $(ui_gpu_label "$GPU_CLASS")"
+        ui_style_centered "GPU:        $(ui_gpu_label "$GPU_CLASS")"
     fi
 
     if [[ "$INSTALL_MODE" == "preset" ]]; then
         summary="$(preset_summary_line "$plan_file")"
-        gum style "Preset:     ${summary}"
+        ui_style_centered "Preset:     ${summary}"
     else
-        gum style "Mode:       custom"
+        ui_style_centered "Mode:       custom"
     fi
 
     dewm_show_summary

@@ -35,19 +35,26 @@ type focusArea int
 const (
 	focusSidebar focusArea = iota
 	focusGrid
+	focusFooter
+)
+
+const (
+	footerContinue = iota
+	footerBack
 )
 
 type softwareModel struct {
-	categories []category
-	catIndex   int
-	appIndex   int
-	focus      focusArea
-	selected   map[string]map[string]bool
-	width      int
-	height     int
-	quitting   bool
-	done       bool
-	err        error
+	categories   []category
+	catIndex     int
+	appIndex     int
+	focus        focusArea
+	footerButton int
+	selected     map[string]map[string]bool
+	width        int
+	height       int
+	quitting     bool
+	done         bool
+	err          error
 }
 
 func (m softwareModel) Init() tea.Cmd { return nil }
@@ -60,18 +67,28 @@ func (m softwareModel) currentCategory() category {
 }
 
 func (m softwareModel) gridCols() int {
-	const minCell = 16
-	if m.width < 100 {
-		return 2
+	const cellW = 20
+	sidebarW := 24
+	avail := m.width - sidebarW - 4
+	if avail < cellW {
+		return 1
 	}
-	cols := (m.width - 28) / minCell
-	if cols < 2 {
-		return 2
+	cols := avail / cellW
+	if cols < 1 {
+		cols = 1
 	}
 	if cols > 4 {
-		return 4
+		cols = 4
 	}
 	return cols
+}
+
+func (m softwareModel) appRowCol() (row, col int) {
+	cols := m.gridCols()
+	if cols < 1 {
+		return 0, 0
+	}
+	return m.appIndex / cols, m.appIndex % cols
 }
 
 func (m softwareModel) selectedCount(catID string) int {
@@ -96,6 +113,31 @@ func (m softwareModel) totalSelected() int {
 	return n
 }
 
+func (m softwareModel) togglePane() {
+	if m.focus == focusSidebar {
+		m.focus = focusGrid
+		if len(m.currentCategory().Apps) > 0 {
+			if m.appIndex >= len(m.currentCategory().Apps) {
+				m.appIndex = 0
+			}
+		} else {
+			m.appIndex = 0
+		}
+		return
+	}
+	if m.focus == focusGrid {
+		m.focus = focusSidebar
+	}
+}
+
+func (m softwareModel) activateFooter() {
+	if m.footerButton == footerContinue {
+		m.done = true
+	} else {
+		m.quitting = true
+	}
+}
+
 func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
@@ -107,48 +149,75 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c", "q":
 			m.quitting = true
 			return m, tea.Quit
-		case "tab", "right":
-			if m.focus == focusSidebar {
-				m.focus = focusGrid
-				m.appIndex = 0
-			} else {
-				m.focus = focusSidebar
+		case "tab", "enter":
+			switch m.focus {
+			case focusSidebar, focusGrid:
+				m.togglePane()
+			case focusFooter:
+				m.activateFooter()
+				return m, tea.Quit
 			}
 			return m, nil
-		case "left":
-			if m.focus == focusGrid {
-				m.focus = focusSidebar
+		case "c":
+			m.done = true
+			return m, tea.Quit
+		case "b", "esc":
+			m.quitting = true
+			return m, tea.Quit
+		case "left", "h":
+			switch m.focus {
+			case focusGrid:
+				_, col := m.appRowCol()
+				if col > 0 {
+					m.appIndex--
+				}
+			case focusFooter:
+				m.footerButton = footerContinue
+			}
+			return m, nil
+		case "right", "l":
+			switch m.focus {
+			case focusGrid:
+				cols := m.gridCols()
+				cat := m.currentCategory()
+				_, col := m.appRowCol()
+				if col < cols-1 && m.appIndex+1 < len(cat.Apps) {
+					m.appIndex++
+				}
+			case focusFooter:
+				m.footerButton = footerBack
 			}
 			return m, nil
 		case "up", "k":
-			if m.focus == focusSidebar && m.catIndex > 0 {
-				m.catIndex--
-				m.appIndex = 0
-			} else if m.focus == focusGrid {
+			switch m.focus {
+			case focusSidebar:
+				if m.catIndex > 0 {
+					m.catIndex--
+					m.appIndex = 0
+				}
+			case focusGrid:
 				cols := m.gridCols()
-				cat := m.currentCategory()
 				if m.appIndex >= cols {
 					m.appIndex -= cols
-				} else if m.appIndex > 0 {
-					m.appIndex--
-				} else if len(cat.Apps) > 0 {
-					m.appIndex = len(cat.Apps) - 1
 				}
+			case focusFooter:
+				m.focus = focusGrid
 			}
 			return m, nil
 		case "down", "j":
-			if m.focus == focusSidebar && m.catIndex < len(m.categories)-1 {
-				m.catIndex++
-				m.appIndex = 0
-			} else if m.focus == focusGrid {
+			switch m.focus {
+			case focusSidebar:
+				if m.catIndex < len(m.categories)-1 {
+					m.catIndex++
+					m.appIndex = 0
+				}
+			case focusGrid:
 				cols := m.gridCols()
 				cat := m.currentCategory()
 				if m.appIndex+cols < len(cat.Apps) {
 					m.appIndex += cols
-				} else if m.appIndex < len(cat.Apps)-1 {
-					m.appIndex++
 				} else {
-					m.appIndex = 0
+					m.focus = focusFooter
 				}
 			}
 			return m, nil
@@ -168,12 +237,124 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.selected[cat.ID][appID] = !m.selected[cat.ID][appID]
 			}
 			return m, nil
-		case "enter":
-			m.done = true
-			return m, tea.Quit
 		}
 	}
 	return m, nil
+}
+
+func (m softwareModel) renderSidebar() string {
+	headerStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("86"))
+	active := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("229"))
+	idle := lipgloss.NewStyle().Foreground(lipgloss.Color("252"))
+	muted := lipgloss.NewStyle().Foreground(lipgloss.Color("245"))
+
+	var b strings.Builder
+	b.WriteString(headerStyle.Render("Categories"))
+	if m.focus == focusSidebar {
+		b.WriteString(muted.Render("  ← active"))
+	}
+	b.WriteString("\n")
+
+	for i, c := range m.categories {
+		count := m.selectedCount(c.ID)
+		label := c.Label
+		if count > 0 {
+			label = fmt.Sprintf("%s (%d)", label, count)
+		}
+		prefix := "  "
+		if i == m.catIndex {
+			prefix = "▸ "
+		}
+		line := prefix + label
+		switch {
+		case i == m.catIndex && m.focus == focusSidebar:
+			line = active.Render(line)
+		case i == m.catIndex:
+			line = idle.Render(line)
+		default:
+			line = muted.Render(line)
+		}
+		b.WriteString(line)
+		b.WriteString("\n")
+	}
+	return b.String()
+}
+
+func (m softwareModel) renderGrid() string {
+	headerStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("86"))
+	subStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("245"))
+	cursorStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("86"))
+	cellW := 20
+
+	cat := m.currentCategory()
+	cols := m.gridCols()
+
+	var b strings.Builder
+	title := cat.Label
+	if n := m.selectedCount(cat.ID); n > 0 {
+		title = fmt.Sprintf("%s — %d selected", cat.Label, n)
+	}
+	b.WriteString(headerStyle.Render(title))
+	if m.focus == focusGrid {
+		b.WriteString(subStyle.Render("  ← active"))
+	}
+	b.WriteString("\n\n")
+
+	if len(cat.Apps) == 0 {
+		b.WriteString(subStyle.Render("No apps in this category for your distro/platform."))
+		return b.String()
+	}
+
+	for i, app := range cat.Apps {
+		selected := m.selected[cat.ID][app.ID]
+		marker := "[ ]"
+		if selected {
+			marker = "[x]"
+		}
+		cell := fmt.Sprintf("%s %s", marker, app.Label)
+		isCursor := m.focus == focusGrid && i == m.appIndex
+		if isCursor {
+			cell = cursorStyle.Render("▸ " + cell)
+		}
+		b.WriteString(lipgloss.NewStyle().Width(cellW).Render(cell))
+		if (i+1)%cols == 0 {
+			b.WriteString("\n")
+		}
+	}
+	if len(cat.Apps)%cols != 0 {
+		b.WriteString("\n")
+	}
+	return b.String()
+}
+
+func (m softwareModel) renderFooter() string {
+	gap := lipgloss.NewStyle().Width(3).Render("")
+
+	continueStyle := lipgloss.NewStyle().
+		Border(lipgloss.RoundedBorder()).
+		Padding(0, 2).
+		Foreground(lipgloss.Color("10"))
+
+	backStyle := lipgloss.NewStyle().
+		Border(lipgloss.RoundedBorder()).
+		Padding(0, 2).
+		Foreground(lipgloss.Color("117"))
+
+	if m.focus == focusFooter && m.footerButton == footerContinue {
+		continueStyle = continueStyle.Bold(true).BorderForeground(lipgloss.Color("10"))
+	} else {
+		continueStyle = continueStyle.BorderForeground(lipgloss.Color("240"))
+	}
+
+	if m.focus == focusFooter && m.footerButton == footerBack {
+		backStyle = backStyle.Bold(true).BorderForeground(lipgloss.Color("117"))
+	} else {
+		backStyle = backStyle.BorderForeground(lipgloss.Color("240"))
+	}
+
+	continueBtn := continueStyle.Render("Continue")
+	backBtn := backStyle.Render("Back")
+	return lipgloss.JoinHorizontal(lipgloss.Top, continueBtn, gap, backBtn)
 }
 
 func (m softwareModel) View() string {
@@ -181,84 +362,48 @@ func (m softwareModel) View() string {
 		return fmt.Sprintf("error: %v\n", m.err)
 	}
 	if len(m.categories) == 0 {
-		return "No compatible software for this platform.\n"
+		return "No compatible software for this category.\n"
 	}
 
-	var b strings.Builder
+	title := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center).Width(m.width).Render("os-configs")
+	subTitle := lipgloss.NewStyle().Align(lipgloss.Center).Width(m.width).Foreground(lipgloss.Color("245")).
+		Render(fmt.Sprintf("Custom software · %d selected", m.totalSelected()))
 
-	headerStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("86"))
-	subStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("245"))
-	sidebarStyle := lipgloss.NewStyle().Width(22).Padding(0, 1)
-	gridStyle := lipgloss.NewStyle().Padding(0, 1)
+	sidebar := lipgloss.NewStyle().Width(24).Padding(0, 1).Render(m.renderSidebar())
+	grid := lipgloss.NewStyle().Padding(0, 1).Render(m.renderGrid())
+	panes := lipgloss.JoinHorizontal(lipgloss.Top, sidebar, grid)
 
-	b.WriteString(headerStyle.Render("os-configs — software picker"))
-	b.WriteString("\n")
-	b.WriteString(subStyle.Render(fmt.Sprintf("%d selected · Tab switch pane · Space toggle · Enter finish",
-		m.totalSelected())))
-	b.WriteString("\n\n")
+	paneBlock := lipgloss.NewStyle().Width(m.width).Align(lipgloss.Center).Render(panes)
 
-	cat := m.currentCategory()
-	cols := m.gridCols()
+	footer := m.renderFooter()
+	footerBlock := lipgloss.Place(m.width, lipgloss.Height(footer)+1, lipgloss.Center, lipgloss.Center, footer)
 
-	var sidebar strings.Builder
-	sidebar.WriteString(headerStyle.Render("Categories"))
-	sidebar.WriteString("\n")
-	for i, c := range m.categories {
-		count := m.selectedCount(c.ID)
-		label := c.Label
-		if count > 0 {
-			label = fmt.Sprintf("%s (%d)", label, count)
-		}
-		line := label
-		if i == m.catIndex && m.focus == focusSidebar {
-			line = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("229")).Render("▸ " + label)
-		} else if i == m.catIndex {
-			line = lipgloss.NewStyle().Foreground(lipgloss.Color("229")).Render("  " + label)
-		} else {
-			line = "  " + label
-		}
-		sidebar.WriteString(line)
-		sidebar.WriteString("\n")
+	hint := lipgloss.NewStyle().
+		Align(lipgloss.Center).
+		Width(m.width).
+		Foreground(lipgloss.Color("245")).
+		Render("↑↓ categories/apps · ←→ grid · Space toggle · Tab/Enter switch pane · c continue · b back")
+
+	body := lipgloss.JoinVertical(
+		lipgloss.Center,
+		title,
+		subTitle,
+		"",
+		paneBlock,
+	)
+
+	contentH := lipgloss.Height(body) + lipgloss.Height(footerBlock) + lipgloss.Height(hint) + 2
+	topPad := (m.height - contentH) / 2
+	if topPad < 0 {
+		topPad = 0
 	}
 
-	var grid strings.Builder
-	title := cat.Label
-	if n := m.selectedCount(cat.ID); n > 0 {
-		title = fmt.Sprintf("%s — %d selected", cat.Label, n)
-	}
-	grid.WriteString(headerStyle.Render(title))
-	grid.WriteString("\n\n")
-
-	if len(cat.Apps) == 0 {
-		grid.WriteString(subStyle.Render("No apps in this category for your distro/platform."))
-	} else {
-		for i, app := range cat.Apps {
-			selected := m.selected[cat.ID][app.ID]
-			marker := "[ ]"
-			if selected {
-				marker = "[x]"
-			}
-			cell := fmt.Sprintf("%s %s", marker, app.Label)
-			isCursor := m.focus == focusGrid && i == m.appIndex
-			if isCursor {
-				cell = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("86")).Render("▸ " + cell)
-			}
-			grid.WriteString(lipgloss.NewStyle().Width(18).Render(cell))
-			if (i+1)%cols == 0 {
-				grid.WriteString("\n")
-			}
-		}
-		if len(cat.Apps)%cols != 0 {
-			grid.WriteString("\n")
-		}
-	}
-
-	left := sidebarStyle.Render(sidebar.String())
-	right := gridStyle.Render(grid.String())
-	b.WriteString(lipgloss.JoinHorizontal(lipgloss.Top, left, right))
-	b.WriteString("\n\n")
-	b.WriteString(subStyle.Render("↑↓ move · Space select · Tab/←→ sidebar/grid · Enter done · q quit"))
-	return b.String()
+	main := lipgloss.JoinVertical(lipgloss.Center, body, "", footerBlock, "", hint)
+	return lipgloss.NewStyle().
+		Width(m.width).
+		Height(m.height).
+		Padding(topPad, 0, 1, 0).
+		Render(main)
 }
 
 func loadCatalog(path string) ([]category, error) {
@@ -304,9 +449,10 @@ func runSoftwarePicker(catalogPath, outputPath string) error {
 	}
 
 	m := softwareModel{
-		categories: cats,
-		selected:   selected,
-		focus:      focusSidebar,
+		categories:   cats,
+		selected:     selected,
+		focus:        focusSidebar,
+		footerButton: footerContinue,
 	}
 
 	p := tea.NewProgram(m, tea.WithAltScreen())

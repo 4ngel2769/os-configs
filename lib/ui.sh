@@ -12,6 +12,26 @@ ui_require_gum() {
     return 1
 }
 
+ui_term_width() {
+    local w="${COLUMNS:-$(tput cols 2>/dev/null || echo 80)}"
+    if [[ "$w" -lt 40 ]]; then
+        w=40
+    elif [[ "$w" -gt 120 ]]; then
+        w=120
+    fi
+    printf '%s' "$w"
+}
+
+ui_divider_line() {
+    local w chars
+    w="$(ui_term_width)"
+    chars=$((w - 4))
+    if [[ "$chars" -lt 20 ]]; then
+        chars=20
+    fi
+    printf '─%.0s' $(seq 1 "$chars")
+}
+
 ui_platform_label() {
     case "${1,,}" in
         laptop) echo "Laptop" ;;
@@ -50,17 +70,22 @@ ui_platform_pick() {
 
 ui_style_header() {
     ui_require_gum || return 1
-    gum style --bold --margin "1 0 0 0" "$@"
+    gum style --bold --align center --width "$(ui_term_width)" --margin "1 0 0 0" "$@"
 }
 
 ui_style_subheader() {
     ui_require_gum || return 1
-    gum style --foreground 245 "$@"
+    gum style --align center --width "$(ui_term_width)" --foreground 245 "$@"
 }
 
 ui_style_divider() {
     ui_require_gum || return 1
-    gum style --foreground 240 "────────────────────────────────────────────────"
+    gum style --align center --width "$(ui_term_width)" --foreground 240 "$(ui_divider_line)"
+}
+
+ui_style_centered() {
+    ui_require_gum || return 1
+    gum style --align center --width "$(ui_term_width)" "$@"
 }
 
 ui_style() {
@@ -159,16 +184,17 @@ ui_distro_badge() {
 }
 
 ui_show_banner() {
-    local badge platform_label color
+    local badge platform_label color width
 
     ui_require_gum || return 1
     badge="$(ui_distro_label)"
     color="$(ui_distro_color)"
     platform_label="$(ui_platform_label "${PLATFORM_CLASS:-desktop}")"
+    width="$(ui_term_width)"
 
-    gum style --bold --align center --width 52 --margin "1 0" "os-configs"
-    gum style --align center --width 52 --foreground 245 "Post-install setup"
+    gum style --bold --align center --width "$width" --margin "1 0" "os-configs"
+    gum style --align center --width "$width" --foreground 245 "Post-install setup"
     ui_style_divider
-    gum style --align center --width 52 --foreground "$color" "/ ${badge} · ${platform_label} \\"
+    gum style --align center --width "$width" --foreground "$color" "/ ${badge} · ${platform_label} \\"
     ui_style_divider
 }

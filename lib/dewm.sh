@@ -158,11 +158,16 @@ dewm_resolve() {
         return 0
     fi
 
+    if [[ "$auto" != "true" ]]; then
+        dewm_prompt_interactive
+        return 0
+    fi
+
     dewm_apply_custom_defaults
 }
 
 dewm_show_summary() {
     [[ -n "$SELECTED_DE_WM" ]] || return 0
-    gum style "DE/WM:     $(dewm_label "$SELECTED_DE_WM")"
-    gum style "DM:        $(dewm_dm_label "$SELECTED_DM")"
+    ui_style_centered "DE/WM:     $(dewm_label "$SELECTED_DE_WM")"
+    ui_style_centered "DM:        $(dewm_dm_label "$SELECTED_DM")"
 }

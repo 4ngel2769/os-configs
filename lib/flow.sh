@@ -76,7 +76,7 @@ flow_show_detection_summary() {
 
     if [[ "$PLATFORM_CLASS" != "server" ]]; then
         gpu_label="$(ui_gpu_label "$GPU_CLASS")"
-        gum style "GPU:       ${gpu_label}"
+        ui_style_centered "GPU: ${gpu_label}"
         ui_style_divider
     fi
 }

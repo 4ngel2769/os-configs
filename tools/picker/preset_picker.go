@@ -146,7 +146,7 @@ func (m presetModel) renderGrid() string {
 			cells = append(cells, m.renderCard(i+j))
 		}
 		row := lipgloss.JoinHorizontal(lipgloss.Top, interleave(cells, gap)...)
-		rows = append(rows, row)
+		rows = append(rows, lipgloss.Place(m.width, lipgloss.Height(row), lipgloss.Center, lipgloss.Top, row))
 	}
 	return lipgloss.JoinVertical(lipgloss.Left, rows...)
 }
@@ -236,26 +236,26 @@ func (m presetModel) View() string {
 
 	title := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center).Width(m.width).Render("os-configs")
 	subTitle := lipgloss.NewStyle().Align(lipgloss.Center).Width(m.width).Foreground(lipgloss.Color("245")).Render("Post-install setup")
-	header := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("86")).Render("Choose a preset")
-	hint := lipgloss.NewStyle().Foreground(lipgloss.Color("245")).Render("← → ↑ ↓ move · Tab next · Enter select · q quit")
+	header := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center).Width(m.width).Foreground(lipgloss.Color("86")).Render("Choose a preset")
+	hint := lipgloss.NewStyle().Align(lipgloss.Center).Width(m.width).Foreground(lipgloss.Color("245")).Render("← → ↑ ↓ move · Tab select · Enter confirm · q quit")
 
 	grid := m.renderGrid()
-	centeredGrid := lipgloss.Place(m.width, lipgloss.Height(grid), lipgloss.Center, lipgloss.Top, grid)
-	body := lipgloss.JoinVertical(lipgloss.Center, title, subTitle, "", header, "", centeredGrid, "", hint)
+	gridBlock := lipgloss.Place(m.width, lipgloss.Height(grid), lipgloss.Center, lipgloss.Center, grid)
 
-	// Center in terminal; leave room for banner already shown by bash above alt screen
-	contentH := lipgloss.Height(body) + 2
-	yPad := (m.height - contentH) / 3
-	if yPad < 0 {
-		yPad = 0
+	body := lipgloss.JoinVertical(lipgloss.Center, title, subTitle, "", header, "", gridBlock)
+
+	contentH := lipgloss.Height(body) + lipgloss.Height(hint) + 2
+	topPad := (m.height - contentH) / 2
+	if topPad < 0 {
+		topPad = 0
 	}
 
+	main := lipgloss.JoinVertical(lipgloss.Center, body, "", hint)
 	return lipgloss.NewStyle().
 		Width(m.width).
 		Height(m.height).
-		Padding(yPad, 0, 0, 0).
-		Align(lipgloss.Center).
-		Render(body)
+		Padding(topPad, 0, 1, 0).
+		Render(main)
 }
 
 func runPresetPicker(inputPath, outputPath string) error {
