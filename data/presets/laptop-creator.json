@@ -2,7 +2,7 @@
   "name": "Laptop Creator",
   "platform_class": "laptop",
   "categories": {
-    "browser": ["firefox"],
+    "browsers": ["firefox"],
     "communication": ["telegram"],
     "developer": ["git", "vscode"],
     "creator": ["obs", "gimp"],

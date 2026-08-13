@@ -2,7 +2,7 @@
   "name": "Laptop Gaming",
   "platform_class": "laptop",
   "categories": {
-    "browser": ["brave", "firefox"],
+    "browsers": ["brave", "firefox"],
     "communication": ["telegram"],
     "developer": ["git", "vscode"],
     "gaming": ["steam"],

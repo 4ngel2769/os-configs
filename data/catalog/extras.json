@@ -1,0 +1,129 @@
+{
+  "chrome": {
+    "label": "Google Chrome",
+    "platforms": ["desktop", "laptop"],
+    "arch": { "manager": "aur", "package": "google-chrome" },
+    "debian": { "manager": "apt", "package": "google-chrome-stable", "source": "google-chrome" },
+    "ubuntu": { "manager": "apt", "package": "google-chrome-stable", "source": "google-chrome" },
+    "fedora": { "manager": "dnf", "package": "google-chrome-stable", "source": "google-chrome" }
+  },
+  "librewolf": {
+    "label": "LibreWolf",
+    "platforms": ["desktop", "laptop"],
+    "arch": { "manager": "aur", "package": "librewolf-bin" }
+  },
+  "vivaldi": {
+    "label": "Vivaldi",
+    "platforms": ["desktop", "laptop"],
+    "arch": { "manager": "aur", "package": "vivaldi" },
+    "debian": { "manager": "apt", "package": "vivaldi-stable", "source": "vivaldi" },
+    "ubuntu": { "manager": "apt", "package": "vivaldi-stable", "source": "vivaldi" },
+    "fedora": { "manager": "dnf", "package": "vivaldi-stable", "source": "vivaldi" }
+  },
+  "opera": {
+    "label": "Opera",
+    "platforms": ["desktop", "laptop"],
+    "arch": { "manager": "aur", "package": "opera" },
+    "debian": { "manager": "apt", "package": "opera-stable", "source": "opera" },
+    "ubuntu": { "manager": "apt", "package": "opera-stable", "source": "opera" },
+    "fedora": { "manager": "dnf", "package": "opera-stable", "source": "opera" }
+  },
+  "zen-browser": {
+    "label": "Zen Browser",
+    "platforms": ["desktop", "laptop"],
+    "arch": { "manager": "aur", "package": "zen-browser-bin" }
+  },
+  "floorp": {
+    "label": "Floorp",
+    "platforms": ["desktop", "laptop"],
+    "arch": { "manager": "aur", "package": "floorp-bin" }
+  },
+  "helium": {
+    "label": "Helium Browser",
+    "platforms": ["desktop", "laptop"],
+    "arch": { "manager": "aur", "package": "helium-browser-bin" }
+  },
+  "waterfox": {
+    "label": "Waterfox",
+    "platforms": ["desktop", "laptop"],
+    "arch": { "manager": "aur", "package": "waterfox" },
+    "debian": { "manager": "apt", "package": "waterfox-g-kpe" },
+    "ubuntu": { "manager": "apt", "package": "waterfox-g-kpe" }
+  },
+  "mullvad-browser": {
+    "label": "Mullvad Browser",
+    "platforms": ["desktop", "laptop"],
+    "arch": { "manager": "aur", "package": "mullvad-browser-bin" }
+  },
+  "tor-browser": {
+    "label": "Tor Browser",
+    "platforms": ["desktop", "laptop"],
+    "arch": { "manager": "aur", "package": "torbrowser-launcher" },
+    "debian": { "manager": "apt", "package": "torbrowser-launcher" },
+    "ubuntu": { "manager": "apt", "package": "torbrowser-launcher" },
+    "fedora": { "manager": "dnf", "package": "torbrowser-launcher" }
+  },
+  "vesktop": {
+    "label": "Vesktop",
+    "platforms": ["desktop", "laptop"],
+    "arch": { "manager": "aur", "package": "vesktop" },
+    "fedora": { "manager": "dnf", "package": "vesktop" }
+  },
+  "equibop": {
+    "label": "Equibop",
+    "platforms": ["desktop", "laptop"],
+    "arch": { "manager": "aur", "package": "equibop-bin" }
+  },
+  "webcord": {
+    "label": "WebCord",
+    "platforms": ["desktop", "laptop"],
+    "arch": { "manager": "aur", "package": "webcord" }
+  },
+  "freecad": {
+    "label": "FreeCAD",
+    "platforms": ["desktop", "laptop"],
+    "arch": { "manager": "pacman", "package": "freecad" },
+    "debian": { "manager": "apt", "package": "freecad" },
+    "ubuntu": { "manager": "apt", "package": "freecad" },
+    "fedora": { "manager": "dnf", "package": "freecad" }
+  },
+  "kicad": {
+    "label": "KiCad",
+    "platforms": ["desktop", "laptop"],
+    "arch": { "manager": "pacman", "package": "kicad" },
+    "debian": { "manager": "apt", "package": "kicad" },
+    "ubuntu": { "manager": "apt", "package": "kicad" },
+    "fedora": { "manager": "dnf", "package": "kicad" }
+  },
+  "openscad": {
+    "label": "OpenSCAD",
+    "platforms": ["desktop", "laptop"],
+    "arch": { "manager": "pacman", "package": "openscad" },
+    "debian": { "manager": "apt", "package": "openscad" },
+    "ubuntu": { "manager": "apt", "package": "openscad" },
+    "fedora": { "manager": "dnf", "package": "openscad" }
+  },
+  "blender": {
+    "label": "Blender",
+    "platforms": ["desktop", "laptop"],
+    "arch": { "manager": "pacman", "package": "blender" },
+    "debian": { "manager": "apt", "package": "blender" },
+    "ubuntu": { "manager": "apt", "package": "blender" },
+    "fedora": { "manager": "dnf", "package": "blender" }
+  },
+  "discord": {
+    "label": "Discord",
+    "platforms": ["desktop", "laptop"],
+    "arch": { "manager": "aur", "package": "discord" },
+    "debian": { "manager": "apt", "package": "discord", "source": "discord" },
+    "ubuntu": { "manager": "apt", "package": "discord", "source": "discord" },
+    "fedora": { "manager": "dnf", "package": "discord", "source": "discord" }
+  },
+  "signal": {
+    "label": "Signal",
+    "platforms": ["desktop", "laptop"],
+    "arch": { "manager": "aur", "package": "signal-desktop" },
+    "debian": { "manager": "apt", "package": "signal-desktop", "source": "signal" },
+    "ubuntu": { "manager": "apt", "package": "signal-desktop", "source": "signal" }
+  }
+}

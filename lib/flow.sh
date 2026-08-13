@@ -22,16 +22,19 @@ flow_preset_visible() {
 
 flow_build_preset_options() {
     local -n _out=$1
+    local gaming_json="false"
 
     if [[ ! -f "$_flow_menu_file" ]]; then
         echo "flow: preset menu not found: $_flow_menu_file" >&2
         return 1
     fi
 
+    if [[ "$GPU_CLASS" == "igpu-gaming" || "$GPU_CLASS" == "dgpu" ]]; then
+        gaming_json="true"
+    fi
+
     local rows
-    rows="$(jq -r --arg pc "$PLATFORM_CLASS" --argjson gaming "$(
-        if [[ "$GPU_CLASS" == "igpu-gaming" || "$GPU_CLASS" == "dgpu" ]]; then echo true; else echo false; fi
-    )" '
+    rows="$(jq -r --arg pc "$PLATFORM_CLASS" --argjson gaming "$gaming_json" '
         [.presets[]
          | select(.platform_class == $pc)
          | select((.requires_gaming_gpu // false) == false or $gaming)
@@ -46,9 +49,13 @@ flow_build_preset_options() {
 }
 
 flow_list_preset_ids() {
-    jq -r --arg pc "$PLATFORM_CLASS" --argjson gaming "$(
-        if [[ "$GPU_CLASS" == "igpu-gaming" || "$GPU_CLASS" == "dgpu" ]]; then echo true; else echo false; fi
-    )" '
+    local gaming_json="false"
+
+    if [[ "$GPU_CLASS" == "igpu-gaming" || "$GPU_CLASS" == "dgpu" ]]; then
+        gaming_json="true"
+    fi
+
+    jq -r --arg pc "$PLATFORM_CLASS" --argjson gaming "$gaming_json" '
         [.presets[]
          | select(.platform_class == $pc)
          | select((.requires_gaming_gpu // false) == false or $gaming)

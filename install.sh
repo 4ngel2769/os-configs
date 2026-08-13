@@ -68,6 +68,8 @@ source "${ROOT}/lib/ui.sh"
 # shellcheck source=/dev/null
 source "${ROOT}/lib/registry.sh"
 # shellcheck source=/dev/null
+source "${ROOT}/lib/picker.sh"
+# shellcheck source=/dev/null
 source "${ROOT}/lib/presets.sh"
 # shellcheck source=/dev/null
 source "${ROOT}/lib/dewm.sh"

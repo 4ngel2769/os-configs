@@ -1,0 +1,10535 @@
+{
+  "a-candy-beauty-icon-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "a-candy-beauty-icon-theme-git"
+    },
+    "label": "A Candy Beauty Icon Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "abiword": {
+    "arch": {
+      "manager": "pacman",
+      "package": "abiword"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "abiword"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "abiword"
+    },
+    "label": "Abiword",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "abiword"
+    }
+  },
+  "acpilight": {
+    "arch": {
+      "manager": "pacman",
+      "package": "acpilight"
+    },
+    "label": "Acpilight",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "adapta-gtk-theme": {
+    "arch": {
+      "manager": "pacman",
+      "package": "adapta-gtk-theme"
+    },
+    "label": "Adapta Gtk Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "adobe-source-code-pro-fonts": {
+    "arch": {
+      "manager": "pacman",
+      "package": "adobe-source-code-pro-fonts"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "adobe-source-code-pro-fonts"
+    },
+    "label": "Adobe Source Code Pro Fonts",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "adobe-source-sans-fonts": {
+    "arch": {
+      "manager": "pacman",
+      "package": "adobe-source-sans-fonts"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "adobe-source-sans-pro-fonts"
+    },
+    "label": "Adobe Source Sans Fonts",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "adobe-source-serif-fonts": {
+    "arch": {
+      "manager": "pacman",
+      "package": "adobe-source-serif-fonts"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "adobe-source-serif-pro-fonts"
+    },
+    "label": "Adobe Source Serif Fonts",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "aisleriot": {
+    "arch": {
+      "manager": "pacman",
+      "package": "aisleriot"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "aisleriot"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "aisleriot"
+    },
+    "label": "Aisleriot",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "aisleriot"
+    }
+  },
+  "alacritty": {
+    "arch": {
+      "manager": "pacman",
+      "package": "alacritty"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "alacritty"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "alacritty"
+    },
+    "label": "Alacritty",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "alacritty"
+    }
+  },
+  "alacritty-themes": {
+    "arch": {
+      "manager": "pacman",
+      "package": "alacritty-themes"
+    },
+    "label": "Alacritty Themes",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "albert": {
+    "arch": {
+      "manager": "pacman",
+      "package": "albert"
+    },
+    "label": "Albert",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "alsi": {
+    "arch": {
+      "manager": "pacman",
+      "package": "alsi"
+    },
+    "label": "Alsi",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "amberol": {
+    "arch": {
+      "manager": "pacman",
+      "package": "amberol"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "amberol"
+    },
+    "label": "Amberol",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "amberol"
+    }
+  },
+  "android-file-transfer": {
+    "arch": {
+      "manager": "pacman",
+      "package": "android-file-transfer"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "android-file-transfer"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "android-file-transfer"
+    },
+    "label": "Android File Transfer",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "android-file-transfer"
+    }
+  },
+  "android-sdk-platform-tools": {
+    "arch": {
+      "manager": "pacman",
+      "package": "android-sdk-platform-tools"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "android-sdk-platform-tools"
+    },
+    "label": "Android Sdk Platform Tools",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "android-sdk-platform-tools"
+    }
+  },
+  "android-tools": {
+    "arch": {
+      "manager": "pacman",
+      "package": "android-tools"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "android-tools"
+    },
+    "label": "Android Tools",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "anydesk": {
+    "arch": {
+      "manager": "aur",
+      "package": "anydesk-bin"
+    },
+    "label": "Anydesk",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "appimagelauncher": {
+    "arch": {
+      "manager": "pacman",
+      "package": "appimagelauncher"
+    },
+    "label": "Appimagelauncher",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "arc-darkest-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "arc-darkest-theme-git"
+    },
+    "label": "Arc Darkest Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "arc-icon-theme": {
+    "arch": {
+      "manager": "pacman",
+      "package": "arc-icon-theme"
+    },
+    "label": "Arc Icon Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "arc-x-icons-theme": {
+    "arch": {
+      "manager": "pacman",
+      "package": "arc-x-icons-theme"
+    },
+    "label": "Arc X Icons Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "archey3": {
+    "arch": {
+      "manager": "pacman",
+      "package": "archey3"
+    },
+    "label": "Archey3",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "arcolinux-arc-kde": {
+    "arch": {
+      "manager": "pacman",
+      "package": "arcolinux-arc-kde"
+    },
+    "label": "Arcolinux Arc Kde",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "arcolinux-conky-collection": {
+    "arch": {
+      "manager": "aur",
+      "package": "arcolinux-conky-collection-git"
+    },
+    "label": "Arcolinux Conky Collection",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "arcolinux-meta-steam-amd": {
+    "arch": {
+      "manager": "pacman",
+      "package": "arcolinux-meta-steam-amd"
+    },
+    "label": "Arcolinux Meta Steam Amd",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming"
+  },
+  "arcolinux-meta-steam-intel": {
+    "arch": {
+      "manager": "pacman",
+      "package": "arcolinux-meta-steam-intel"
+    },
+    "label": "Arcolinux Meta Steam Intel",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming"
+  },
+  "arcolinux-meta-steam-nvidia": {
+    "arch": {
+      "manager": "pacman",
+      "package": "arcolinux-meta-steam-nvidia"
+    },
+    "label": "Arcolinux Meta Steam Nvidia",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming"
+  },
+  "arcolinux-pipemenus": {
+    "arch": {
+      "manager": "aur",
+      "package": "arcolinux-pipemenus-git"
+    },
+    "label": "Arcolinux Pipemenus",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "arcolinux-plank-themes": {
+    "arch": {
+      "manager": "aur",
+      "package": "arcolinux-plank-themes-git"
+    },
+    "label": "Arcolinux Plank Themes",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "arcolinux-sweet-mars": {
+    "arch": {
+      "manager": "aur",
+      "package": "arcolinux-sweet-mars-git"
+    },
+    "label": "Arcolinux Sweet Mars",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "arcolinux-zsh": {
+    "arch": {
+      "manager": "aur",
+      "package": "arcolinux-zsh-git"
+    },
+    "label": "Arcolinux Zsh",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "ardour": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ardour"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "ardour"
+    },
+    "label": "Ardour",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "ardour"
+    }
+  },
+  "arduino": {
+    "arch": {
+      "manager": "pacman",
+      "package": "arduino"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "arduino"
+    },
+    "label": "Arduino",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "arduino"
+    }
+  },
+  "aria2": {
+    "arch": {
+      "manager": "pacman",
+      "package": "aria2"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "aria2"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "aria2"
+    },
+    "label": "Aria2",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "aria2"
+    }
+  },
+  "armagetronad": {
+    "arch": {
+      "manager": "pacman",
+      "package": "armagetronad"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "armagetronad"
+    },
+    "label": "Armagetronad",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "armagetronad"
+    }
+  },
+  "asciiquarium": {
+    "arch": {
+      "manager": "pacman",
+      "package": "asciiquarium"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "asciiquarium"
+    },
+    "label": "Asciiquarium",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "astromenace": {
+    "arch": {
+      "manager": "pacman",
+      "package": "astromenace"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "astromenace"
+    },
+    "label": "Astromenace",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "astromenace"
+    }
+  },
+  "atril": {
+    "arch": {
+      "manager": "pacman",
+      "package": "atril"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "atril"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "atril"
+    },
+    "label": "Atril",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "atril"
+    }
+  },
+  "audacious": {
+    "arch": {
+      "manager": "pacman",
+      "package": "audacious"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "audacious"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "audacious"
+    },
+    "label": "Audacious",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "audacious"
+    }
+  },
+  "audacious-plugins": {
+    "arch": {
+      "manager": "pacman",
+      "package": "audacious-plugins"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "audacious-plugins"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "audacious-plugins"
+    },
+    "label": "Audacious Plugins",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "audacious-plugins"
+    }
+  },
+  "audacity": {
+    "arch": {
+      "manager": "pacman",
+      "package": "audacity"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "audacity"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "audacity"
+    },
+    "label": "Audacity",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "audacity"
+    }
+  },
+  "aura": {
+    "arch": {
+      "manager": "aur",
+      "package": "aura-bin"
+    },
+    "label": "Aura",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "auto-cpufreq": {
+    "arch": {
+      "manager": "pacman",
+      "package": "auto-cpufreq"
+    },
+    "label": "Auto Cpufreq",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "awesome-terminal-fonts": {
+    "arch": {
+      "manager": "pacman",
+      "package": "awesome-terminal-fonts"
+    },
+    "label": "Awesome Terminal Fonts",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "baobab": {
+    "arch": {
+      "manager": "pacman",
+      "package": "baobab"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "baobab"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "baobab"
+    },
+    "label": "Baobab",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "baobab"
+    }
+  },
+  "base16-alacritty": {
+    "arch": {
+      "manager": "aur",
+      "package": "base16-alacritty-git"
+    },
+    "label": "Base16 Alacritty",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "bash-pipes": {
+    "arch": {
+      "manager": "pacman",
+      "package": "bash-pipes"
+    },
+    "label": "Bash Pipes",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "bauh": {
+    "arch": {
+      "manager": "pacman",
+      "package": "bauh"
+    },
+    "label": "Bauh",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "betterlockscreen": {
+    "arch": {
+      "manager": "pacman",
+      "package": "betterlockscreen"
+    },
+    "label": "Betterlockscreen",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "bibata-cursor-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "bibata-cursor-theme-bin"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "bibata-cursor-theme"
+    },
+    "label": "Bibata Cursor Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "bibata-cursor-theme"
+    }
+  },
+  "bibata-cursor-translucent": {
+    "arch": {
+      "manager": "pacman",
+      "package": "bibata-cursor-translucent"
+    },
+    "label": "Bibata Cursor Translucent",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "bibata-extra-cursor-theme": {
+    "arch": {
+      "manager": "pacman",
+      "package": "bibata-extra-cursor-theme"
+    },
+    "label": "Bibata Extra Cursor Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "bibata-rainbow-cursor-theme": {
+    "arch": {
+      "manager": "pacman",
+      "package": "bibata-rainbow-cursor-theme"
+    },
+    "label": "Bibata Rainbow Cursor Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "bitwarden": {
+    "arch": {
+      "manager": "pacman",
+      "package": "bitwarden"
+    },
+    "label": "Bitwarden",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "bleachbit": {
+    "arch": {
+      "manager": "pacman",
+      "package": "bleachbit"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "bleachbit"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "bleachbit"
+    },
+    "label": "Bleachbit",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "bleachbit"
+    }
+  },
+  "blender": {
+    "arch": {
+      "manager": "pacman",
+      "package": "blender"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "blender"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "blender"
+    },
+    "label": "Blender",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "blender"
+    }
+  },
+  "blender-benchmark": {
+    "arch": {
+      "manager": "pacman",
+      "package": "blender-benchmark"
+    },
+    "label": "Blender Benchmark",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "bluefish": {
+    "arch": {
+      "manager": "pacman",
+      "package": "bluefish"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "bluefish"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "bluefish"
+    },
+    "label": "Bluefish",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "bluefish"
+    }
+  },
+  "bottom": {
+    "arch": {
+      "manager": "pacman",
+      "package": "bottom"
+    },
+    "label": "Bottom",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "boxes": {
+    "arch": {
+      "manager": "pacman",
+      "package": "boxes"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "boxes"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "boxes"
+    },
+    "label": "Boxes",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "boxes"
+    }
+  },
+  "bpytop": {
+    "arch": {
+      "manager": "pacman",
+      "package": "bpytop"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "bpytop"
+    },
+    "label": "Bpytop",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "bpytop"
+    }
+  },
+  "brasero": {
+    "arch": {
+      "manager": "pacman",
+      "package": "brasero"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "brasero"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "brasero"
+    },
+    "label": "Brasero",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "brasero"
+    }
+  },
+  "breeze": {
+    "arch": {
+      "manager": "pacman",
+      "package": "breeze"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "breeze"
+    },
+    "label": "Breeze",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "breeze"
+    }
+  },
+  "breeze-icons": {
+    "arch": {
+      "manager": "pacman",
+      "package": "breeze-icons"
+    },
+    "label": "Breeze Icons",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "brightnessctl": {
+    "arch": {
+      "manager": "pacman",
+      "package": "brightnessctl"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "brightnessctl"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "brightnessctl"
+    },
+    "label": "Brightnessctl",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "brightnessctl"
+    }
+  },
+  "brillo": {
+    "arch": {
+      "manager": "pacman",
+      "package": "brillo"
+    },
+    "label": "Brillo",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "brltty": {
+    "arch": {
+      "manager": "pacman",
+      "package": "brltty"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "brltty"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "brltty"
+    },
+    "label": "Brltty",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "brltty"
+    }
+  },
+  "btrbk": {
+    "arch": {
+      "manager": "pacman",
+      "package": "btrbk"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "btrbk"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "btrbk"
+    },
+    "label": "Btrbk",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "btrbk"
+    }
+  },
+  "btrfs-assistant": {
+    "arch": {
+      "manager": "pacman",
+      "package": "btrfs-assistant"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "btrfs-assistant"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "btrfs-assistant"
+    },
+    "label": "Btrfs Assistant",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "btrfs-assistant"
+    }
+  },
+  "btrfsmaintenance": {
+    "arch": {
+      "manager": "pacman",
+      "package": "btrfsmaintenance"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "btrfsmaintenance"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "btrfsmaintenance"
+    },
+    "label": "Btrfsmaintenance",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "btrfsmaintenance"
+    }
+  },
+  "byte": {
+    "arch": {
+      "manager": "pacman",
+      "package": "byte"
+    },
+    "label": "Byte",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "c-lolcat": {
+    "arch": {
+      "manager": "pacman",
+      "package": "c-lolcat"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "lolcat"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "lolcat"
+    },
+    "label": "C Lolcat",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "lolcat"
+    }
+  },
+  "caffeine": {
+    "arch": {
+      "manager": "pacman",
+      "package": "caffeine"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "caffeine"
+    },
+    "label": "Caffeine",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "caffeine"
+    }
+  },
+  "caffeine-ng": {
+    "arch": {
+      "manager": "pacman",
+      "package": "caffeine-ng"
+    },
+    "label": "Caffeine Ng",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "caja": {
+    "arch": {
+      "manager": "pacman",
+      "package": "caja"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "caja"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "caja"
+    },
+    "label": "Caja",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "caja"
+    }
+  },
+  "calibre": {
+    "arch": {
+      "manager": "pacman",
+      "package": "calibre"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "calibre"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "calibre"
+    },
+    "label": "Calibre",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "calibre"
+    }
+  },
+  "calligra": {
+    "arch": {
+      "manager": "pacman",
+      "package": "calligra"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "calligra"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "calligra"
+    },
+    "label": "Calligra",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "calligra"
+    }
+  },
+  "calligra-plan": {
+    "arch": {
+      "manager": "pacman",
+      "package": "calligra-plan"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "calligraplan"
+    },
+    "label": "Calligra Plan",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "calligraplan"
+    }
+  },
+  "capitaine-cursors": {
+    "arch": {
+      "manager": "pacman",
+      "package": "capitaine-cursors"
+    },
+    "label": "Capitaine Cursors",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "catfish": {
+    "arch": {
+      "manager": "pacman",
+      "package": "catfish"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "catfish"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "catfish"
+    },
+    "label": "Catfish",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "catfish"
+    }
+  },
+  "catppuccin-cursors": {
+    "arch": {
+      "manager": "aur",
+      "package": "catppuccin-cursors-mocha"
+    },
+    "label": "Catppuccin Cursors",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "cava": {
+    "arch": {
+      "manager": "pacman",
+      "package": "cava"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "cava"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "cava"
+    },
+    "label": "Cava",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "cava"
+    }
+  },
+  "celluloid": {
+    "arch": {
+      "manager": "pacman",
+      "package": "celluloid"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "celluloid"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "celluloid"
+    },
+    "label": "Celluloid",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "celluloid"
+    }
+  },
+  "cheese": {
+    "arch": {
+      "manager": "pacman",
+      "package": "cheese"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "cheese"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "cheese"
+    },
+    "label": "Cheese",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "cheese"
+    }
+  },
+  "chrome-gnome-shell": {
+    "arch": {
+      "manager": "aur",
+      "package": "chrome-gnome-shell"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "gnome-shell-extension-apps-menu"
+    },
+    "label": "Chrome Gnome Shell",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "chrome-gnome-shell"
+    }
+  },
+  "chromium": {
+    "arch": {
+      "manager": "pacman",
+      "package": "chromium"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "chromium"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "chromium"
+    },
+    "label": "Chromium",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "chromium"
+    }
+  },
+  "chromium-bsu": {
+    "arch": {
+      "manager": "pacman",
+      "package": "chromium-bsu"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "chromium-bsu"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "chromium-bsu"
+    },
+    "label": "Chromium Bsu",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "chromium-bsu"
+    }
+  },
+  "chromium-widevine": {
+    "arch": {
+      "manager": "pacman",
+      "package": "chromium-widevine"
+    },
+    "label": "Chromium Widevine",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "ckb-next": {
+    "arch": {
+      "manager": "aur",
+      "package": "ckb-next-git"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "ckb-next"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "ckb-next"
+    },
+    "label": "Ckb Next",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "ckb-next"
+    }
+  },
+  "clapper": {
+    "arch": {
+      "manager": "pacman",
+      "package": "clapper"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "clapper"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "clapper"
+    },
+    "label": "Clapper",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "clapper"
+    }
+  },
+  "clementine": {
+    "arch": {
+      "manager": "pacman",
+      "package": "clementine"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "clementine"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "clementine"
+    },
+    "label": "Clementine",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "clementine"
+    }
+  },
+  "cmatrix": {
+    "arch": {
+      "manager": "aur",
+      "package": "cmatrix-git"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "cmatrix"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "cmatrix"
+    },
+    "label": "Cmatrix",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "cmatrix"
+    }
+  },
+  "code": {
+    "arch": {
+      "manager": "pacman",
+      "package": "code"
+    },
+    "label": "Code",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "codeblocks": {
+    "arch": {
+      "manager": "pacman",
+      "package": "codeblocks"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "codeblocks"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "codeblocks"
+    },
+    "label": "Codeblocks",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "codeblocks"
+    }
+  },
+  "conky-lua-archers": {
+    "arch": {
+      "manager": "pacman",
+      "package": "conky-lua-nv"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "conky"
+    },
+    "label": "Conky Lua Archers",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "conky"
+    }
+  },
+  "cool-retro-term": {
+    "arch": {
+      "manager": "pacman",
+      "package": "cool-retro-term"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "cool-retro-term"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "cool-retro-term"
+    },
+    "label": "Cool Retro Term",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "cool-retro-term"
+    }
+  },
+  "cowfortune": {
+    "arch": {
+      "manager": "pacman",
+      "package": "cowfortune"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fortune-mod"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "fortune-mod"
+    },
+    "label": "Cowfortune",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fortune-mod"
+    }
+  },
+  "cpu-x": {
+    "arch": {
+      "manager": "pacman",
+      "package": "cpu-x"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "cpu-x"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "cpu-x"
+    },
+    "label": "Cpu X",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "cpufetch": {
+    "arch": {
+      "manager": "aur",
+      "package": "cpufetch-git"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "cpufetch"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "cpufetch"
+    },
+    "label": "Cpufetch",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "cpufetch"
+    }
+  },
+  "cpuid": {
+    "arch": {
+      "manager": "pacman",
+      "package": "cpuid"
+    },
+    "label": "Cpuid",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "cpuid"
+    }
+  },
+  "curseradio": {
+    "arch": {
+      "manager": "aur",
+      "package": "curseradio-git"
+    },
+    "label": "Curseradio",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "cxxmatrix": {
+    "arch": {
+      "manager": "aur",
+      "package": "cxxmatrix-git"
+    },
+    "label": "Cxxmatrix",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "darktable": {
+    "arch": {
+      "manager": "pacman",
+      "package": "darktable"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "darktable"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "darktable"
+    },
+    "label": "Darktable",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "darktable"
+    }
+  },
+  "deadbeef": {
+    "arch": {
+      "manager": "pacman",
+      "package": "deadbeef"
+    },
+    "label": "Deadbeef",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "deadbeef"
+    }
+  },
+  "debtap": {
+    "arch": {
+      "manager": "pacman",
+      "package": "debtap"
+    },
+    "label": "Debtap",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "deezer": {
+    "arch": {
+      "manager": "pacman",
+      "package": "deezer"
+    },
+    "label": "Deezer",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "deja-dup": {
+    "arch": {
+      "manager": "pacman",
+      "package": "deja-dup"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "deja-dup"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "deja-dup"
+    },
+    "label": "Deja Dup",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "deja-dup"
+    }
+  },
+  "deluge": {
+    "arch": {
+      "manager": "pacman",
+      "package": "deluge"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "deluge"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "deluge"
+    },
+    "label": "Deluge",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "deluge"
+    }
+  },
+  "digikam": {
+    "arch": {
+      "manager": "pacman",
+      "package": "digikam"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "digikam"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "digikam"
+    },
+    "label": "Digikam",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "digikam"
+    }
+  },
+  "discord-arch-electron": {
+    "arch": {
+      "manager": "pacman",
+      "package": "discord_arch_electron"
+    },
+    "label": "Discord Arch Electron",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "dmidecode": {
+    "arch": {
+      "manager": "pacman",
+      "package": "dmidecode"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "dmidecode"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "dmidecode"
+    },
+    "label": "Dmidecode",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "dmidecode"
+    }
+  },
+  "dolphin": {
+    "arch": {
+      "manager": "pacman",
+      "package": "dolphin"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "dolphin"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "dolphin"
+    },
+    "label": "Dolphin",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "dolphin"
+    }
+  },
+  "doublecmd-qt5": {
+    "arch": {
+      "manager": "pacman",
+      "package": "doublecmd-qt5"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "doublecmd-qt"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "doublecmd-qt"
+    },
+    "label": "Doublecmd Qt5",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "doublecmd-qt"
+    }
+  },
+  "downgrade": {
+    "arch": {
+      "manager": "pacman",
+      "package": "downgrade"
+    },
+    "label": "Downgrade",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "dracula-cursors": {
+    "arch": {
+      "manager": "aur",
+      "package": "dracula-cursors-git"
+    },
+    "label": "Dracula Cursors",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "dracula-gtk-theme": {
+    "arch": {
+      "manager": "pacman",
+      "package": "dracula-gtk-theme"
+    },
+    "label": "Dracula Gtk Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "dracula-icons": {
+    "arch": {
+      "manager": "aur",
+      "package": "dracula-icons-git"
+    },
+    "label": "Dracula Icons",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "droidcam": {
+    "arch": {
+      "manager": "pacman",
+      "package": "droidcam"
+    },
+    "label": "Droidcam",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "dropbox": {
+    "arch": {
+      "manager": "pacman",
+      "package": "dropbox"
+    },
+    "label": "Dropbox",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "duf": {
+    "arch": {
+      "manager": "pacman",
+      "package": "duf"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "duf"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "duf"
+    },
+    "label": "Duf",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "duf"
+    }
+  },
+  "edid-decode": {
+    "debian": {
+      "manager": "apt",
+      "package": "edid-decode"
+    },
+    "label": "Edid Decode",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "edid-decode"
+    }
+  },
+  "element-desktop": {
+    "arch": {
+      "manager": "pacman",
+      "package": "element-desktop"
+    },
+    "label": "Element Desktop",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "elisa": {
+    "arch": {
+      "manager": "pacman",
+      "package": "elisa"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "elisa"
+    },
+    "label": "Elisa",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "elisa"
+    }
+  },
+  "emacs": {
+    "arch": {
+      "manager": "pacman",
+      "package": "emacs"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "emacs"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "emacs"
+    },
+    "label": "Emacs",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "emacs"
+    }
+  },
+  "enpass": {
+    "arch": {
+      "manager": "aur",
+      "package": "enpass-bin"
+    },
+    "label": "Enpass",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "espeak-ng": {
+    "arch": {
+      "manager": "pacman",
+      "package": "espeak-ng"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "espeak-ng"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "espeak-ng"
+    },
+    "label": "Espeak Ng",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "espeak-ng"
+    }
+  },
+  "etcher": {
+    "arch": {
+      "manager": "aur",
+      "package": "etcher-bin"
+    },
+    "label": "Etcher",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "evince": {
+    "arch": {
+      "manager": "pacman",
+      "package": "evince"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "evince"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "evince"
+    },
+    "label": "Evince",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "evince"
+    }
+  },
+  "evolution": {
+    "arch": {
+      "manager": "pacman",
+      "package": "evolution"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "evolution"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "evolution"
+    },
+    "label": "Evolution",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "evolution"
+    }
+  },
+  "extremetuxracer": {
+    "arch": {
+      "manager": "pacman",
+      "package": "extremetuxracer"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "extremetuxracer"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "extremetuxracer"
+    },
+    "label": "Extremetuxracer",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "extremetuxracer"
+    }
+  },
+  "faba-icon-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "faba-icon-theme-git"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "faba-icon-theme"
+    },
+    "label": "Faba Icon Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "faba-icon-theme"
+    }
+  },
+  "faba-mono-icons": {
+    "arch": {
+      "manager": "aur",
+      "package": "faba-mono-icons-git"
+    },
+    "label": "Faba Mono Icons",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "falkon": {
+    "arch": {
+      "manager": "pacman",
+      "package": "falkon"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "falkon"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "falkon"
+    },
+    "label": "Falkon",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "falkon"
+    }
+  },
+  "fancontrol-gui": {
+    "arch": {
+      "manager": "aur",
+      "package": "fancontrol-gui-git"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "fancontrol-gui"
+    },
+    "label": "Fancontrol Gui",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "fastfetch": {
+    "arch": {
+      "manager": "pacman",
+      "package": "fastfetch"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fastfetch"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "fastfetch"
+    },
+    "label": "Fastfetch",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fastfetch"
+    }
+  },
+  "figlet": {
+    "arch": {
+      "manager": "pacman",
+      "package": "figlet"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "figlet"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "figlet"
+    },
+    "label": "Figlet",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "figlet"
+    }
+  },
+  "filezilla": {
+    "arch": {
+      "manager": "pacman",
+      "package": "filezilla"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "filezilla"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "filezilla"
+    },
+    "label": "Filezilla",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "filezilla"
+    }
+  },
+  "find-the-command": {
+    "arch": {
+      "manager": "aur",
+      "package": "find-the-command-git"
+    },
+    "label": "Find The Command",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "fingerprint-gui": {
+    "arch": {
+      "manager": "pacman",
+      "package": "fingerprint-gui"
+    },
+    "label": "Fingerprint Gui",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "firefox-adblock-plus": {
+    "arch": {
+      "manager": "pacman",
+      "package": "firefox-adblock-plus"
+    },
+    "label": "Firefox Adblock Plus",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "firefox-ublock-origin": {
+    "arch": {
+      "manager": "pacman",
+      "package": "firefox-ublock-origin"
+    },
+    "label": "Firefox Ublock Origin",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "flameshot": {
+    "arch": {
+      "manager": "aur",
+      "package": "flameshot-git"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "flameshot"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "flameshot"
+    },
+    "label": "Flameshot",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "flameshot"
+    }
+  },
+  "flat-remix": {
+    "arch": {
+      "manager": "aur",
+      "package": "flat-remix-git"
+    },
+    "label": "Flat Remix",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "flatpak": {
+    "arch": {
+      "manager": "pacman",
+      "package": "flatpak"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "flatpak"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "flatpak"
+    },
+    "label": "Flatpak",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "flatpak"
+    }
+  },
+  "flavours": {
+    "arch": {
+      "manager": "pacman",
+      "package": "flavours"
+    },
+    "label": "Flavours",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "florence": {
+    "arch": {
+      "manager": "pacman",
+      "package": "florence"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "florence"
+    },
+    "label": "Florence",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "fluent-gtk-theme": {
+    "arch": {
+      "manager": "pacman",
+      "package": "fluent-gtk-theme"
+    },
+    "label": "Fluent Gtk Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "fluent-icon-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "fluent-icon-theme-git"
+    },
+    "label": "Fluent Icon Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "focuswriter": {
+    "arch": {
+      "manager": "pacman",
+      "package": "focuswriter"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "focuswriter"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "focuswriter"
+    },
+    "label": "Focuswriter",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "focuswriter"
+    }
+  },
+  "font-manager": {
+    "arch": {
+      "manager": "aur",
+      "package": "font-manager-git"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "font-manager"
+    },
+    "label": "Font Manager",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "font-manager"
+    }
+  },
+  "fragments": {
+    "arch": {
+      "manager": "pacman",
+      "package": "fragments"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fragments"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "fragments"
+    },
+    "label": "Fragments",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fragments"
+    }
+  },
+  "freeciv": {
+    "arch": {
+      "manager": "pacman",
+      "package": "freeciv-gtk3"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "freeciv"
+    },
+    "label": "Freeciv",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "freeciv"
+    }
+  },
+  "freedownloadmanager": {
+    "arch": {
+      "manager": "pacman",
+      "package": "freedownloadmanager"
+    },
+    "label": "Freedownloadmanager",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "freeoffice": {
+    "arch": {
+      "manager": "pacman",
+      "package": "freeoffice"
+    },
+    "label": "Freeoffice",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "freetube": {
+    "arch": {
+      "manager": "aur",
+      "package": "freetube-bin"
+    },
+    "label": "Freetube",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "g4music": {
+    "arch": {
+      "manager": "pacman",
+      "package": "g4music-git"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "g4music"
+    },
+    "label": "G4music",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "galculator": {
+    "arch": {
+      "manager": "pacman",
+      "package": "galculator"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "galculator"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "galculator"
+    },
+    "label": "Galculator",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "galculator"
+    }
+  },
+  "game-devices-udev": {
+    "arch": {
+      "manager": "pacman",
+      "package": "game-devices-udev"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "steam-devices"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "steam-devices"
+    },
+    "label": "Game Devices Udev",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming",
+    "ubuntu": {
+      "manager": "apt",
+      "package": "steam-devices"
+    }
+  },
+  "gamehub": {
+    "arch": {
+      "manager": "aur",
+      "package": "gamehub-bin"
+    },
+    "label": "Gamehub",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming"
+  },
+  "gamemode": {
+    "arch": {
+      "manager": "pacman",
+      "package": "gamemode"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "gamemode"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "gamemode"
+    },
+    "label": "Gamemode",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming",
+    "ubuntu": {
+      "manager": "apt",
+      "package": "gamemode"
+    }
+  },
+  "gdown": {
+    "arch": {
+      "manager": "pacman",
+      "package": "gdown"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "gdown"
+    },
+    "label": "Gdown",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "gdown"
+    }
+  },
+  "geany": {
+    "arch": {
+      "manager": "pacman",
+      "package": "geany"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "geany"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "geany"
+    },
+    "label": "Geany",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "geany"
+    }
+  },
+  "geany-plugins": {
+    "arch": {
+      "manager": "pacman",
+      "package": "geany-plugins"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "geany-plugins"
+    },
+    "label": "Geany Plugins",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "geany-plugins"
+    }
+  },
+  "geary": {
+    "arch": {
+      "manager": "pacman",
+      "package": "geary"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "geary"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "geary"
+    },
+    "label": "Geary",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "geary"
+    }
+  },
+  "geekbench": {
+    "arch": {
+      "manager": "pacman",
+      "package": "geekbench"
+    },
+    "label": "Geekbench",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "ghostwriter": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ghostwriter"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "ghostwriter"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "ghostwriter"
+    },
+    "label": "Ghostwriter",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "ghostwriter"
+    }
+  },
+  "gitahead": {
+    "arch": {
+      "manager": "pacman",
+      "package": "gitahead"
+    },
+    "label": "Gitahead",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "gitfiend": {
+    "arch": {
+      "manager": "pacman",
+      "package": "gitfiend"
+    },
+    "label": "Gitfiend",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "gitg": {
+    "arch": {
+      "manager": "pacman",
+      "package": "gitg"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "gitg"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "gitg"
+    },
+    "label": "Gitg",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "gitg"
+    }
+  },
+  "github-desktop": {
+    "arch": {
+      "manager": "aur",
+      "package": "github-desktop-bin"
+    },
+    "label": "Github Desktop",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "gitkraken": {
+    "arch": {
+      "manager": "pacman",
+      "package": "gitkraken"
+    },
+    "label": "Gitkraken",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "glade": {
+    "arch": {
+      "manager": "pacman",
+      "package": "glade"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "glade"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "glade"
+    },
+    "label": "Glade",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "glade"
+    }
+  },
+  "gmusicbrowser": {
+    "arch": {
+      "manager": "pacman",
+      "package": "gmusicbrowser"
+    },
+    "label": "Gmusicbrowser",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "gmusicbrowser"
+    }
+  },
+  "gnome-chess": {
+    "arch": {
+      "manager": "pacman",
+      "package": "gnome-chess"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "gnome-chess"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "gnome-chess"
+    },
+    "label": "Gnome Chess",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "gnome-chess"
+    }
+  },
+  "gnome-disk-utility": {
+    "arch": {
+      "manager": "pacman",
+      "package": "gnome-disk-utility"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "gnome-disk-utility"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "gnome-disk-utility"
+    },
+    "label": "Gnome Disk Utility",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "gnome-disk-utility"
+    }
+  },
+  "gnome-software": {
+    "arch": {
+      "manager": "pacman",
+      "package": "gnome-software"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "gnome-software"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "gnome-software"
+    },
+    "label": "Gnome Software",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "gnome-software"
+    }
+  },
+  "gnome-terminal": {
+    "arch": {
+      "manager": "pacman",
+      "package": "gnome-terminal"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "gnome-terminal"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "gnome-terminal"
+    },
+    "label": "Gnome Terminal",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "gnome-terminal"
+    }
+  },
+  "gnome-terminal-transparency": {
+    "arch": {
+      "manager": "pacman",
+      "package": "gnome-terminal-transparency"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "gnome-terminal"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "gnome-terminal"
+    },
+    "label": "Gnome Terminal Transparency",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "gnome-terminal"
+    }
+  },
+  "gnuchess": {
+    "arch": {
+      "manager": "pacman",
+      "package": "gnuchess"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "gnuchess"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "gnuchess"
+    },
+    "label": "Gnuchess",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "gnuchess"
+    }
+  },
+  "gnumeric": {
+    "arch": {
+      "manager": "pacman",
+      "package": "gnumeric"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "gnumeric"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "gnumeric"
+    },
+    "label": "Gnumeric",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "gnumeric"
+    }
+  },
+  "google-chat-linux": {
+    "arch": {
+      "manager": "aur",
+      "package": "google-chat-linux-bin"
+    },
+    "label": "Google Chat Linux",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "google-chrome": {
+    "arch": {
+      "manager": "pacman",
+      "package": "google-chrome"
+    },
+    "label": "Google Chrome",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "google-earth-pro": {
+    "arch": {
+      "manager": "pacman",
+      "package": "google-earth-pro"
+    },
+    "label": "Google Earth Pro",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "gotop": {
+    "arch": {
+      "manager": "aur",
+      "package": "gotop-bin"
+    },
+    "label": "Gotop",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "goverlay": {
+    "arch": {
+      "manager": "aur",
+      "package": "goverlay"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "goverlay"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "goverlay"
+    },
+    "label": "Goverlay",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming",
+    "ubuntu": {
+      "manager": "apt",
+      "package": "goverlay"
+    }
+  },
+  "gpick": {
+    "arch": {
+      "manager": "pacman",
+      "package": "gpick"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "gpick"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "gpick"
+    },
+    "label": "Gpick",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "gpick"
+    }
+  },
+  "gputest": {
+    "arch": {
+      "manager": "pacman",
+      "package": "gputest"
+    },
+    "label": "Gputest",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "graphite-gtk-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "graphite-gtk-theme-git"
+    },
+    "label": "Graphite Gtk Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "grsync": {
+    "arch": {
+      "manager": "pacman",
+      "package": "grsync"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "grsync"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "grsync"
+    },
+    "label": "Grsync",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "grsync"
+    }
+  },
+  "grub-btrfs": {
+    "arch": {
+      "manager": "pacman",
+      "package": "grub-btrfs"
+    },
+    "label": "Grub Btrfs",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "grub-customizer": {
+    "arch": {
+      "manager": "pacman",
+      "package": "grub-customizer"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "grub-customizer"
+    },
+    "label": "Grub Customizer",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "gsmartcontrol": {
+    "arch": {
+      "manager": "pacman",
+      "package": "gsmartcontrol"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "gsmartcontrol"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "gsmartcontrol"
+    },
+    "label": "Gsmartcontrol",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "gsmartcontrol"
+    }
+  },
+  "gtop": {
+    "arch": {
+      "manager": "pacman",
+      "package": "gtop"
+    },
+    "label": "Gtop",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "guake": {
+    "arch": {
+      "manager": "pacman",
+      "package": "guake"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "guake"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "guake"
+    },
+    "label": "Guake",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "guake"
+    }
+  },
+  "gufw": {
+    "arch": {
+      "manager": "pacman",
+      "package": "gufw"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "gufw"
+    },
+    "label": "Gufw",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "gufw"
+    }
+  },
+  "gummy": {
+    "arch": {
+      "manager": "pacman",
+      "package": "gummy"
+    },
+    "label": "Gummy",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "guvcview": {
+    "arch": {
+      "manager": "pacman",
+      "package": "guvcview"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "guvcview"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "guvcview"
+    },
+    "label": "Guvcview",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "guvcview"
+    }
+  },
+  "handbrake": {
+    "arch": {
+      "manager": "pacman",
+      "package": "handbrake"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "handbrake"
+    },
+    "label": "Handbrake",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "handbrake"
+    }
+  },
+  "hardcode-fixer": {
+    "arch": {
+      "manager": "aur",
+      "package": "hardcode-fixer-git"
+    },
+    "label": "Hardcode Fixer",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "hardinfo-gtk3": {
+    "arch": {
+      "manager": "pacman",
+      "package": "hardinfo2"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "hardinfo"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "hardinfo2"
+    },
+    "label": "Hardinfo Gtk3",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "hardinfo"
+    }
+  },
+  "hddtemp": {
+    "arch": {
+      "manager": "pacman",
+      "package": "hddtemp"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "hddtemp"
+    },
+    "label": "Hddtemp",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "hddtemp"
+    }
+  },
+  "hedgewars": {
+    "arch": {
+      "manager": "pacman",
+      "package": "hedgewars"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "hedgewars"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "hedgewars"
+    },
+    "label": "Hedgewars",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "hedgewars"
+    }
+  },
+  "heroic-games-launcher": {
+    "arch": {
+      "manager": "aur",
+      "package": "heroic-games-launcher-bin"
+    },
+    "label": "Heroic Games Launcher",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming"
+  },
+  "hexchat": {
+    "arch": {
+      "manager": "pacman",
+      "package": "hexchat"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "hexchat"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "hexchat"
+    },
+    "label": "Hexchat",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "hexchat"
+    }
+  },
+  "hplip": {
+    "arch": {
+      "manager": "pacman",
+      "package": "hplip"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "hplip"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "hplip"
+    },
+    "label": "Hplip",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "hplip"
+    }
+  },
+  "hunspell": {
+    "arch": {
+      "manager": "pacman",
+      "package": "hunspell"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "hunspell"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "hunspell"
+    },
+    "label": "Hunspell",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "hunspell"
+    }
+  },
+  "hw-probe": {
+    "arch": {
+      "manager": "pacman",
+      "package": "hw-probe"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "hw-probe"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "hw-probe"
+    },
+    "label": "Hw Probe",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "hw-probe"
+    }
+  },
+  "hypnotix": {
+    "arch": {
+      "manager": "pacman",
+      "package": "hypnotix"
+    },
+    "label": "Hypnotix",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "icecat": {
+    "arch": {
+      "manager": "pacman",
+      "package": "icecat"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "icecat"
+    },
+    "label": "Icecat",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "icecat"
+    }
+  },
+  "ifuse": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ifuse"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "ifuse"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "ifuse"
+    },
+    "label": "Ifuse",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "ifuse"
+    }
+  },
+  "imagewriter": {
+    "arch": {
+      "manager": "pacman",
+      "package": "imagewriter"
+    },
+    "label": "Imagewriter",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "inetutils": {
+    "arch": {
+      "manager": "pacman",
+      "package": "inetutils"
+    },
+    "label": "Inetutils",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "inkscape": {
+    "arch": {
+      "manager": "pacman",
+      "package": "inkscape"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "inkscape"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "inkscape"
+    },
+    "label": "Inkscape",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "inkscape"
+    }
+  },
+  "insync": {
+    "arch": {
+      "manager": "pacman",
+      "package": "insync"
+    },
+    "label": "Insync",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "intellij-idea-community-edition": {
+    "arch": {
+      "manager": "pacman",
+      "package": "intellij-idea-community-edition"
+    },
+    "label": "Intellij Idea Community Edition",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "inxi": {
+    "arch": {
+      "manager": "pacman",
+      "package": "inxi"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "inxi"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "inxi"
+    },
+    "label": "Inxi",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "inxi"
+    }
+  },
+  "itch": {
+    "arch": {
+      "manager": "pacman",
+      "package": "itch"
+    },
+    "label": "Itch",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming"
+  },
+  "jdownloader2": {
+    "arch": {
+      "manager": "pacman",
+      "package": "jdownloader2"
+    },
+    "label": "Jdownloader2",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "jitsi-meet-desktop": {
+    "arch": {
+      "manager": "aur",
+      "package": "jitsi-meet-desktop-bin"
+    },
+    "label": "Jitsi Meet Desktop",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "joshuto": {
+    "arch": {
+      "manager": "pacman",
+      "package": "joshuto"
+    },
+    "label": "Joshuto",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "juk": {
+    "arch": {
+      "manager": "pacman",
+      "package": "juk"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "juk"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "juk"
+    },
+    "label": "Juk",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "juk"
+    }
+  },
+  "kazam": {
+    "arch": {
+      "manager": "pacman",
+      "package": "kazam"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "kazam"
+    },
+    "label": "Kazam",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "kazam"
+    }
+  },
+  "kbackup": {
+    "arch": {
+      "manager": "pacman",
+      "package": "kbackup"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "kbackup"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "kbackup"
+    },
+    "label": "Kbackup",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "kbackup"
+    }
+  },
+  "kbreakout": {
+    "arch": {
+      "manager": "pacman",
+      "package": "kbreakout"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "kbreakout"
+    },
+    "label": "Kbreakout",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "kbreakout"
+    }
+  },
+  "kde-dev-utils": {
+    "arch": {
+      "manager": "pacman",
+      "package": "kde-dev-utils"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "kde-dev-utils"
+    },
+    "label": "Kde Dev Utils",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "kdenlive": {
+    "arch": {
+      "manager": "pacman",
+      "package": "kdenlive"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "kdenlive"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "kdenlive"
+    },
+    "label": "Kdenlive",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "kdenlive"
+    }
+  },
+  "kdevelop": {
+    "arch": {
+      "manager": "pacman",
+      "package": "kdevelop"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "kdevelop"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "kdevelop"
+    },
+    "label": "Kdevelop",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "kdevelop"
+    }
+  },
+  "keepassxc": {
+    "arch": {
+      "manager": "pacman",
+      "package": "keepassxc"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "keepassxc"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "keepassxc"
+    },
+    "label": "Keepassxc",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "keepassxc"
+    }
+  },
+  "kitty": {
+    "arch": {
+      "manager": "pacman",
+      "package": "kitty"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "kitty"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "kitty"
+    },
+    "label": "Kitty",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "kitty"
+    }
+  },
+  "knights": {
+    "arch": {
+      "manager": "pacman",
+      "package": "knights"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "knights"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "knights"
+    },
+    "label": "Knights",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "knights"
+    }
+  },
+  "kodi": {
+    "arch": {
+      "manager": "pacman",
+      "package": "kodi"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "kodi"
+    },
+    "label": "Kodi",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "kodi"
+    }
+  },
+  "kodi-addons": {
+    "debian": {
+      "manager": "apt",
+      "package": "kodi"
+    },
+    "label": "Kodi Addons",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "kodi"
+    }
+  },
+  "kodi-x11": {
+    "debian": {
+      "manager": "apt",
+      "package": "kodi"
+    },
+    "label": "Kodi X11",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "kodi"
+    }
+  },
+  "konsave": {
+    "arch": {
+      "manager": "pacman",
+      "package": "konsave"
+    },
+    "label": "Konsave",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "konsole": {
+    "arch": {
+      "manager": "pacman",
+      "package": "konsole"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "konsole"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "konsole"
+    },
+    "label": "Konsole",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "konsole"
+    }
+  },
+  "krdc": {
+    "arch": {
+      "manager": "pacman",
+      "package": "krdc"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "krdc"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "krdc"
+    },
+    "label": "Krdc",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "krdc"
+    }
+  },
+  "kripton-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "kripton-theme-git"
+    },
+    "label": "Kripton Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "krita": {
+    "arch": {
+      "manager": "pacman",
+      "package": "krita"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "krita"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "krita"
+    },
+    "label": "Krita",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "krita"
+    }
+  },
+  "ktorrent": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ktorrent"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "ktorrent"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "ktorrent"
+    },
+    "label": "Ktorrent",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "ktorrent"
+    }
+  },
+  "kvantum-qt5": {
+    "arch": {
+      "manager": "aur",
+      "package": "kvantum-qt5-git"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "kvantum-qt5"
+    },
+    "label": "Kvantum Qt5",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "kvantum-qt6": {
+    "arch": {
+      "manager": "aur",
+      "package": "kvantum-qt6-git"
+    },
+    "label": "Kvantum Qt6",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "kvantum-theme-materia": {
+    "arch": {
+      "manager": "pacman",
+      "package": "kvantum-theme-materia"
+    },
+    "label": "Kvantum Theme Materia",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "kvantum-theme-qogir": {
+    "arch": {
+      "manager": "aur",
+      "package": "kvantum-theme-qogir-git"
+    },
+    "label": "Kvantum Theme Qogir",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "kwave": {
+    "arch": {
+      "manager": "pacman",
+      "package": "kwave"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "kwave"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "kwave"
+    },
+    "label": "Kwave",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "kwave"
+    }
+  },
+  "la-capitaine-icon-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "la-capitaine-icon-theme-git"
+    },
+    "label": "La Capitaine Icon Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "lastpass": {
+    "arch": {
+      "manager": "pacman",
+      "package": "lastpass"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "lastpass-cli"
+    },
+    "label": "Lastpass",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "layan-cursor-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "layan-cursor-theme-git"
+    },
+    "label": "Layan Cursor Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "layan-gtk-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "layan-gtk-theme-git"
+    },
+    "label": "Layan Gtk Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "leafpad": {
+    "arch": {
+      "manager": "pacman",
+      "package": "leafpad"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "leafpad"
+    },
+    "label": "Leafpad",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "leafpad"
+    }
+  },
+  "legendary": {
+    "arch": {
+      "manager": "pacman",
+      "package": "legendary"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "legendary"
+    },
+    "label": "Legendary",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming"
+  },
+  "lf": {
+    "arch": {
+      "manager": "pacman",
+      "package": "lf"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "lf"
+    },
+    "label": "Lf",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "lf"
+    }
+  },
+  "libertinus-font": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-libertinus"
+    },
+    "label": "Libertinus Font",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "libreoffice-fresh": {
+    "arch": {
+      "manager": "pacman",
+      "package": "libreoffice-fresh"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "libreoffice"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "libreoffice"
+    },
+    "label": "Libreoffice Fresh",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "libreoffice"
+    }
+  },
+  "libreoffice-still": {
+    "arch": {
+      "manager": "pacman",
+      "package": "libreoffice-still"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "libreoffice"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "libreoffice"
+    },
+    "label": "Libreoffice Still",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "libreoffice"
+    }
+  },
+  "liferea": {
+    "arch": {
+      "manager": "pacman",
+      "package": "liferea"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "liferea"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "liferea"
+    },
+    "label": "Liferea",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "liferea"
+    }
+  },
+  "light": {
+    "arch": {
+      "manager": "pacman",
+      "package": "light"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "light"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "light"
+    },
+    "label": "Light",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "light"
+    }
+  },
+  "linux": {
+    "arch": {
+      "manager": "pacman",
+      "package": "linux"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "kernel"
+    },
+    "label": "Linux",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "linux-image-generic"
+    }
+  },
+  "linux-headers": {
+    "arch": {
+      "manager": "pacman",
+      "package": "linux-headers"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "kernel-devel"
+    },
+    "label": "Linux Headers",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "linux-headers"
+    }
+  },
+  "linux-lts": {
+    "arch": {
+      "manager": "pacman",
+      "package": "linux-lts"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "kernel"
+    },
+    "label": "Linux Lts",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "linux-lts-headers": {
+    "arch": {
+      "manager": "pacman",
+      "package": "linux-lts-headers"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "kernel-devel"
+    },
+    "label": "Linux Lts Headers",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "linux-wifi-hotspot": {
+    "arch": {
+      "manager": "pacman",
+      "package": "linux-wifi-hotspot"
+    },
+    "label": "Linux Wifi Hotspot",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "lm-sensors": {
+    "arch": {
+      "manager": "pacman",
+      "package": "lm_sensors"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "lm-sensors"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "lm_sensors"
+    },
+    "label": "Lm Sensors",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "lm-sensors"
+    }
+  },
+  "lmms": {
+    "arch": {
+      "manager": "pacman",
+      "package": "lmms"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "lmms"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "lmms"
+    },
+    "label": "Lmms",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "lmms"
+    }
+  },
+  "lohit-fonts": {
+    "arch": {
+      "manager": "pacman",
+      "package": "lohit-fonts"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-lohit-deva"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "lohit-devanagari-fonts"
+    },
+    "label": "Lohit Fonts",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fonts-lohit-deva"
+    }
+  },
+  "lolcat": {
+    "arch": {
+      "manager": "pacman",
+      "package": "lolcat"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "lolcat"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "lolcat"
+    },
+    "label": "Lolcat",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "lolcat"
+    }
+  },
+  "lollypop": {
+    "arch": {
+      "manager": "pacman",
+      "package": "lollypop"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "lollypop"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "lollypop"
+    },
+    "label": "Lollypop",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "lollypop"
+    }
+  },
+  "losslesscut": {
+    "arch": {
+      "manager": "aur",
+      "package": "losslesscut-bin"
+    },
+    "label": "Losslesscut",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "lshw": {
+    "arch": {
+      "manager": "pacman",
+      "package": "lshw"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "lshw"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "lshw"
+    },
+    "label": "Lshw",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "lshw"
+    }
+  },
+  "luna-icon-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "luna-icon-theme-git"
+    },
+    "label": "Luna Icon Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "lutris": {
+    "arch": {
+      "manager": "pacman",
+      "package": "lutris"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "lutris"
+    },
+    "label": "Lutris",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming",
+    "ubuntu": {
+      "manager": "apt",
+      "package": "lutris"
+    }
+  },
+  "lxmusic": {
+    "arch": {
+      "manager": "pacman",
+      "package": "lxmusic"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "lxmusic"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "lxmusic"
+    },
+    "label": "Lxmusic",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "lxmusic"
+    }
+  },
+  "lxterminal": {
+    "arch": {
+      "manager": "pacman",
+      "package": "lxterminal"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "lxterminal"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "lxterminal"
+    },
+    "label": "Lxterminal",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "lxterminal"
+    }
+  },
+  "mailspring": {
+    "arch": {
+      "manager": "pacman",
+      "package": "mailspring"
+    },
+    "label": "Mailspring",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "makemkv": {
+    "arch": {
+      "manager": "pacman",
+      "package": "makemkv"
+    },
+    "label": "Makemkv",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "mangohud": {
+    "arch": {
+      "manager": "pacman",
+      "package": "mangohud"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "mangohud"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "mangohud"
+    },
+    "label": "Mangohud",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming",
+    "ubuntu": {
+      "manager": "apt",
+      "package": "mangohud"
+    }
+  },
+  "mari0": {
+    "arch": {
+      "manager": "pacman",
+      "package": "mari0"
+    },
+    "label": "Mari0",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "materia-gtk-theme": {
+    "arch": {
+      "manager": "pacman",
+      "package": "materia-gtk-theme"
+    },
+    "label": "Materia Gtk Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "materia-gtk-theme"
+    }
+  },
+  "materia-kde": {
+    "arch": {
+      "manager": "pacman",
+      "package": "materia-kde"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "materia-kde"
+    },
+    "label": "Materia Kde",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "materia-kde"
+    }
+  },
+  "mc": {
+    "arch": {
+      "manager": "pacman",
+      "package": "mc"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "mc"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "mc"
+    },
+    "label": "Mc",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "mc"
+    }
+  },
+  "mcomix": {
+    "arch": {
+      "manager": "pacman",
+      "package": "mcomix"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "mcomix"
+    },
+    "label": "Mcomix",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "mcomix"
+    }
+  },
+  "mediainfo-gui": {
+    "arch": {
+      "manager": "pacman",
+      "package": "mediainfo-gui"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "mediainfo-gui"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "mediainfo-gui"
+    },
+    "label": "Mediainfo Gui",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "mediainfo-gui"
+    }
+  },
+  "megasync": {
+    "arch": {
+      "manager": "aur",
+      "package": "megasync-bin"
+    },
+    "label": "Megasync",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "meld": {
+    "arch": {
+      "manager": "pacman",
+      "package": "meld"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "meld"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "meld"
+    },
+    "label": "Meld",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "meld"
+    }
+  },
+  "micro": {
+    "arch": {
+      "manager": "pacman",
+      "package": "micro"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "micro"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "micro"
+    },
+    "label": "Micro",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "micro"
+    }
+  },
+  "minecraft-launcher": {
+    "arch": {
+      "manager": "pacman",
+      "package": "minecraft-launcher"
+    },
+    "label": "Minecraft Launcher",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "minigalaxy": {
+    "arch": {
+      "manager": "pacman",
+      "package": "minigalaxy"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "minigalaxy"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "minigalaxy"
+    },
+    "label": "Minigalaxy",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming",
+    "ubuntu": {
+      "manager": "apt",
+      "package": "minigalaxy"
+    }
+  },
+  "mintstick": {
+    "arch": {
+      "manager": "aur",
+      "package": "mintstick-git"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "mintstick"
+    },
+    "label": "Mintstick",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "mintstick"
+    }
+  },
+  "mkinitcpio-firmware": {
+    "arch": {
+      "manager": "pacman",
+      "package": "mkinitcpio-firmware"
+    },
+    "label": "Mkinitcpio Firmware",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "mkvtoolnix-gui": {
+    "arch": {
+      "manager": "pacman",
+      "package": "mkvtoolnix-gui"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "mkvtoolnix-gui"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "mkvtoolnix-gui"
+    },
+    "label": "Mkvtoolnix Gui",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "mkvtoolnix-gui"
+    }
+  },
+  "moka-icon-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "moka-icon-theme-git"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "moka-icon-theme"
+    },
+    "label": "Moka Icon Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "moka-icon-theme"
+    }
+  },
+  "moneydance": {
+    "arch": {
+      "manager": "pacman",
+      "package": "moneydance"
+    },
+    "label": "Moneydance",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "mousetweaks": {
+    "arch": {
+      "manager": "pacman",
+      "package": "mousetweaks"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "mousetweaks"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "mousetweaks"
+    },
+    "label": "Mousetweaks",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "mousetweaks"
+    }
+  },
+  "mpc": {
+    "arch": {
+      "manager": "pacman",
+      "package": "mpc"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "mpc"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "mpc"
+    },
+    "label": "Mpc",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "mpc"
+    }
+  },
+  "mpd": {
+    "arch": {
+      "manager": "pacman",
+      "package": "mpd"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "mpd"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "mpd"
+    },
+    "label": "Mpd",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "mpd"
+    }
+  },
+  "mpv": {
+    "arch": {
+      "manager": "pacman",
+      "package": "mpv"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "mpv"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "mpv"
+    },
+    "label": "Mpv",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "mpv"
+    }
+  },
+  "ms-office-online": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ms-office-online"
+    },
+    "label": "Ms Office Online",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "mullvad-vpn": {
+    "arch": {
+      "manager": "aur",
+      "package": "mullvad-vpn-bin"
+    },
+    "label": "Mullvad Vpn",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "multimc": {
+    "arch": {
+      "manager": "aur",
+      "package": "multimc-git"
+    },
+    "label": "Multimc",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "mumble": {
+    "arch": {
+      "manager": "pacman",
+      "package": "mumble"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "mumble"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "mumble"
+    },
+    "label": "Mumble",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "mumble"
+    }
+  },
+  "nautilus": {
+    "arch": {
+      "manager": "pacman",
+      "package": "nautilus"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "nautilus"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "nautilus"
+    },
+    "label": "Nautilus",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "nautilus"
+    }
+  },
+  "nautilus-open-any-terminal": {
+    "arch": {
+      "manager": "pacman",
+      "package": "nautilus-open-any-terminal"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "gnome-terminal"
+    },
+    "label": "Nautilus Open Any Terminal",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "gnome-terminal"
+    }
+  },
+  "ncmpcpp": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ncmpcpp"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "ncmpcpp"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "ncmpcpp"
+    },
+    "label": "Ncmpcpp",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "ncmpcpp"
+    }
+  },
+  "nemo": {
+    "arch": {
+      "manager": "pacman",
+      "package": "nemo"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "nemo"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "nemo"
+    },
+    "label": "Nemo",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "nemo"
+    }
+  },
+  "nemo-fileroller": {
+    "arch": {
+      "manager": "pacman",
+      "package": "nemo-fileroller"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "nemo-fileroller"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "nemo-fileroller"
+    },
+    "label": "Nemo Fileroller",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "nemo-fileroller"
+    }
+  },
+  "neochat": {
+    "arch": {
+      "manager": "pacman",
+      "package": "neochat"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "neochat"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "neochat"
+    },
+    "label": "Neochat",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "neochat"
+    }
+  },
+  "neofetch": {
+    "arch": {
+      "manager": "pacman",
+      "package": "neofetch"
+    },
+    "label": "Neofetch",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "neofetch"
+    }
+  },
+  "netbeans": {
+    "arch": {
+      "manager": "pacman",
+      "package": "netbeans"
+    },
+    "label": "Netbeans",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "netsurf": {
+    "arch": {
+      "manager": "pacman",
+      "package": "netsurf"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "netsurf"
+    },
+    "label": "Netsurf",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "netsurf"
+    }
+  },
+  "neverball": {
+    "arch": {
+      "manager": "pacman",
+      "package": "neverball"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "neverball"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "neverball"
+    },
+    "label": "Neverball",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "neverball"
+    }
+  },
+  "nextcloud-client": {
+    "arch": {
+      "manager": "pacman",
+      "package": "nextcloud-client"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "nextcloud-desktop"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "nextcloud-client"
+    },
+    "label": "Nextcloud Client",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "nextcloud-desktop"
+    }
+  },
+  "nitrogen": {
+    "arch": {
+      "manager": "pacman",
+      "package": "nitrogen"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "nitrogen"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "nitrogen"
+    },
+    "label": "Nitrogen",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "nitrogen"
+    }
+  },
+  "nixieclock": {
+    "arch": {
+      "manager": "pacman",
+      "package": "nixieclock"
+    },
+    "label": "Nixieclock",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "nnn": {
+    "arch": {
+      "manager": "pacman",
+      "package": "nnn"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "nnn"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "nnn"
+    },
+    "label": "Nnn",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "nnn"
+    }
+  },
+  "nomachine": {
+    "arch": {
+      "manager": "pacman",
+      "package": "nomachine"
+    },
+    "label": "Nomachine",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "nomacs": {
+    "arch": {
+      "manager": "pacman",
+      "package": "nomacs"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "nomacs"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "nomacs"
+    },
+    "label": "Nomacs",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "nomacs"
+    }
+  },
+  "nomacs-qt6": {
+    "arch": {
+      "manager": "aur",
+      "package": "nomacs"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "nomacs"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "nomacs"
+    },
+    "label": "Nomacs Qt6",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "nomacs"
+    }
+  },
+  "nordpass": {
+    "arch": {
+      "manager": "aur",
+      "package": "nordpass-bin"
+    },
+    "label": "Nordpass",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "nordtray": {
+    "arch": {
+      "manager": "aur",
+      "package": "nordtray-bin"
+    },
+    "label": "Nordtray",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "nordvpn": {
+    "arch": {
+      "manager": "aur",
+      "package": "nordvpn-bin"
+    },
+    "label": "Nordvpn",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "nordzy-icon-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "nordzy-icon-theme-git"
+    },
+    "label": "Nordzy Icon Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "notepadqq": {
+    "arch": {
+      "manager": "pacman",
+      "package": "notepadqq"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "notepadqq"
+    },
+    "label": "Notepadqq",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "notepadqq"
+    }
+  },
+  "noto-fonts": {
+    "arch": {
+      "manager": "pacman",
+      "package": "noto-fonts"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-noto-core"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "google-noto-sans-fonts"
+    },
+    "label": "Noto Fonts",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fonts-noto-core"
+    }
+  },
+  "noto-fonts-emoji": {
+    "arch": {
+      "manager": "pacman",
+      "package": "noto-fonts-emoji"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-noto-color-emoji"
+    },
+    "label": "Noto Fonts Emoji",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fonts-noto-color-emoji"
+    }
+  },
+  "numix-circle-icon-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "numix-circle-icon-theme-git"
+    },
+    "label": "Numix Circle Icon Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "numix-gtk-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "numix-gtk-theme-git"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "numix-gtk-theme"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "numix-gtk-theme"
+    },
+    "label": "Numix Gtk Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "numix-gtk-theme"
+    }
+  },
+  "numix-icon-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "numix-icon-theme-git"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "numix-icon-theme"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "numix-icon-theme"
+    },
+    "label": "Numix Icon Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "numix-icon-theme"
+    }
+  },
+  "nvtop": {
+    "arch": {
+      "manager": "pacman",
+      "package": "nvtop"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "nvtop"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "nvtop"
+    },
+    "label": "Nvtop",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "nvtop"
+    }
+  },
+  "obs-studio": {
+    "arch": {
+      "manager": "pacman",
+      "package": "obs-studio"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "obs-studio"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "obs-studio"
+    },
+    "label": "Obs Studio",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "obs-studio"
+    }
+  },
+  "obsidian-icon-theme": {
+    "arch": {
+      "manager": "pacman",
+      "package": "obsidian-icon-theme"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "obsidian-icon-theme"
+    },
+    "label": "Obsidian Icon Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "obsidian-icon-theme"
+    }
+  },
+  "octopi": {
+    "arch": {
+      "manager": "pacman",
+      "package": "octopi"
+    },
+    "label": "Octopi",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "octopi-notifier-qt5": {
+    "arch": {
+      "manager": "pacman",
+      "package": "octopi"
+    },
+    "label": "Octopi Notifier Qt5",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "oh-my-zsh": {
+    "arch": {
+      "manager": "aur",
+      "package": "oh-my-zsh-git"
+    },
+    "label": "Oh My Zsh",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "oh-my-zsh-powerline-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "oh-my-zsh-powerline-theme-git"
+    },
+    "label": "Oh My Zsh Powerline Theme",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "okular": {
+    "arch": {
+      "manager": "pacman",
+      "package": "okular"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "okular"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "okular"
+    },
+    "label": "Okular",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "okular"
+    }
+  },
+  "olivia": {
+    "arch": {
+      "manager": "pacman",
+      "package": "olivia-git"
+    },
+    "label": "Olivia",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "onboard": {
+    "arch": {
+      "manager": "pacman",
+      "package": "onboard"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "onboard"
+    },
+    "label": "Onboard",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "onboard"
+    }
+  },
+  "onlyoffice": {
+    "arch": {
+      "manager": "aur",
+      "package": "onlyoffice-bin"
+    },
+    "label": "Onlyoffice",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "ookla-speedtest": {
+    "arch": {
+      "manager": "aur",
+      "package": "ookla-speedtest-bin"
+    },
+    "label": "Ookla Speedtest",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "open-vm-tools": {
+    "arch": {
+      "manager": "pacman",
+      "package": "open-vm-tools"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "open-vm-tools"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "open-vm-tools"
+    },
+    "label": "Open Vm Tools",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "open-vm-tools"
+    }
+  },
+  "openbox-themes-pambudi": {
+    "arch": {
+      "manager": "aur",
+      "package": "openbox-themes-pambudi-git"
+    },
+    "label": "Openbox Themes Pambudi",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "openoffice": {
+    "arch": {
+      "manager": "aur",
+      "package": "openoffice-bin"
+    },
+    "label": "Openoffice",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "openscad": {
+    "arch": {
+      "manager": "pacman",
+      "package": "openscad"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "openscad"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "openscad"
+    },
+    "label": "Openscad",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "openscad"
+    }
+  },
+  "openshot": {
+    "arch": {
+      "manager": "pacman",
+      "package": "openshot"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "openshot-qt"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "openshot"
+    },
+    "label": "Openshot",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "openshot"
+    }
+  },
+  "opera": {
+    "arch": {
+      "manager": "pacman",
+      "package": "opera"
+    },
+    "label": "Opera",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "oranchelo-icon-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "oranchelo-icon-theme-git"
+    },
+    "label": "Oranchelo Icon Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "orca": {
+    "arch": {
+      "manager": "pacman",
+      "package": "orca"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "orca"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "orca"
+    },
+    "label": "Orca",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "orca"
+    }
+  },
+  "orchis-kde-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "plasma6-themes-orchis-kde-git"
+    },
+    "label": "Orchis Kde Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "orchis-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "orchis-theme-git"
+    },
+    "label": "Orchis Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "pacback": {
+    "arch": {
+      "manager": "pacman",
+      "package": "pacback"
+    },
+    "label": "Pacback",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "pace": {
+    "arch": {
+      "manager": "pacman",
+      "package": "pace"
+    },
+    "label": "Pace",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "pacseek": {
+    "arch": {
+      "manager": "aur",
+      "package": "pacseek-bin"
+    },
+    "label": "Pacseek",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "paper-icon-theme": {
+    "arch": {
+      "manager": "pacman",
+      "package": "paper-icon-theme"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "paper-icon-theme"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "paper-icon-theme"
+    },
+    "label": "Paper Icon Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "paper-icon-theme"
+    }
+  },
+  "papirus-folders": {
+    "arch": {
+      "manager": "aur",
+      "package": "papirus-folders-git"
+    },
+    "label": "Papirus Folders",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "papirus-folders-nordic": {
+    "arch": {
+      "manager": "pacman",
+      "package": "papirus-folders-nordic"
+    },
+    "label": "Papirus Folders Nordic",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "papirus-icon-theme": {
+    "arch": {
+      "manager": "pacman",
+      "package": "papirus-icon-theme"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "papirus-icon-theme"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "papirus-icon-theme"
+    },
+    "label": "Papirus Icon Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "papirus-icon-theme"
+    }
+  },
+  "papirus-linux-universe": {
+    "arch": {
+      "manager": "pacman",
+      "package": "papirus-linux-universe"
+    },
+    "label": "Papirus Linux Universe",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "papirus-nord": {
+    "arch": {
+      "manager": "pacman",
+      "package": "papirus-nord"
+    },
+    "label": "Papirus Nord",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "parcellite": {
+    "arch": {
+      "manager": "pacman",
+      "package": "parcellite"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "parcellite"
+    },
+    "label": "Parcellite",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "parcellite"
+    }
+  },
+  "paru": {
+    "arch": {
+      "manager": "pacman",
+      "package": "paru"
+    },
+    "label": "Paru",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "pcmanfm": {
+    "arch": {
+      "manager": "pacman",
+      "package": "pcmanfm"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "pcmanfm"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "pcmanfm"
+    },
+    "label": "Pcmanfm",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "pcmanfm"
+    }
+  },
+  "pdfarranger": {
+    "arch": {
+      "manager": "pacman",
+      "package": "pdfarranger"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "pdfarranger"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "pdfarranger"
+    },
+    "label": "Pdfarranger",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "pdfarranger"
+    }
+  },
+  "peek": {
+    "arch": {
+      "manager": "pacman",
+      "package": "peek"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "peek"
+    },
+    "label": "Peek",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "peek"
+    }
+  },
+  "persepolis": {
+    "arch": {
+      "manager": "pacman",
+      "package": "persepolis"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "persepolis"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "persepolis"
+    },
+    "label": "Persepolis",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "persepolis"
+    }
+  },
+  "pfetch": {
+    "arch": {
+      "manager": "pacman",
+      "package": "pfetch"
+    },
+    "label": "Pfetch",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "phinger-cursors": {
+    "arch": {
+      "manager": "pacman",
+      "package": "phinger-cursors"
+    },
+    "label": "Phinger Cursors",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "phoronix-test-suite": {
+    "arch": {
+      "manager": "pacman",
+      "package": "phoronix-test-suite"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "phoronix-test-suite"
+    },
+    "label": "Phoronix Test Suite",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "picom": {
+    "arch": {
+      "manager": "pacman",
+      "package": "picom"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "picom"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "picom"
+    },
+    "label": "Picom",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "picom"
+    }
+  },
+  "picom-ibhagwan": {
+    "debian": {
+      "manager": "apt",
+      "package": "picom"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "picom"
+    },
+    "label": "Picom Ibhagwan",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "picom"
+    }
+  },
+  "picom-jonaburg": {
+    "debian": {
+      "manager": "apt",
+      "package": "picom"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "picom"
+    },
+    "label": "Picom Jonaburg",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "picom"
+    }
+  },
+  "pidgin": {
+    "arch": {
+      "manager": "pacman",
+      "package": "pidgin"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "pidgin"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "pidgin"
+    },
+    "label": "Pidgin",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "pidgin"
+    }
+  },
+  "pikaur": {
+    "arch": {
+      "manager": "aur",
+      "package": "pikaur-git"
+    },
+    "label": "Pikaur",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "piper": {
+    "arch": {
+      "manager": "pacman",
+      "package": "piper"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "piper"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "piper"
+    },
+    "label": "Piper",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "piper"
+    }
+  },
+  "pipes-sh": {
+    "arch": {
+      "manager": "pacman",
+      "package": "pipes.sh"
+    },
+    "label": "Pipes Sh",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "pitivi": {
+    "arch": {
+      "manager": "pacman",
+      "package": "pitivi"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "pitivi"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "pitivi"
+    },
+    "label": "Pitivi",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "pitivi"
+    }
+  },
+  "plank": {
+    "arch": {
+      "manager": "pacman",
+      "package": "plank"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "plank"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "plank"
+    },
+    "label": "Plank",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "plank"
+    }
+  },
+  "plata-theme": {
+    "arch": {
+      "manager": "pacman",
+      "package": "plata-theme"
+    },
+    "label": "Plata Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "playonlinux": {
+    "arch": {
+      "manager": "pacman",
+      "package": "playonlinux"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "playonlinux"
+    },
+    "label": "Playonlinux",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming",
+    "ubuntu": {
+      "manager": "apt",
+      "package": "playonlinux"
+    }
+  },
+  "plex-media-player": {
+    "arch": {
+      "manager": "pacman",
+      "package": "plex-media-player"
+    },
+    "label": "Plex Media Player",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "plex-media-server": {
+    "arch": {
+      "manager": "pacman",
+      "package": "plex-media-server"
+    },
+    "label": "Plex Media Server",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "power-profiles-daemon": {
+    "arch": {
+      "manager": "pacman",
+      "package": "power-profiles-daemon"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "power-profiles-daemon"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "power-profiles-daemon"
+    },
+    "label": "Power Profiles Daemon",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "power-profiles-daemon"
+    }
+  },
+  "powerpill": {
+    "arch": {
+      "manager": "pacman",
+      "package": "powerpill-me"
+    },
+    "label": "Powerpill",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "powertop": {
+    "arch": {
+      "manager": "pacman",
+      "package": "powertop"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "powertop"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "powertop"
+    },
+    "label": "Powertop",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "powertop"
+    }
+  },
+  "pragha": {
+    "arch": {
+      "manager": "pacman",
+      "package": "pragha"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "pragha"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "pragha"
+    },
+    "label": "Pragha",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "pragha"
+    }
+  },
+  "privoxy": {
+    "arch": {
+      "manager": "pacman",
+      "package": "privoxy"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "privoxy"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "privoxy"
+    },
+    "label": "Privoxy",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "privoxy"
+    }
+  },
+  "prot16-xfce4-terminal": {
+    "arch": {
+      "manager": "pacman",
+      "package": "prot16-xfce4-terminal"
+    },
+    "label": "Prot16 Xfce4 Terminal",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "proton-community-updater": {
+    "arch": {
+      "manager": "pacman",
+      "package": "proton-community-updater"
+    },
+    "label": "Proton Community Updater",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming"
+  },
+  "proton-ge-custom": {
+    "arch": {
+      "manager": "aur",
+      "package": "proton-ge-custom-bin"
+    },
+    "label": "Proton Ge Custom",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming"
+  },
+  "protontricks": {
+    "arch": {
+      "manager": "pacman",
+      "package": "protontricks"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "protontricks"
+    },
+    "label": "Protontricks",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming",
+    "ubuntu": {
+      "manager": "apt",
+      "package": "protontricks"
+    }
+  },
+  "protonup": {
+    "arch": {
+      "manager": "aur",
+      "package": "protonup-git"
+    },
+    "label": "Protonup",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming"
+  },
+  "protonup-qt": {
+    "arch": {
+      "manager": "aur",
+      "package": "protonup-qt-bin"
+    },
+    "label": "Protonup Qt",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming"
+  },
+  "pulsar": {
+    "arch": {
+      "manager": "aur",
+      "package": "pulsar-bin"
+    },
+    "label": "Pulsar",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "putty": {
+    "arch": {
+      "manager": "pacman",
+      "package": "putty"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "putty"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "putty"
+    },
+    "label": "Putty",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "putty"
+    }
+  },
+  "pycharm-community-edition": {
+    "arch": {
+      "manager": "pacman",
+      "package": "pycharm-community-edition"
+    },
+    "label": "Pycharm Community Edition",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "python-pywal": {
+    "arch": {
+      "manager": "pacman",
+      "package": "python-pywal"
+    },
+    "label": "Python Pywal",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "qbittorrent": {
+    "arch": {
+      "manager": "pacman",
+      "package": "qbittorrent"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "qbittorrent"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "qbittorrent"
+    },
+    "label": "Qbittorrent",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "qbittorrent"
+    }
+  },
+  "qemu-base": {
+    "arch": {
+      "manager": "pacman",
+      "package": "qemu-base"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "qemu-system-x86"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "qemu-system-x86-core"
+    },
+    "label": "Qemu Base",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "qemu-system-x86"
+    }
+  },
+  "qemu-full": {
+    "arch": {
+      "manager": "pacman",
+      "package": "qemu-full"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "qemu-system-x86"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "qemu-system-x86-core"
+    },
+    "label": "Qemu Full",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "qemu-system-x86"
+    }
+  },
+  "qogir-gtk-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "qogir-gtk-theme-git"
+    },
+    "label": "Qogir Gtk Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "qogir-icon-theme": {
+    "arch": {
+      "manager": "pacman",
+      "package": "qogir-icon-theme"
+    },
+    "label": "Qogir Icon Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "qt5-tools": {
+    "arch": {
+      "manager": "pacman",
+      "package": "qt5-tools"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "qt5-qmake"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "qt5-qtbase"
+    },
+    "label": "Qt5 Tools",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "qt5-qmake"
+    }
+  },
+  "qtcreator": {
+    "arch": {
+      "manager": "pacman",
+      "package": "qtcreator"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "qtcreator"
+    },
+    "label": "Qtcreator",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "qtcreator"
+    }
+  },
+  "qtox": {
+    "arch": {
+      "manager": "pacman",
+      "package": "qtox-toktok"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "qtox"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "qtox"
+    },
+    "label": "Qtox",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "qtox"
+    }
+  },
+  "qtscrcpy": {
+    "arch": {
+      "manager": "pacman",
+      "package": "qtscrcpy"
+    },
+    "label": "Qtscrcpy",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "qtwebflix": {
+    "arch": {
+      "manager": "aur",
+      "package": "qtwebflix-git"
+    },
+    "label": "Qtwebflix",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "quickemu": {
+    "arch": {
+      "manager": "pacman",
+      "package": "quickemu"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "quickemu"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "quickemu"
+    },
+    "label": "Quickemu",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "quickemu"
+    }
+  },
+  "quickgui": {
+    "arch": {
+      "manager": "aur",
+      "package": "quickgui-bin"
+    },
+    "label": "Quickgui",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "qutebrowser": {
+    "arch": {
+      "manager": "pacman",
+      "package": "qutebrowser"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "qutebrowser"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "qutebrowser"
+    },
+    "label": "Qutebrowser",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "qutebrowser"
+    }
+  },
+  "radiotray": {
+    "arch": {
+      "manager": "pacman",
+      "package": "radiotray"
+    },
+    "label": "Radiotray",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "ranger": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ranger"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "ranger"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "ranger"
+    },
+    "label": "Ranger",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "ranger"
+    }
+  },
+  "rare": {
+    "arch": {
+      "manager": "pacman",
+      "package": "rare"
+    },
+    "label": "Rare",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming"
+  },
+  "rate-mirrors": {
+    "arch": {
+      "manager": "pacman",
+      "package": "rate-mirrors"
+    },
+    "label": "Rate Mirrors",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "realvnc-vnc-server": {
+    "arch": {
+      "manager": "pacman",
+      "package": "realvnc-vnc-server"
+    },
+    "label": "Realvnc Vnc Server",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "realvnc-vnc-viewer": {
+    "arch": {
+      "manager": "pacman",
+      "package": "realvnc-vnc-viewer"
+    },
+    "label": "Realvnc Vnc Viewer",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "realvnc-vnc-viewer"
+    }
+  },
+  "redshift": {
+    "arch": {
+      "manager": "pacman",
+      "package": "redshift"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "redshift"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "redshift"
+    },
+    "label": "Redshift",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "redshift"
+    }
+  },
+  "remmina": {
+    "arch": {
+      "manager": "pacman",
+      "package": "remmina"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "remmina"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "remmina"
+    },
+    "label": "Remmina",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "remmina"
+    }
+  },
+  "replay-sorcery": {
+    "arch": {
+      "manager": "pacman",
+      "package": "replay-sorcery"
+    },
+    "label": "Replay Sorcery",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming"
+  },
+  "rhythmbox": {
+    "arch": {
+      "manager": "pacman",
+      "package": "rhythmbox"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "rhythmbox"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "rhythmbox"
+    },
+    "label": "Rhythmbox",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "rhythmbox"
+    }
+  },
+  "ripgrep": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ripgrep"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "ripgrep"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "ripgrep"
+    },
+    "label": "Ripgrep",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "ripgrep"
+    }
+  },
+  "ripgrep-all": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ripgrep-all"
+    },
+    "label": "Ripgrep All",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "rxvt-unicode": {
+    "arch": {
+      "manager": "pacman",
+      "package": "rxvt-unicode"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "rxvt-unicode"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "rxvt-unicode"
+    },
+    "label": "Rxvt Unicode",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "rxvt-unicode"
+    }
+  },
+  "s-tui": {
+    "arch": {
+      "manager": "pacman",
+      "package": "s-tui"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "s-tui"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "s-tui"
+    },
+    "label": "S Tui",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "s-tui"
+    }
+  },
+  "sakura": {
+    "arch": {
+      "manager": "pacman",
+      "package": "sakura"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "sakura"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "sakura"
+    },
+    "label": "Sakura",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "sakura"
+    }
+  },
+  "sardi-flat-mint-y-icons": {
+    "arch": {
+      "manager": "aur",
+      "package": "sardi-icons"
+    },
+    "label": "Sardi Flat Mint Y Icons",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "sardi-flat-mixing-icons": {
+    "arch": {
+      "manager": "aur",
+      "package": "sardi-icons"
+    },
+    "label": "Sardi Flat Mixing Icons",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "sardi-icons": {
+    "arch": {
+      "manager": "pacman",
+      "package": "sardi-icons"
+    },
+    "label": "Sardi Icons",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "sardi-mint-y-icons": {
+    "arch": {
+      "manager": "aur",
+      "package": "sardi-icons"
+    },
+    "label": "Sardi Mint Y Icons",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "sardi-mixing-icons": {
+    "arch": {
+      "manager": "aur",
+      "package": "sardi-icons"
+    },
+    "label": "Sardi Mixing Icons",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "sauerbraten": {
+    "arch": {
+      "manager": "pacman",
+      "package": "sauerbraten"
+    },
+    "label": "Sauerbraten",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "sauerbraten"
+    }
+  },
+  "sauerbraten-data": {
+    "arch": {
+      "manager": "pacman",
+      "package": "sauerbraten-data"
+    },
+    "label": "Sauerbraten Data",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "sayonara-player": {
+    "arch": {
+      "manager": "pacman",
+      "package": "sayonara-player"
+    },
+    "label": "Sayonara Player",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "scrcpy": {
+    "arch": {
+      "manager": "pacman",
+      "package": "scrcpy"
+    },
+    "label": "Scrcpy",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "scrcpy"
+    }
+  },
+  "screenfetch": {
+    "arch": {
+      "manager": "pacman",
+      "package": "screenfetch"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "screenfetch"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "screenfetch"
+    },
+    "label": "Screenfetch",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "screenfetch"
+    }
+  },
+  "screenkey": {
+    "arch": {
+      "manager": "aur",
+      "package": "screenkey-git"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "screenkey"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "screenkey"
+    },
+    "label": "Screenkey",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "screenkey"
+    }
+  },
+  "scribus": {
+    "arch": {
+      "manager": "pacman",
+      "package": "scribus"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "scribus"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "scribus"
+    },
+    "label": "Scribus",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "scribus"
+    }
+  },
+  "shairport-sync": {
+    "arch": {
+      "manager": "pacman",
+      "package": "shairport-sync"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "shairport-sync"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "shairport-sync"
+    },
+    "label": "Shairport Sync",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "shairport-sync"
+    }
+  },
+  "shortwave": {
+    "arch": {
+      "manager": "pacman",
+      "package": "shortwave"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "shortwave"
+    },
+    "label": "Shortwave",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "shortwave"
+    }
+  },
+  "sigil": {
+    "arch": {
+      "manager": "pacman",
+      "package": "sigil"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "sigil"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "sigil"
+    },
+    "label": "Sigil",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "sigil"
+    }
+  },
+  "signal-desktop": {
+    "arch": {
+      "manager": "pacman",
+      "package": "signal-desktop"
+    },
+    "label": "Signal Desktop",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "signal-desktop-beta": {
+    "arch": {
+      "manager": "aur",
+      "package": "signal-desktop-beta-bin"
+    },
+    "label": "Signal Desktop Beta",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "simple-scan": {
+    "arch": {
+      "manager": "pacman",
+      "package": "simple-scan"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "simple-scan"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "simple-scan"
+    },
+    "label": "Simple Scan",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "simple-scan"
+    }
+  },
+  "simplescreenrecorder": {
+    "arch": {
+      "manager": "pacman",
+      "package": "simplescreenrecorder"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "simplescreenrecorder"
+    },
+    "label": "Simplescreenrecorder",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "simplescreenrecorder"
+    }
+  },
+  "skippy-xd": {
+    "arch": {
+      "manager": "aur",
+      "package": "skippy-xd-git"
+    },
+    "label": "Skippy Xd",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "skypeforlinux-stable": {
+    "arch": {
+      "manager": "aur",
+      "package": "skypeforlinux-stable-bin"
+    },
+    "label": "Skypeforlinux Stable",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "sl": {
+    "arch": {
+      "manager": "pacman",
+      "package": "sl"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "sl"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "sl"
+    },
+    "label": "Sl",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "sl"
+    }
+  },
+  "slack-desktop": {
+    "arch": {
+      "manager": "pacman",
+      "package": "slack-desktop"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "slack"
+    },
+    "label": "Slack Desktop",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "slack"
+    }
+  },
+  "slimbookbattery": {
+    "arch": {
+      "manager": "pacman",
+      "package": "slimbookbattery"
+    },
+    "label": "Slimbookbattery",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "slurm": {
+    "arch": {
+      "manager": "pacman",
+      "package": "slurm"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "slurm"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "slurm"
+    },
+    "label": "Slurm",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "slurm"
+    }
+  },
+  "smplayer": {
+    "arch": {
+      "manager": "pacman",
+      "package": "smplayer"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "smplayer"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "smplayer"
+    },
+    "label": "Smplayer",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "smplayer"
+    }
+  },
+  "snap-pac": {
+    "arch": {
+      "manager": "pacman",
+      "package": "snap-pac"
+    },
+    "label": "Snap Pac",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "snapd": {
+    "arch": {
+      "manager": "pacman",
+      "package": "snapd"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "snapd"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "snapd"
+    },
+    "label": "Snapd",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "snapd"
+    }
+  },
+  "snapper": {
+    "arch": {
+      "manager": "pacman",
+      "package": "snapper"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "snapper"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "snapper"
+    },
+    "label": "Snapper",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "snapper"
+    }
+  },
+  "snapper-support": {
+    "arch": {
+      "manager": "pacman",
+      "package": "snapper-support"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "snapper"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "snapper"
+    },
+    "label": "Snapper Support",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "snapper"
+    }
+  },
+  "snapper-tools": {
+    "arch": {
+      "manager": "pacman",
+      "package": "snapper-tools"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "snapper"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "snapper"
+    },
+    "label": "Snapper Tools",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "snapper"
+    }
+  },
+  "solaar": {
+    "arch": {
+      "manager": "pacman",
+      "package": "solaar"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "solaar"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "solaar"
+    },
+    "label": "Solaar",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "solaar"
+    }
+  },
+  "soundconverter": {
+    "arch": {
+      "manager": "pacman",
+      "package": "soundconverter"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "soundconverter"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "soundconverter"
+    },
+    "label": "Soundconverter",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "soundconverter"
+    }
+  },
+  "sparklines": {
+    "arch": {
+      "manager": "aur",
+      "package": "sparklines-git"
+    },
+    "label": "Sparklines",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "speedtest-cli": {
+    "arch": {
+      "manager": "aur",
+      "package": "speedtest-cli-git"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "speedtest-cli"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "speedtest-cli"
+    },
+    "label": "Speedtest Cli",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "speedtest-cli"
+    }
+  },
+  "spotify": {
+    "arch": {
+      "manager": "pacman",
+      "package": "spotify"
+    },
+    "label": "Spotify",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "spotify-adblock": {
+    "arch": {
+      "manager": "aur",
+      "package": "spotify-adblock-git"
+    },
+    "label": "Spotify Adblock",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "spotifywm": {
+    "arch": {
+      "manager": "aur",
+      "package": "spotifywm-git"
+    },
+    "label": "Spotifywm",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "stacer": {
+    "arch": {
+      "manager": "pacman",
+      "package": "stacer"
+    },
+    "label": "Stacer",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "stacer"
+    }
+  },
+  "steamtinkerlaunch": {
+    "arch": {
+      "manager": "pacman",
+      "package": "steamtinkerlaunch"
+    },
+    "label": "Steamtinkerlaunch",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming"
+  },
+  "sublime-text-4": {
+    "arch": {
+      "manager": "pacman",
+      "package": "sublime-text-4"
+    },
+    "label": "Sublime Text 4",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "supergfxctl": {
+    "arch": {
+      "manager": "pacman",
+      "package": "supergfxctl"
+    },
+    "label": "Supergfxctl",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming"
+  },
+  "supertux": {
+    "arch": {
+      "manager": "pacman",
+      "package": "supertux"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "supertux"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "supertux"
+    },
+    "label": "Supertux",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "supertux"
+    }
+  },
+  "supertuxkart": {
+    "arch": {
+      "manager": "pacman",
+      "package": "supertuxkart"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "supertuxkart"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "supertuxkart"
+    },
+    "label": "Supertuxkart",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "supertuxkart"
+    }
+  },
+  "surfn-icons": {
+    "arch": {
+      "manager": "aur",
+      "package": "surfn-icons-git"
+    },
+    "label": "Surfn Icons",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "surfn-mint-y-icons": {
+    "arch": {
+      "manager": "aur",
+      "package": "surfn-icons-git"
+    },
+    "label": "Surfn Mint Y Icons",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "sweet-cursor-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "sweet-cursors-git"
+    },
+    "label": "Sweet Cursor Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "sweet-gtk-theme-dark": {
+    "arch": {
+      "manager": "pacman",
+      "package": "sweet-gtk-theme-dark"
+    },
+    "label": "Sweet Gtk Theme Dark",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "sweet-kde-theme-mars": {
+    "arch": {
+      "manager": "aur",
+      "package": "sweet-kde-theme-git"
+    },
+    "label": "Sweet Kde Theme Mars",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "sweet-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "sweet-theme-git"
+    },
+    "label": "Sweet Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "synapse": {
+    "arch": {
+      "manager": "pacman",
+      "package": "synapse"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "synapse"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "synapse"
+    },
+    "label": "Synapse",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "synapse"
+    }
+  },
+  "sysprof": {
+    "arch": {
+      "manager": "pacman",
+      "package": "sysprof"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "sysprof"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "sysprof"
+    },
+    "label": "Sysprof",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "sysprof"
+    }
+  },
+  "system76-power": {
+    "arch": {
+      "manager": "pacman",
+      "package": "system76-power"
+    },
+    "label": "System76 Power",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "systemd-manager": {
+    "arch": {
+      "manager": "aur",
+      "package": "systemd-manager-tui"
+    },
+    "label": "Systemd Manager",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "tabby": {
+    "arch": {
+      "manager": "aur",
+      "package": "tabby-bin"
+    },
+    "label": "Tabby",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "tauon-music-box": {
+    "arch": {
+      "manager": "pacman",
+      "package": "tauon-music-box"
+    },
+    "label": "Tauon Music Box",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "teams": {
+    "arch": {
+      "manager": "pacman",
+      "package": "teams-for-linux"
+    },
+    "label": "Teams",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "tela-circle-icon-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "tela-circle-icon-theme-git"
+    },
+    "label": "Tela Circle Icon Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "telegram-desktop": {
+    "arch": {
+      "manager": "pacman",
+      "package": "telegram-desktop"
+    },
+    "label": "Telegram Desktop",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "tempus-themes-xfce4-terminal": {
+    "arch": {
+      "manager": "aur",
+      "package": "tempus-themes-xfce4-terminal-git"
+    },
+    "label": "Tempus Themes Xfce4 Terminal",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "terminator": {
+    "arch": {
+      "manager": "pacman",
+      "package": "terminator"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "terminator"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "terminator"
+    },
+    "label": "Terminator",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "terminator"
+    }
+  },
+  "termite": {
+    "arch": {
+      "manager": "pacman",
+      "package": "termite"
+    },
+    "label": "Termite",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "the-platinum-searcher": {
+    "arch": {
+      "manager": "aur",
+      "package": "the_platinum_searcher-bin"
+    },
+    "label": "The Platinum Searcher",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "the-silver-searcher": {
+    "arch": {
+      "manager": "pacman",
+      "package": "the_silver_searcher"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "silversearcher-ag"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "the_silver_searcher"
+    },
+    "label": "The Silver Searcher",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "silversearcher-ag"
+    }
+  },
+  "thunar": {
+    "arch": {
+      "manager": "pacman",
+      "package": "thunar"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "thunar"
+    },
+    "label": "Thunar",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "thunar"
+    }
+  },
+  "thunar-archive-plugin": {
+    "arch": {
+      "manager": "pacman",
+      "package": "thunar-archive-plugin"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "thunar-archive-plugin"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "thunar-archive-plugin"
+    },
+    "label": "Thunar Archive Plugin",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "thunar-archive-plugin"
+    }
+  },
+  "thunar-shares-plugin": {
+    "arch": {
+      "manager": "pacman",
+      "package": "thunar-shares-plugin"
+    },
+    "label": "Thunar Shares Plugin",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "thunar-volman": {
+    "arch": {
+      "manager": "pacman",
+      "package": "thunar-volman"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "thunar-volman"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "thunar-volman"
+    },
+    "label": "Thunar Volman",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "thunar-volman"
+    }
+  },
+  "thunderbird": {
+    "arch": {
+      "manager": "pacman",
+      "package": "thunderbird"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "thunderbird"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "thunderbird"
+    },
+    "label": "Thunderbird",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "thunderbird"
+    }
+  },
+  "tigervnc": {
+    "arch": {
+      "manager": "pacman",
+      "package": "tigervnc"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "tigervnc-viewer"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "tigervnc"
+    },
+    "label": "Tigervnc",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "tigervnc-viewer"
+    }
+  },
+  "tilda": {
+    "arch": {
+      "manager": "pacman",
+      "package": "tilda"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "tilda"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "tilda"
+    },
+    "label": "Tilda",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "tilda"
+    }
+  },
+  "tilix": {
+    "arch": {
+      "manager": "pacman",
+      "package": "tilix"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "tilix"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "tilix"
+    },
+    "label": "Tilix",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "tilix"
+    }
+  },
+  "timeshift": {
+    "arch": {
+      "manager": "pacman",
+      "package": "timeshift"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "timeshift"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "timeshift"
+    },
+    "label": "Timeshift",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "timeshift"
+    }
+  },
+  "timeshift-autosnap": {
+    "arch": {
+      "manager": "pacman",
+      "package": "timeshift-autosnap"
+    },
+    "label": "Timeshift Autosnap",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "tlp": {
+    "arch": {
+      "manager": "pacman",
+      "package": "tlp"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "tlp"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "tlp"
+    },
+    "label": "Tlp",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "tlp"
+    }
+  },
+  "toilet": {
+    "arch": {
+      "manager": "pacman",
+      "package": "toilet"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "toilet"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "toilet"
+    },
+    "label": "Toilet",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "toilet"
+    }
+  },
+  "topgrade": {
+    "arch": {
+      "manager": "pacman",
+      "package": "topgrade"
+    },
+    "label": "Topgrade",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "torbrowser-launcher": {
+    "arch": {
+      "manager": "pacman",
+      "package": "torbrowser-launcher"
+    },
+    "label": "Torbrowser Launcher",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "torbrowser-launcher"
+    }
+  },
+  "transmission-gtk": {
+    "arch": {
+      "manager": "pacman",
+      "package": "transmission-gtk"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "transmission-gtk"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "transmission-gtk"
+    },
+    "label": "Transmission Gtk",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "transmission-gtk"
+    }
+  },
+  "trizen": {
+    "arch": {
+      "manager": "pacman",
+      "package": "trizen"
+    },
+    "label": "Trizen",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "ttf-anonymous-pro": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-anonymous-pro"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-anonymous-pro"
+    },
+    "label": "Ttf Anonymous Pro",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "ttf-anonymous-pro"
+    }
+  },
+  "ttf-bitstream-vera": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-bitstream-vera"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "ttf-bitstream-vera"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "bitstream-vera-sans-fonts"
+    },
+    "label": "Ttf Bitstream Vera",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "ttf-bitstream-vera"
+    }
+  },
+  "ttf-caladea": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-caladea"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-crosextra-caladea"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "google-crosextra-caladea-fonts"
+    },
+    "label": "Ttf Caladea",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fonts-crosextra-caladea"
+    }
+  },
+  "ttf-carlito": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-carlito"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-crosextra-carlito"
+    },
+    "label": "Ttf Carlito",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fonts-crosextra-carlito"
+    }
+  },
+  "ttf-cascadia-code": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-cascadia-code"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-cascadia-code"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "cascadia-code-fonts"
+    },
+    "label": "Ttf Cascadia Code",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fonts-cascadia-code"
+    }
+  },
+  "ttf-cormorant": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-cormorant"
+    },
+    "label": "Ttf Cormorant",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "ttf-croscore": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-croscore"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-crosextra-caladea"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "google-crosextra-caladea-fonts"
+    },
+    "label": "Ttf Croscore",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fonts-crosextra-caladea"
+    }
+  },
+  "ttf-dejavu": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-dejavu"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-dejavu"
+    },
+    "label": "Ttf Dejavu",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fonts-dejavu"
+    }
+  },
+  "ttf-droid": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-droid"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-droid-fallback"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "google-droid-sans-fonts"
+    },
+    "label": "Ttf Droid",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "ttf-droid"
+    }
+  },
+  "ttf-eurof": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-eurof"
+    },
+    "label": "Ttf Eurof",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "ttf-fantasque-sans-mono": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-fantasque-sans-mono"
+    },
+    "label": "Ttf Fantasque Sans Mono",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "ttf-fira-code": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-fira-code"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-firacode"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "fira-code-fonts"
+    },
+    "label": "Ttf Fira Code",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fonts-firacode"
+    }
+  },
+  "ttf-fira-mono": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-fira-mono"
+    },
+    "label": "Ttf Fira Mono",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "ttf-fira-sans": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-fira-sans"
+    },
+    "label": "Ttf Fira Sans",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "ttf-font-awesome": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-font-awesome-5"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-font-awesome"
+    },
+    "label": "Ttf Font Awesome",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fonts-font-awesome"
+    }
+  },
+  "ttf-hack": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-hack"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-hack"
+    },
+    "label": "Ttf Hack",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fonts-hack"
+    }
+  },
+  "ttf-hactor": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-hactor"
+    },
+    "label": "Ttf Hactor",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "ttf-hellvetica": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-hellvetica"
+    },
+    "label": "Ttf Hellvetica",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "ttf-ibm-plex": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-ibm-plex"
+    },
+    "label": "Ttf Ibm Plex",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fonts-ibm-plex"
+    }
+  },
+  "ttf-inconsolata": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-inconsolata"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-inconsolata"
+    },
+    "label": "Ttf Inconsolata",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fonts-inconsolata"
+    }
+  },
+  "ttf-iosevka-nerd": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-iosevka-nerd"
+    },
+    "label": "Ttf Iosevka Nerd",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "ttf-jetbrains-mono": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-jetbrains-mono"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-jetbrains-mono"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "jetbrains-mono-fonts"
+    },
+    "label": "Ttf Jetbrains Mono",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fonts-jetbrains-mono"
+    }
+  },
+  "ttf-jetbrains-mono-nerd": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-jetbrains-mono-nerd"
+    },
+    "label": "Ttf Jetbrains Mono Nerd",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "ttf-joypixels": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-joypixels"
+    },
+    "label": "Ttf Joypixels",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "ttf-lato": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-lato"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-lato"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "lato-fonts"
+    },
+    "label": "Ttf Lato",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fonts-lato"
+    }
+  },
+  "ttf-liberation": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-liberation"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-liberation"
+    },
+    "label": "Ttf Liberation",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "ttf-liberation"
+    }
+  },
+  "ttf-linux-libertine": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-linux-libertine"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-linuxlibertine"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "linux-libertine-fonts"
+    },
+    "label": "Ttf Linux Libertine",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "ttf-linux-libertine"
+    }
+  },
+  "ttf-linux-libertine-g": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-linux-libertine-g"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-linuxlibertine"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "linux-libertine-fonts"
+    },
+    "label": "Ttf Linux Libertine G",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fonts-linuxlibertine"
+    }
+  },
+  "ttf-mac-fonts": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-mac-fonts"
+    },
+    "label": "Ttf Mac Fonts",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "ttf-meslo-nerd-font-powerlevel10k": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-meslo-nerd-font-powerlevel10k"
+    },
+    "label": "Ttf Meslo Nerd Font Powerlevel10k",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "ttf-monofur": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-monofur"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-monofur"
+    },
+    "label": "Ttf Monofur",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fonts-monofur"
+    }
+  },
+  "ttf-ms-fonts": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-ms-fonts"
+    },
+    "label": "Ttf Ms Fonts",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "ttf-mscorefonts-installer"
+    }
+  },
+  "ttf-nerd-fonts-symbols": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-nerd-fonts-symbols"
+    },
+    "label": "Ttf Nerd Fonts Symbols",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "ttf-nerd-fonts-symbols-mono": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-nerd-fonts-symbols-mono"
+    },
+    "label": "Ttf Nerd Fonts Symbols Mono",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "ttf-opensans": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-opensans"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-open-sans"
+    },
+    "label": "Ttf Opensans",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fonts-open-sans"
+    }
+  },
+  "ttf-proggy-clean": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-proggy-clean"
+    },
+    "label": "Ttf Proggy Clean",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "ttf-roboto": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-roboto"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-roboto"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "google-roboto-fonts"
+    },
+    "label": "Ttf Roboto",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fonts-roboto"
+    }
+  },
+  "ttf-roboto-mono": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-roboto-mono"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "fonts-roboto"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "google-roboto-mono-fonts"
+    },
+    "label": "Ttf Roboto Mono",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "fonts-roboto"
+    }
+  },
+  "ttf-ubuntu-font-family": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-ubuntu-font-family"
+    },
+    "label": "Ttf Ubuntu Font Family",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "ttf-ubuntu-font-family"
+    }
+  },
+  "ttf-wps-fonts": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ttf-wps-fonts"
+    },
+    "label": "Ttf Wps Fonts",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "tty-clock": {
+    "arch": {
+      "manager": "pacman",
+      "package": "tty-clock"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "tty-clock"
+    },
+    "label": "Tty Clock",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "tty-clock"
+    }
+  },
+  "tuxboot": {
+    "arch": {
+      "manager": "pacman",
+      "package": "tuxboot"
+    },
+    "label": "Tuxboot",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "ufetch": {
+    "arch": {
+      "manager": "aur",
+      "package": "ufetch-git"
+    },
+    "label": "Ufetch",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "ulauncher": {
+    "arch": {
+      "manager": "pacman",
+      "package": "ulauncher"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "ulauncher"
+    },
+    "label": "Ulauncher",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "unimatrix": {
+    "arch": {
+      "manager": "aur",
+      "package": "unimatrix-git"
+    },
+    "label": "Unimatrix",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "upower": {
+    "arch": {
+      "manager": "pacman",
+      "package": "upower"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "upower"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "upower"
+    },
+    "label": "Upower",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "upower"
+    }
+  },
+  "urxvt-fullscreen": {
+    "arch": {
+      "manager": "pacman",
+      "package": "urxvt-fullscreen"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "rxvt-unicode"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "rxvt-unicode"
+    },
+    "label": "Urxvt Fullscreen",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "rxvt-unicode"
+    }
+  },
+  "urxvt-perls": {
+    "arch": {
+      "manager": "pacman",
+      "package": "urxvt-perls"
+    },
+    "label": "Urxvt Perls",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "urxvt-resize-font": {
+    "arch": {
+      "manager": "aur",
+      "package": "urxvt-resize-font-git"
+    },
+    "label": "Urxvt Resize Font",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "variety": {
+    "arch": {
+      "manager": "pacman",
+      "package": "variety"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "variety"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "variety"
+    },
+    "label": "Variety",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "variety"
+    }
+  },
+  "ventoy": {
+    "arch": {
+      "manager": "aur",
+      "package": "ventoy-bin"
+    },
+    "label": "Ventoy",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "viber": {
+    "arch": {
+      "manager": "pacman",
+      "package": "viber"
+    },
+    "label": "Viber",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "vim": {
+    "arch": {
+      "manager": "pacman",
+      "package": "vim"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "vim"
+    },
+    "label": "Vim",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "vim"
+    }
+  },
+  "vim-runtime": {
+    "arch": {
+      "manager": "pacman",
+      "package": "vim-runtime"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "vim-runtime"
+    },
+    "label": "Vim Runtime",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "vim-runtime"
+    }
+  },
+  "vimix-cursors": {
+    "arch": {
+      "manager": "pacman",
+      "package": "vimix-cursors"
+    },
+    "label": "Vimix Cursors",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "vimix-icon-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "vimix-icon-theme-git"
+    },
+    "label": "Vimix Icon Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "virtualbox": {
+    "arch": {
+      "manager": "pacman",
+      "package": "virtualbox"
+    },
+    "label": "Virtualbox",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "virtualbox"
+    }
+  },
+  "virtualbox-host-dkms": {
+    "arch": {
+      "manager": "pacman",
+      "package": "virtualbox-host-dkms"
+    },
+    "label": "Virtualbox Host Dkms",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "visual-studio-code": {
+    "arch": {
+      "manager": "aur",
+      "package": "visual-studio-code-bin"
+    },
+    "label": "Visual Studio Code",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "vivaldi": {
+    "arch": {
+      "manager": "pacman",
+      "package": "vivaldi"
+    },
+    "label": "Vivaldi",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "vivaldi-ffmpeg-codecs": {
+    "arch": {
+      "manager": "pacman",
+      "package": "vivaldi-ffmpeg-codecs"
+    },
+    "label": "Vivaldi Ffmpeg Codecs",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "vkbasalt": {
+    "arch": {
+      "manager": "pacman",
+      "package": "vkbasalt"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "vkbasalt"
+    },
+    "label": "Vkbasalt",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "requires_gpu": "gaming",
+    "ubuntu": {
+      "manager": "apt",
+      "package": "vkbasalt"
+    }
+  },
+  "vmware-keymaps": {
+    "arch": {
+      "manager": "pacman",
+      "package": "vmware-keymaps"
+    },
+    "label": "Vmware Keymaps",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "vmware-workstation": {
+    "arch": {
+      "manager": "pacman",
+      "package": "vmware-workstation"
+    },
+    "label": "Vmware Workstation",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "vnstat": {
+    "arch": {
+      "manager": "pacman",
+      "package": "vnstat"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "vnstat"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "vnstat"
+    },
+    "label": "Vnstat",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "vnstat"
+    }
+  },
+  "vscodium": {
+    "arch": {
+      "manager": "aur",
+      "package": "vscodium-bin"
+    },
+    "label": "Vscodium",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "wacom-settings": {
+    "arch": {
+      "manager": "aur",
+      "package": "wacom-settings-git"
+    },
+    "label": "Wacom Settings",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "warsow": {
+    "arch": {
+      "manager": "pacman",
+      "package": "warsow"
+    },
+    "label": "Warsow",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "waydroid": {
+    "arch": {
+      "manager": "pacman",
+      "package": "waydroid"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "waydroid"
+    },
+    "label": "Waydroid",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "we10x-icon-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "we10x-icon-theme-git"
+    },
+    "label": "We10x Icon Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "wesnoth": {
+    "arch": {
+      "manager": "pacman",
+      "package": "wesnoth"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "wesnoth"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "wesnoth"
+    },
+    "label": "Wesnoth",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "wesnoth"
+    }
+  },
+  "whatsapp-nativefier": {
+    "arch": {
+      "manager": "aur",
+      "package": "whatsapp-nativefier"
+    },
+    "label": "Whatsapp Nativefier",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "whitesur-icon-theme": {
+    "arch": {
+      "manager": "aur",
+      "package": "whitesur-icon-theme-git"
+    },
+    "label": "Whitesur Icon Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "wire-desktop": {
+    "arch": {
+      "manager": "pacman",
+      "package": "wire-desktop"
+    },
+    "label": "Wire Desktop",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "wireshark-qt": {
+    "arch": {
+      "manager": "pacman",
+      "package": "wireshark-qt"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "wireshark"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "wireshark"
+    },
+    "label": "Wireshark Qt",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "wireshark-qt"
+    }
+  },
+  "woeusb": {
+    "arch": {
+      "manager": "pacman",
+      "package": "woeusb"
+    },
+    "label": "Woeusb",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "workrave": {
+    "arch": {
+      "manager": "pacman",
+      "package": "workrave"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "workrave"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "workrave"
+    },
+    "label": "Workrave",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "workrave"
+    }
+  },
+  "wps-office": {
+    "arch": {
+      "manager": "pacman",
+      "package": "wps-office"
+    },
+    "label": "Wps Office",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "wps-office-mime": {
+    "arch": {
+      "manager": "pacman",
+      "package": "wps-office-mime"
+    },
+    "label": "Wps Office Mime",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "wttr": {
+    "arch": {
+      "manager": "pacman",
+      "package": "wttr-bin"
+    },
+    "label": "Wttr",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "xcursor-arch-cursor-complete": {
+    "arch": {
+      "manager": "pacman",
+      "package": "xcursor-arch-cursor-complete"
+    },
+    "label": "Xcursor Arch Cursor Complete",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "xcursor-breeze": {
+    "arch": {
+      "manager": "pacman",
+      "package": "xcursor-breeze5"
+    },
+    "label": "Xcursor Breeze",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "xcursor-comix": {
+    "arch": {
+      "manager": "pacman",
+      "package": "xcursor-comix"
+    },
+    "label": "Xcursor Comix",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "xcursor-flatbed": {
+    "arch": {
+      "manager": "pacman",
+      "package": "xcursor-flatbed"
+    },
+    "label": "Xcursor Flatbed",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "xcursor-neutral": {
+    "arch": {
+      "manager": "pacman",
+      "package": "xcursor-neutral"
+    },
+    "label": "Xcursor Neutral",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "xcursor-premium": {
+    "arch": {
+      "manager": "pacman",
+      "package": "xcursor-premium"
+    },
+    "label": "Xcursor Premium",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "xcursor-simpleandsoft": {
+    "arch": {
+      "manager": "pacman",
+      "package": "xcursor-simpleandsoft"
+    },
+    "label": "Xcursor Simpleandsoft",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "xdman": {
+    "arch": {
+      "manager": "pacman",
+      "package": "xdman"
+    },
+    "label": "Xdman",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "xfburn": {
+    "arch": {
+      "manager": "pacman",
+      "package": "xfburn"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "xfburn"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "xfburn"
+    },
+    "label": "Xfburn",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "xfburn"
+    }
+  },
+  "xfce4-terminal": {
+    "arch": {
+      "manager": "pacman",
+      "package": "xfce4-terminal"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "xfce4-terminal"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "xfce4-terminal"
+    },
+    "label": "Xfce4 Terminal",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "xfce4-terminal"
+    }
+  },
+  "xfce4-terminal-base16-colors": {
+    "arch": {
+      "manager": "aur",
+      "package": "xfce4-terminal-base16-colors-git"
+    },
+    "label": "Xfce4 Terminal Base16 Colors",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "xlunch": {
+    "arch": {
+      "manager": "aur",
+      "package": "xlunch-git"
+    },
+    "label": "Xlunch",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "xonotic": {
+    "arch": {
+      "manager": "pacman",
+      "package": "xonotic"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "xonotic"
+    },
+    "label": "Xonotic",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "xonotic-data": {
+    "arch": {
+      "manager": "pacman",
+      "package": "xonotic-data"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "xonotic-data"
+    },
+    "label": "Xonotic Data",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "xpdf": {
+    "arch": {
+      "manager": "pacman",
+      "package": "xpdf"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "xpdf"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "xpdf"
+    },
+    "label": "Xpdf",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "xpdf"
+    }
+  },
+  "xreader": {
+    "arch": {
+      "manager": "pacman",
+      "package": "xreader"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "xreader"
+    },
+    "label": "Xreader",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "yad": {
+    "arch": {
+      "manager": "pacman",
+      "package": "yad"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "yad"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "yad"
+    },
+    "label": "Yad",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "yad"
+    }
+  },
+  "yay": {
+    "arch": {
+      "manager": "pacman",
+      "package": "yay"
+    },
+    "label": "Yay",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "yin-yang": {
+    "arch": {
+      "manager": "aur",
+      "package": "yin-yang-git"
+    },
+    "label": "Yin Yang",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "youtube-dl": {
+    "arch": {
+      "manager": "pacman",
+      "package": "youtube-dl"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "youtube-dl"
+    },
+    "label": "Youtube Dl",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "youtube-dl"
+    }
+  },
+  "youtube-dl-gui": {
+    "arch": {
+      "manager": "aur",
+      "package": "youtube-dl-gui-git"
+    },
+    "label": "Youtube Dl Gui",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "yt-dlp": {
+    "arch": {
+      "manager": "pacman",
+      "package": "yt-dlp"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "yt-dlp"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "yt-dlp"
+    },
+    "label": "Yt Dlp",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "yt-dlp"
+    }
+  },
+  "zafiro-icon-theme": {
+    "arch": {
+      "manager": "pacman",
+      "package": "zafiro-icon-theme"
+    },
+    "label": "Zafiro Icon Theme",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "zoom": {
+    "arch": {
+      "manager": "pacman",
+      "package": "zoom"
+    },
+    "label": "Zoom",
+    "platforms": [
+      "desktop",
+      "laptop"
+    ]
+  },
+  "zsh": {
+    "arch": {
+      "manager": "pacman",
+      "package": "zsh"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "zsh"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "zsh"
+    },
+    "label": "Zsh",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "zsh"
+    }
+  },
+  "zsh-autosuggestions": {
+    "arch": {
+      "manager": "aur",
+      "package": "zsh-autosuggestions-git"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "zsh-autosuggestions"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "zsh-autosuggestions"
+    },
+    "label": "Zsh Autosuggestions",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "zsh-autosuggestions"
+    }
+  },
+  "zsh-completions": {
+    "arch": {
+      "manager": "pacman",
+      "package": "zsh-completions"
+    },
+    "label": "Zsh Completions",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "zsh-fast-syntax-highlighting": {
+    "arch": {
+      "manager": "pacman",
+      "package": "zsh-fast-syntax-highlighting"
+    },
+    "label": "Zsh Fast Syntax Highlighting",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "zsh-history-substring-search": {
+    "arch": {
+      "manager": "aur",
+      "package": "zsh-history-substring-search-git"
+    },
+    "label": "Zsh History Substring Search",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  },
+  "zsh-syntax-highlighting": {
+    "arch": {
+      "manager": "pacman",
+      "package": "zsh-syntax-highlighting"
+    },
+    "debian": {
+      "manager": "apt",
+      "package": "zsh-syntax-highlighting"
+    },
+    "fedora": {
+      "manager": "dnf",
+      "package": "zsh-syntax-highlighting"
+    },
+    "label": "Zsh Syntax Highlighting",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ],
+    "ubuntu": {
+      "manager": "apt",
+      "package": "zsh-syntax-highlighting"
+    }
+  },
+  "zsh-theme-powerlevel10k": {
+    "arch": {
+      "manager": "aur",
+      "package": "zsh-theme-powerlevel10k-git"
+    },
+    "label": "Zsh Theme Powerlevel10k",
+    "platforms": [
+      "desktop",
+      "laptop",
+      "server"
+    ]
+  }
+}

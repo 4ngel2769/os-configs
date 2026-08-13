@@ -118,5 +118,39 @@ os_configs_ensure_gum() {
 os_configs_ensure_deps() {
     os_configs_ensure_jq
     os_configs_ensure_gum
+    os_configs_ensure_picker
     _deps_prepend_path
+}
+
+_deps_install_picker() {
+    local dest src
+    dest="${OS_CONFIGS_BIN}/os-configs-picker"
+    src="${REPO_ROOT}/tools/picker"
+
+    if [[ -x "$dest" ]]; then
+        return 0
+    fi
+
+    if ! command -v go &>/dev/null; then
+        if [[ -x "${HOME}/go/bin/go" ]]; then
+            export PATH="${HOME}/go/bin:${PATH}"
+        else
+            _deps_msg "go not installed — software picker will fall back to gum choose"
+            return 0
+        fi
+    fi
+
+    if [[ ! -f "${src}/main.go" ]]; then
+        _deps_msg "picker source missing at ${src}"
+        return 0
+    fi
+
+    _deps_msg "building os-configs-picker..."
+    (cd "$src" && go mod tidy >/dev/null 2>&1 && go build -o "$dest" .)
+    chmod +x "$dest"
+    _deps_msg "picker installed to ${dest}"
+}
+
+os_configs_ensure_picker() {
+    _deps_install_picker
 }

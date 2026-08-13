@@ -3,8 +3,6 @@ set -euo pipefail
 
 _custom_lib_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 _custom_repo="${REPO_ROOT:-$(cd "${_custom_lib_dir}/.." && pwd)}"
-_custom_categories="${_custom_repo}/data/categories.json"
-_custom_registry="${_custom_repo}/data/registry.json"
 
 SELECTED_CUSTOM_FILE=""
 declare -A CUSTOM_SELECTION=()
@@ -34,7 +32,7 @@ custom_category_apps() {
 
     while IFS= read -r app; do
         [[ -n "$app" ]] || continue
-        if registry_has_entry "$app"; then
+        if registry_app_visible "$app"; then
             echo "$app"
         fi
     done < <(jq -r --arg key "$key" '.[$key].apps[]?' "$(custom_merged_categories_path)")
@@ -97,17 +95,28 @@ custom_write_plan_json() {
 
 custom_run_selection() {
     local auto="${1:-false}"
-    local key out_dir
+    local out_dir pick_file
 
     CUSTOM_SELECTION=()
     out_dir="${OS_CONFIGS_CACHE:-${HOME}/.cache}/os-configs"
     mkdir -p "$out_dir"
     SELECTED_CUSTOM_FILE="${out_dir}/custom-plan.json"
+    pick_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-pick.XXXXXX")"
 
-    for key in $(custom_category_keys); do
-        custom_pick_category "$key" "$auto"
-    done
+    if [[ "$auto" == "true" ]]; then
+        picker_fallback_gum true
+    elif picker_can_run && picker_run "$pick_file"; then
+        picker_apply_selections "$pick_file" || picker_fallback_gum false
+    else
+        if [[ ! -x "$(picker_binary)" ]]; then
+            ui_style_subheader "(fallback) build os-configs-picker for the full catalog UI"
+        elif ! picker_has_tty; then
+            ui_style_subheader "(fallback) no TTY — use ssh -t for the full picker"
+        fi
+        picker_fallback_gum false
+    fi
 
+    rm -f "$pick_file"
     custom_write_plan_json "$SELECTED_CUSTOM_FILE"
     export SELECTED_CUSTOM_FILE
 }

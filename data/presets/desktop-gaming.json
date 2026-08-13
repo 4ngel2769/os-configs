@@ -2,7 +2,7 @@
   "name": "Desktop Gaming (Pick your Desktop)",
   "platform_class": "desktop",
   "categories": {
-    "browser": ["brave", "firefox"],
+    "browsers": ["brave", "firefox"],
     "communication": ["telegram"],
     "developer": ["git", "vscode"],
     "gaming": ["steam"],

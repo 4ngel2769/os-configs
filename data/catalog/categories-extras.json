@@ -1,0 +1,22 @@
+{
+  "browsers": {
+    "apps": [
+      "chrome",
+      "librewolf",
+      "vivaldi",
+      "opera",
+      "zen-browser",
+      "floorp",
+      "helium",
+      "waterfox",
+      "mullvad-browser",
+      "tor-browser"
+    ]
+  },
+  "communication": {
+    "apps": ["vesktop", "equibop", "webcord", "discord", "signal"]
+  },
+  "creator": {
+    "apps": ["freecad", "kicad", "openscad", "blender"]
+  }
+}

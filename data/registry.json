@@ -1,127 +1,172 @@
 {
   "brave": {
+    "label": "Brave",
+    "platforms": ["desktop", "laptop"],
     "arch": { "manager": "aur", "package": "brave-bin" },
     "debian": { "manager": "apt", "package": "brave-browser", "source": "brave" },
     "ubuntu": { "manager": "apt", "package": "brave-browser", "source": "brave" },
     "fedora": { "manager": "dnf", "package": "brave-browser", "source": "brave" }
   },
   "discord": {
+    "label": "Discord",
+    "platforms": ["desktop", "laptop"],
     "arch": { "manager": "aur", "package": "discord" }
   },
   "signal": {
+    "label": "Signal",
+    "platforms": ["desktop", "laptop"],
     "arch": { "manager": "aur", "package": "signal-desktop" },
     "debian": { "manager": "apt", "package": "signal-desktop", "source": "signal" },
     "ubuntu": { "manager": "apt", "package": "signal-desktop", "source": "signal" }
   },
   "telegram": {
+    "label": "Telegram",
+    "platforms": ["desktop", "laptop"],
     "arch": { "manager": "aur", "package": "telegram-desktop" },
     "debian": { "manager": "apt", "package": "telegram-desktop" },
     "ubuntu": { "manager": "apt", "package": "telegram-desktop" },
     "fedora": { "manager": "dnf", "package": "telegram-desktop" }
   },
   "firefox": {
+    "label": "Firefox",
+    "platforms": ["desktop", "laptop"],
     "arch": { "manager": "pacman", "package": "firefox" },
     "debian": { "manager": "apt", "package": "firefox-esr" },
     "ubuntu": { "manager": "apt", "package": "firefox" },
     "fedora": { "manager": "dnf", "package": "firefox" }
   },
   "vscode": {
+    "label": "VS Code",
+    "platforms": ["desktop", "laptop"],
     "arch": { "manager": "aur", "package": "visual-studio-code-bin" },
     "debian": { "manager": "apt", "package": "code", "source": "vscode" },
     "ubuntu": { "manager": "apt", "package": "code", "source": "vscode" },
     "fedora": { "manager": "dnf", "package": "code", "source": "vscode" }
   },
   "git": {
+    "label": "Git",
+    "platforms": ["server", "desktop", "laptop"],
     "arch": { "manager": "pacman", "package": "git" },
     "debian": { "manager": "apt", "package": "git" },
     "ubuntu": { "manager": "apt", "package": "git" },
     "fedora": { "manager": "dnf", "package": "git" }
   },
   "obs": {
+    "label": "OBS Studio",
+    "platforms": ["desktop", "laptop"],
     "arch": { "manager": "pacman", "package": "obs-studio" },
     "debian": { "manager": "apt", "package": "obs-studio" },
     "ubuntu": { "manager": "apt", "package": "obs-studio" },
     "fedora": { "manager": "dnf", "package": "obs-studio" }
   },
   "steam": {
+    "label": "Steam",
+    "platforms": ["desktop", "laptop"],
+    "requires_gpu": "gaming",
     "arch": { "manager": "aur", "package": "steam" },
     "debian": { "manager": "apt", "package": "steam", "component": "non-free" },
     "ubuntu": { "manager": "apt", "package": "steam", "component": "multiverse" },
     "fedora": { "manager": "dnf", "package": "steam", "component": "rpmfusion-nonfree" }
   },
   "libreoffice": {
+    "label": "LibreOffice",
+    "platforms": ["desktop", "laptop"],
     "arch": { "manager": "pacman", "package": "libreoffice-fresh" },
     "debian": { "manager": "apt", "package": "libreoffice" },
     "ubuntu": { "manager": "apt", "package": "libreoffice" },
     "fedora": { "manager": "dnf", "package": "libreoffice" }
   },
   "vlc": {
+    "label": "VLC",
+    "platforms": ["desktop", "laptop"],
     "arch": { "manager": "pacman", "package": "vlc" },
     "debian": { "manager": "apt", "package": "vlc" },
     "ubuntu": { "manager": "apt", "package": "vlc" },
     "fedora": { "manager": "dnf", "package": "vlc" }
   },
   "gimp": {
+    "label": "GIMP",
+    "platforms": ["desktop", "laptop"],
     "arch": { "manager": "pacman", "package": "gimp" },
     "debian": { "manager": "apt", "package": "gimp" },
     "ubuntu": { "manager": "apt", "package": "gimp" },
     "fedora": { "manager": "dnf", "package": "gimp" }
   },
   "btop": {
+    "label": "btop",
+    "platforms": ["server", "desktop", "laptop"],
     "arch": { "manager": "pacman", "package": "btop" },
     "debian": { "manager": "apt", "package": "btop" },
     "ubuntu": { "manager": "apt", "package": "btop" },
     "fedora": { "manager": "dnf", "package": "btop" }
   },
   "fzf": {
+    "label": "fzf",
+    "platforms": ["server", "desktop", "laptop"],
     "arch": { "manager": "pacman", "package": "fzf" },
     "debian": { "manager": "apt", "package": "fzf" },
     "ubuntu": { "manager": "apt", "package": "fzf" },
     "fedora": { "manager": "dnf", "package": "fzf" }
   },
   "ncdu": {
+    "label": "ncdu",
+    "platforms": ["server", "desktop", "laptop"],
     "arch": { "manager": "pacman", "package": "ncdu" },
     "debian": { "manager": "apt", "package": "ncdu" },
     "ubuntu": { "manager": "apt", "package": "ncdu" },
     "fedora": { "manager": "dnf", "package": "ncdu" }
   },
   "lazygit": {
+    "label": "Lazygit",
+    "platforms": ["server", "desktop", "laptop"],
     "arch": { "manager": "pacman", "package": "lazygit" },
     "debian": { "manager": "apt", "package": "lazygit" },
     "ubuntu": { "manager": "apt", "package": "lazygit" },
     "fedora": { "manager": "dnf", "package": "lazygit" }
   },
   "glances": {
+    "label": "Glances",
+    "platforms": ["server", "desktop", "laptop"],
     "arch": { "manager": "pacman", "package": "glances" },
     "debian": { "manager": "apt", "package": "glances" },
     "ubuntu": { "manager": "apt", "package": "glances" },
     "fedora": { "manager": "dnf", "package": "glances" }
   },
   "htop": {
+    "label": "htop",
+    "platforms": ["server", "desktop", "laptop"],
     "arch": { "manager": "pacman", "package": "htop" },
     "debian": { "manager": "apt", "package": "htop" },
     "ubuntu": { "manager": "apt", "package": "htop" },
     "fedora": { "manager": "dnf", "package": "htop" }
   },
   "tmux": {
+    "label": "tmux",
+    "platforms": ["server", "desktop", "laptop"],
     "arch": { "manager": "pacman", "package": "tmux" },
     "debian": { "manager": "apt", "package": "tmux" },
     "ubuntu": { "manager": "apt", "package": "tmux" },
     "fedora": { "manager": "dnf", "package": "tmux" }
   },
   "rsync": {
+    "label": "rsync",
+    "platforms": ["server", "desktop", "laptop"],
     "arch": { "manager": "pacman", "package": "rsync" },
     "debian": { "manager": "apt", "package": "rsync" },
     "ubuntu": { "manager": "apt", "package": "rsync" },
     "fedora": { "manager": "dnf", "package": "rsync" }
   },
   "yazi": {
+    "label": "Yazi",
+    "platforms": ["server", "desktop", "laptop"],
     "arch": { "manager": "aur", "package": "yazi" },
     "debian": { "manager": "apt", "package": "yazi", "source": "yazi" },
     "ubuntu": { "manager": "apt", "package": "yazi", "source": "yazi" },
     "fedora": { "manager": "dnf", "package": "yazi", "source": "yazi" }
   },
   "stow": {
+    "label": "GNU Stow",
+    "platforms": ["server", "desktop", "laptop"],
     "arch": { "manager": "pacman", "package": "stow" },
     "debian": { "manager": "apt", "package": "stow" },
     "ubuntu": { "manager": "apt", "package": "stow" },

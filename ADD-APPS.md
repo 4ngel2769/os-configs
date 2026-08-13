@@ -127,18 +127,10 @@ Same `optional` / `ensure_tool` rules as Homebrew.
 
 ## 5. Show in Custom menu
 
-Add the simple-name to **`data/user/categories.json`**:
+Add the simple-name to **`data/user/categories.json`** under the right native category (`browsers`, `communication`, `creator`, …), or run **`scripts/import-arco-catalog.py`** after updating `arco-resolver/` to regenerate the Arco catalog.
 
-```json
-{
-  "utilities": {
-    "apps": ["my-app", "eza"]
-  },
-  "community": {
-    "label": "Community / GitHub",
-    "apps": ["eza", "ripgrep-brew", "my-bun-cli"]
-  }
-}
-```
+Arco-derived apps live in **`data/catalog/`** (merged automatically). Cross-distro extras (Chrome, Signal, CAD, …) are in **`data/catalog/extras.json`** and are merged into the same native categories via **`data/catalog/categories-extras.json`**.
 
-Apps in presets use simple-names too — user registry entries work there automatically after merge.
+Put **GitHub / AppImage / script-only** apps in the **`custom-installers`** category (or your own user category). Everything with a normal package manager entry belongs in the matching native category.
+
+Apps only appear in the picker when they have a registry entry **for your distro** and match your **platform** (server / desktop / laptop). Gaming-only tools also require a gaming-capable GPU.

@@ -2,7 +2,7 @@
   "name": "Server Everything",
   "platform_class": "server",
   "categories": {
-    "browser": ["firefox"],
+    "browsers": ["firefox"],
     "communication": ["telegram"],
     "developer": ["git", "vscode"],
     "utilities": ["fzf", "btop", "ncdu", "lazygit", "glances", "htop", "tmux", "rsync", "yazi"],

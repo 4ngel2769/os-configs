@@ -2,7 +2,7 @@
   "name": "Desktop Workstation",
   "platform_class": "desktop",
   "categories": {
-    "browser": ["brave", "firefox"],
+    "browsers": ["brave", "firefox"],
     "communication": ["telegram"],
     "developer": ["git", "vscode"],
     "utilities": ["fzf", "btop", "ncdu", "lazygit", "glances", "yazi"],

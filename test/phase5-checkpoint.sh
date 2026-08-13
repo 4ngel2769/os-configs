@@ -19,9 +19,9 @@ export PLATFORM_CLASS=laptop
 export GPU_CLASS=igpu-gaming
 
 echo "=== custom selection (simulated) ==="
-custom_apply_test_selection "browser:brave+firefox,utilities:fzf+btop" "/tmp/os-configs-custom-plan.json"
+custom_apply_test_selection "browsers:brave+firefox,utilities:fzf+btop" "/tmp/os-configs-custom-plan.json"
 cat "/tmp/os-configs-custom-plan.json"
-jq -e '.categories.browser | index("brave")' "/tmp/os-configs-custom-plan.json" >/dev/null
+jq -e '.categories.browsers | index("brave")' "/tmp/os-configs-custom-plan.json" >/dev/null
 jq -e '.categories.utilities | index("fzf")' "/tmp/os-configs-custom-plan.json" >/dev/null
 jq -e '.laptop_tuning == true' "/tmp/os-configs-custom-plan.json" >/dev/null
 echo "[ok] custom plan JSON shape"

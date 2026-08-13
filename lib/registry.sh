@@ -7,38 +7,83 @@ REGISTRY_FILE="${REGISTRY_FILE:-${REPO_ROOT}/data/registry.json}"
 USER_REGISTRY_FILE="${USER_REGISTRY_FILE:-${REPO_ROOT}/data/user/registry.json}"
 USER_CATEGORIES_FILE="${USER_CATEGORIES_FILE:-${REPO_ROOT}/data/user/categories.json}"
 CATEGORIES_FILE="${CATEGORIES_FILE:-${REPO_ROOT}/data/categories.json}"
+CATALOG_DIR="${REPO_ROOT}/data/catalog"
 
-registry_user_file() {
-    [[ -f "$USER_REGISTRY_FILE" ]] && echo "$USER_REGISTRY_FILE" || echo /dev/null
+registry_fragment_files() {
+    local f
+    for f in \
+        "$REGISTRY_FILE" \
+        "${CATALOG_DIR}/registry-arco.json" \
+        "${CATALOG_DIR}/extras.json" \
+        "$USER_REGISTRY_FILE"; do
+        [[ -f "$f" ]] && printf '%s\n' "$f"
+    done
+}
+
+categories_fragment_files() {
+    local f
+    for f in \
+        "$CATEGORIES_FILE" \
+        "${CATALOG_DIR}/categories-arco.json" \
+        "${CATALOG_DIR}/categories-extras.json" \
+        "$USER_CATEGORIES_FILE"; do
+        [[ -f "$f" ]] && printf '%s\n' "$f"
+    done
+}
+
+registry_merged_json() {
+    local -a files=()
+    while IFS= read -r f; do
+        files+=("$f")
+    done < <(registry_fragment_files)
+
+    if [[ ${#files[@]} -eq 0 ]]; then
+        echo '{}'
+        return 0
+    fi
+
+    jq -s '
+        def merge_app($a; $b):
+            ($a | keys) + ($b | keys) | unique | map(
+                . as $name |
+                {
+                    ($name): (
+                        if ($b[$name] // null) then
+                            (($a[$name] // {}) * ($b[$name]))
+                        else
+                            $a[$name]
+                        end
+                    )
+                }
+            ) | add // {};
+        reduce .[] as $item ({}; merge_app(.; $item))
+    ' "${files[@]}"
 }
 
 registry_entry_json() {
     local simple_name="$1"
     local family="$2"
-    local base user merged
 
-    base="$(jq -c --arg name "$simple_name" --arg family "$family" \
-        '.[$name][$family] // .[$name]["*"] // empty' "$REGISTRY_FILE")"
+    registry_merged_json | jq -c --arg name "$simple_name" --arg family "$family" \
+        '.[$name][$family] // .[$name]["*"] // empty'
+}
 
-    if [[ -f "$USER_REGISTRY_FILE" ]]; then
-        user="$(jq -c --arg name "$simple_name" --arg family "$family" \
-            '.[$name][$family] // .[$name]["*"] // empty' "$USER_REGISTRY_FILE")"
-    else
-        user=""
-    fi
+registry_app_label() {
+    local simple_name="$1"
+    registry_merged_json | jq -r --arg name "$simple_name" \
+        '.[$name].label // ($name | gsub("-"; " ") | split(" ") | map(.[0:1] + .[1:]) | join(" "))'
+}
 
-    if [[ -z "$user" || "$user" == "null" ]]; then
-        [[ -n "$base" && "$base" != "null" ]] && echo "$base" || echo ""
-        return 0
-    fi
+registry_app_platforms_json() {
+    local simple_name="$1"
+    registry_merged_json | jq -c --arg name "$simple_name" \
+        '.[$name].platforms // ["desktop","laptop"]'
+}
 
-    if [[ -z "$base" || "$base" == "null" ]]; then
-        echo "$user"
-        return 0
-    fi
-
-    merged="$(jq -nc --argjson a "$base" --argjson b "$user" '$a * $b')"
-    echo "$merged"
+registry_app_requires_gpu() {
+    local simple_name="$1"
+    registry_merged_json | jq -r --arg name "$simple_name" \
+        '.[$name].requires_gpu // empty'
 }
 
 registry_has_entry() {
@@ -50,15 +95,33 @@ registry_has_entry() {
     [[ -n "$entry" && "$entry" != "null" && "$entry" != "" ]]
 }
 
+registry_app_visible() {
+    local simple_name="$1"
+    local family="${DISTRO_FAMILY:?DISTRO_FAMILY must be set}"
+    local pc="${PLATFORM_CLASS:-desktop}"
+    local gpu="${GPU_CLASS:-none}"
+
+    registry_merged_json | jq -e \
+        --arg name "$simple_name" \
+        --arg family "$family" \
+        --arg pc "$pc" \
+        --arg gpu "$gpu" '
+        .[$name] as $app |
+        ($app != null) and
+        (($app[$family] // $app["*"] // null) != null) and
+        (($app.platforms // ["desktop","laptop"]) | index($pc)) and
+        (
+            ($app.requires_gpu // "") == "" or
+            $app.requires_gpu == null or
+            ($app.requires_gpu == "gaming" and ($gpu == "igpu-gaming" or $gpu == "dgpu"))
+        )
+    ' >/dev/null
+}
+
 registry_lookup() {
     local simple_name="$1"
     local family="${DISTRO_FAMILY:?DISTRO_FAMILY must be set}"
     local entry
-
-    if [[ ! -f "$REGISTRY_FILE" ]]; then
-        echo "registry_lookup: registry file not found: $REGISTRY_FILE" >&2
-        return 1
-    fi
 
     entry="$(registry_entry_json "$simple_name" "$family")"
 
@@ -72,38 +135,14 @@ registry_lookup() {
         | "\(.key)=\(.value)"' <<<"$entry"
 }
 
-registry_merged_json() {
-    local user_file
-    user_file="$(registry_user_file)"
-
-    if [[ "$user_file" == "/dev/null" ]]; then
-        jq '.' "$REGISTRY_FILE"
-        return 0
-    fi
-
-    jq -s '
-        def merge_app($base; $user):
-            ($base | keys) + ($user | keys) | unique | map(
-                . as $name |
-                {
-                    ($name): (
-                        if ($user[$name] // null) then
-                            (($base[$name] // {}) * ($user[$name]))
-                        else
-                            $base[$name]
-                        end
-                    )
-                }
-            ) | add // {};
-        merge_app(.[0]; .[1])
-    ' "$REGISTRY_FILE" "$user_file"
-}
-
 categories_merged_json() {
-    local user_file="${USER_CATEGORIES_FILE}"
+    local -a files=()
+    while IFS= read -r f; do
+        files+=("$f")
+    done < <(categories_fragment_files)
 
-    if [[ ! -f "$user_file" ]]; then
-        jq '.' "$CATEGORIES_FILE"
+    if [[ ${#files[@]} -eq 0 ]]; then
+        echo '{}'
         return 0
     fi
 
@@ -124,8 +163,23 @@ categories_merged_json() {
                     )
                 }
             ) | add // {};
-        merge_cats(.[0]; .[1])
-    ' "$CATEGORIES_FILE" "$user_file"
+        def normalize($cats):
+            if ($cats.browser != null) then
+                if ($cats.browsers != null) then
+                    $cats
+                    | .browsers.apps = ((.browsers.apps // []) + (.browser.apps // []) | unique)
+                    | del(.browser)
+                else
+                    $cats
+                    | .browsers = (.browser + {label: (.browser.label // "Browsers")})
+                    | del(.browser)
+                end
+            else
+                $cats
+            end;
+        reduce .[] as $item ({}; merge_cats(.; $item))
+        | normalize
+    ' "${files[@]}"
 }
 
 registry_validate_user() {
@@ -148,7 +202,7 @@ registry_validate_user() {
         families="$(jq -r --arg app "$app" '.[$app] | keys[]' "$user_file")"
         while IFS= read -r family; do
             [[ -n "$family" ]] || continue
-            [[ "$family" == "_comment" || "$family" == "_schema" ]] && continue
+            [[ "$family" == "_comment" || "$family" == "_schema" || "$family" == "label" || "$family" == "platforms" || "$family" == "requires_gpu" ]] && continue
             local manager
             manager="$(jq -r --arg app "$app" --arg family "$family" \
                 '.[$app][$family].manager // empty' "$user_file")"

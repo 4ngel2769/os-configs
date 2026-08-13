@@ -31,7 +31,7 @@ export PLATFORM_CLASS=laptop
 export GPU_CLASS=igpu-gaming
 export OS_CONFIGS_DRY_RUN=true
 INSTALL_MODE=custom
-custom_apply_test_selection "browser:brave,developer:git" "/tmp/os-configs-custom-plan.json"
+custom_apply_test_selection "browsers:brave,developer:git" "/tmp/os-configs-custom-plan.json"
 SELECTED_CUSTOM_FILE="/tmp/os-configs-custom-plan.json"
 dewm_resolve true ""
 
