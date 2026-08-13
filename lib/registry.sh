@@ -88,8 +88,13 @@ registry_app_requires_gpu() {
 
 registry_has_entry() {
     local simple_name="$1"
-    local family="${DISTRO_FAMILY:?DISTRO_FAMILY must be set}"
+    local family="${2:-${DISTRO_FAMILY:-}}"
     local entry
+
+    if [[ -z "$family" ]]; then
+        echo "registry_has_entry: family required (set DISTRO_FAMILY or pass as 2nd arg)" >&2
+        return 1
+    fi
 
     entry="$(registry_entry_json "$simple_name" "$family")"
     [[ -n "$entry" && "$entry" != "null" && "$entry" != "" ]]

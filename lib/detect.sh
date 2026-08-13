@@ -264,6 +264,19 @@ _detect_init_system() {
 }
 
 _detect_platform_class() {
+    if [[ -n "${OS_CONFIGS_FORCE_PLATFORM:-}" ]]; then
+        case "$OS_CONFIGS_FORCE_PLATFORM" in
+            server | desktop | laptop)
+                PLATFORM_CLASS="$OS_CONFIGS_FORCE_PLATFORM"
+                return 0
+                ;;
+            *)
+                echo "detect: invalid OS_CONFIGS_FORCE_PLATFORM='${OS_CONFIGS_FORCE_PLATFORM}' (use server, desktop, or laptop)" >&2
+                return 1
+                ;;
+        esac
+    fi
+
     if compgen -G "/sys/class/power_supply/BAT*" >/dev/null 2>&1; then
         PLATFORM_CLASS="laptop"
         return 0

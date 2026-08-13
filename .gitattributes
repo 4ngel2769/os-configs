@@ -1,2 +1,1 @@
-# Shell scripts must use LF — CRLF breaks bash on Linux (remote deploy / kantr).
 *.sh text eol=lf

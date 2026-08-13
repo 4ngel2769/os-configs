@@ -16,7 +16,7 @@ preset_validate_registry() {
 
     while IFS= read -r app; do
         [[ -n "$app" ]] || continue
-        if ! registry_has_entry "$app"; then
+        if ! registry_has_entry "$app" "$family"; then
             echo "preset: '${app}' in $(basename "$file") has no registry entry for family '${family}'" >&2
             missing=$((missing + 1))
         fi
@@ -25,15 +25,24 @@ preset_validate_registry() {
     [[ "$missing" -eq 0 ]]
 }
 
-preset_validate_all() {
-    local family file dir="${REPO_ROOT}/data/presets"
+preset_validate_family() {
+    local family="$1"
+    local file dir="${REPO_ROOT}/data/presets"
     local failed=0
 
+    for file in "${dir}"/*.json; do
+        [[ -f "$file" ]] || continue
+        preset_validate_registry "$file" "$family" || failed=$((failed + 1))
+    done
+
+    [[ "$failed" -eq 0 ]]
+}
+
+preset_validate_all() {
+    local family failed=0
+
     for family in arch debian ubuntu fedora; do
-        for file in "${dir}"/*.json; do
-            [[ -f "$file" ]] || continue
-            preset_validate_registry "$file" "$family" || failed=$((failed + 1))
-        done
+        preset_validate_family "$family" || failed=$((failed + 1))
     done
 
     [[ "$failed" -eq 0 ]]

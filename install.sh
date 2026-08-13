@@ -33,6 +33,7 @@ Options:
 
 Environment:
   OS_CONFIGS_ASK_DE_WM=1   Same as --ask-de-wm
+  OS_CONFIGS_FORCE_PLATFORM  Override detected platform (server|desktop|laptop; testing)
 
 Adding apps: see ADD-APPS.md
 EOF
