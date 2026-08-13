@@ -6,13 +6,33 @@ This repository holds automated bootstrap scripts, dotfiles, and system configur
 
 ## Quick Start
 
-You can bootstrap a fresh system directly from GitHub using `curl`:
+Post-install setup (presets, custom software picker, dotfiles):
+
+```bash
+# curl
+bash <(curl -fsSL https://raw.githubusercontent.com/4ngel2769/os-configs/main/bootstrap.sh)
+
+# wget
+wget -qO- https://raw.githubusercontent.com/4ngel2769/os-configs/main/bootstrap.sh | bash
+
+# options (dry-run, non-interactive, etc.)
+curl -fsSL https://raw.githubusercontent.com/4ngel2769/os-configs/main/bootstrap.sh | bash -s -- --dry-run --auto
+```
+
+The bootstrap script clones or updates `~/os-configs`, then runs `install.sh`.
+Override the checkout with `OS_CONFIGS_DIR`, branch with `OS_CONFIGS_REF`.
+
+Already have a clone? Run `./install.sh` from the repo root.
+
+### Legacy profile dispatch
+
+Per-distro bootstrap profiles (Fedora workstation, Ubuntu server, …):
 
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/4ngel2769/os-configs/main/setup.sh)
 ```
 
-The script automatically detects the host operating system and routes to the corresponding profile's bootstrap script. Add `--auto` for non-interactive mode.
+Add `--auto` for non-interactive mode.
 
 ## Profiles
 

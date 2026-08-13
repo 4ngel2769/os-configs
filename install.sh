@@ -19,6 +19,8 @@ os-configs — post-install setup
 
 Usage: install.sh [OPTIONS]
 
+Run from a git clone, or use bootstrap.sh via curl/wget (see README).
+
 Options:
   --auto              Non-interactive (keep detected platform, pick first preset)
   --dry-run           Full flow + confirmation preview (no system changes)
