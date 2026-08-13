@@ -33,7 +33,7 @@ func renderBanner(width int, b bannerInfo) string {
 		badgeColor = lipgloss.Color(b.DistroColor)
 	}
 
-	artBlock := renderArtBlock(badgeColor, distroArt(b.DistroID))
+	art := lipgloss.NewStyle().Width(width).Align(lipgloss.Center).Render(renderArtBlock(badgeColor, distroArt(b.DistroID)))
 
 	arch := strings.TrimSpace(b.MachineArch)
 	distroLine := b.DistroLabel
@@ -41,20 +41,18 @@ func renderBanner(width int, b bannerInfo) string {
 		distroLine = fmt.Sprintf("%s %s", b.DistroLabel, arch)
 	}
 
-	infoStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("252"))
+	infoStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("252")).Align(lipgloss.Center).Width(width)
 	var infoLines []string
 	infoLines = append(infoLines, infoStyle.Render("Detected Distribution: "+distroLine))
 	infoLines = append(infoLines, infoStyle.Render("Platform: "+b.PlatformLabel))
 	if b.ShowGPU && b.GPULabel != "" {
 		infoLines = append(infoLines, infoStyle.Render("GPU: "+b.GPULabel))
 	}
-	infoBlock := lipgloss.JoinVertical(lipgloss.Left, infoLines...)
+	infoBlock := lipgloss.JoinVertical(lipgloss.Center, infoLines...)
 
-	gap := lipgloss.NewStyle().Width(3).Render("")
-	detection := lipgloss.JoinHorizontal(lipgloss.Top, artBlock, gap, infoBlock)
-	detection = lipgloss.NewStyle().Width(width).Align(lipgloss.Center).Render(detection)
+	detection := lipgloss.JoinVertical(lipgloss.Center, art, infoBlock)
 
-	return lipgloss.JoinVertical(lipgloss.Center, title, sub, div, detection, div)
+	return lipgloss.JoinVertical(lipgloss.Top, title, sub, div, detection, div)
 }
 
 func clamp(v, lo, hi int) int {

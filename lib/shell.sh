@@ -172,8 +172,6 @@ shell_resolve() {
     fi
 
     shell_pick_interactive
-    ui_style_centered "Selected: $(shell_label "$SELECTED_SHELL")"
-
     if ui_picker_menu_confirm "Apply a custom shell configuration (themes, plugins, rc file)?" true "Shell configuration"; then
         shell_pick_profile_interactive "$SELECTED_SHELL"
         shell_apply_selection "$SELECTED_SHELL" "$SELECTED_SHELL_PROFILE" "true"
@@ -208,7 +206,7 @@ shell_set_default() {
     fi
 
     if [[ "$dry_run" == "true" ]]; then
-        echo "[dry-run] would run: chsh -s ${bin} $(whoami)"
+        echo "[dry-run] would run: chsh -s ${bin}"
         return 0
     fi
 
@@ -217,8 +215,19 @@ shell_set_default() {
         return 0
     fi
 
-    if chsh -s "$bin" "$(whoami)" 2>/dev/null; then
-        gum style --foreground 10 "Default shell set to ${shell_id}"
+    if ! grep -Fxq "$bin" /etc/shells 2>/dev/null; then
+        if command -v sudo &>/dev/null; then
+            if ! echo "$bin" | sudo tee -a /etc/shells >/dev/null; then
+                echo "shell: could not add ${bin} to /etc/shells" >&2
+                return 1
+            fi
+        else
+            echo "shell: ${bin} not in /etc/shells — add it manually, then: chsh -s ${bin}" >&2
+            return 1
+        fi
+    fi
+
+    if chsh -s "$bin" 2>/dev/null; then
         return 0
     fi
 
