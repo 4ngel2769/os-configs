@@ -105,8 +105,13 @@ custom_run_selection() {
 
     if [[ "$auto" == "true" ]]; then
         picker_fallback_gum true
-    elif picker_can_run && picker_run "$pick_file"; then
-        picker_apply_selections "$pick_file" || picker_fallback_gum false
+    elif picker_can_run; then
+        if picker_run "$pick_file"; then
+            picker_apply_selections "$pick_file" || picker_fallback_gum false
+        else
+            ui_style_subheader "Software selection cancelled."
+            return 1
+        fi
     else
         if [[ ! -x "$(picker_binary)" ]]; then
             ui_style_subheader "(fallback) os-configs-picker missing — pull the latest repo or re-run install.sh"

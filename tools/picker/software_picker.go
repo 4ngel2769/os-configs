@@ -179,9 +179,19 @@ func (m softwareModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "c":
 			m.done = true
 			return m, tea.Quit
-		case "b", "esc":
+		case "b":
 			m.quitting = true
 			return m, tea.Quit
+		case "esc":
+			switch m.focus {
+			case focusGrid:
+				m.togglePane()
+			case focusFooter:
+				m.footerButton = footerBack
+				m.activateFooter()
+				return m, tea.Quit
+			}
+			return m, nil
 		case "left", "h":
 			switch m.focus {
 			case focusGrid:
