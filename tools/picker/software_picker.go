@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	softwareSidebarW = 22
+	softwareSidebarW = 24
 )
 
 type catalogFile struct {
@@ -84,11 +84,13 @@ func (m softwareModel) headerView() string {
 	title := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center).Width(m.width).Render("os-configs")
 	sub := lipgloss.NewStyle().Align(lipgloss.Center).Width(m.width).Foreground(lipgloss.Color("245")).
 		Render(fmt.Sprintf("Custom software · %d selected", m.totalSelected()))
-	return lipgloss.JoinVertical(lipgloss.Top, title, sub)
+	div := lipgloss.NewStyle().Align(lipgloss.Center).Width(m.width).Foreground(lipgloss.Color("240")).
+		Render(strings.Repeat("─", clamp(m.width-4, 20, 100)))
+	return lipgloss.JoinVertical(lipgloss.Top, title, sub, div)
 }
 
 func (m softwareModel) footerView() string {
-	gap := lipgloss.NewStyle().Width(3).Render("")
+	gap := lipgloss.NewStyle().Width(4).Render("")
 
 	continueStyle := lipgloss.NewStyle().Border(lipgloss.RoundedBorder()).Padding(0, 2).Foreground(lipgloss.Color("10"))
 	backStyle := lipgloss.NewStyle().Border(lipgloss.RoundedBorder()).Padding(0, 2).Foreground(lipgloss.Color("117"))
@@ -105,7 +107,7 @@ func (m softwareModel) footerView() string {
 	}
 
 	buttons := lipgloss.JoinHorizontal(lipgloss.Top, backStyle.Render("Back"), gap, continueStyle.Render("Continue"))
-	return lipgloss.NewStyle().Width(m.width).Align(lipgloss.Center).Margin(1, 0).Render(buttons)
+	return lipgloss.NewStyle().Width(m.width).Align(lipgloss.Center).Render(buttons)
 }
 
 func (m softwareModel) hintView() string {
@@ -114,24 +116,29 @@ func (m softwareModel) hintView() string {
 }
 
 func (m softwareModel) bodyHeight() int {
-	h := m.height - lipgloss.Height(m.headerView()) - lipgloss.Height(m.footerView()) - lipgloss.Height(m.hintView())
-	if h < 6 {
-		return 6
+	// m.height minus fixed header (3 lines), footer buttons (3 lines), hint (1 line), gaps (3 lines)
+	h := m.height - 10
+	if h < 8 {
+		return 8
 	}
 	return h
 }
 
 func (m softwareModel) appPanelWidth() int {
-	w := m.width - softwareSidebarW - 4
-	if w < 30 {
-		return 30
+	w := m.width - softwareSidebarW - 6
+	if w < 34 {
+		return 34
 	}
 	return w
 }
 
 func (m softwareModel) appVisibleLines() int {
-	// Category title + blank line.
-	return m.bodyHeight() - 2
+	// Border top/bottom take 2 lines; Header line takes 1 line; Blank gap takes 1 line
+	lines := m.bodyHeight() - 4
+	if lines < 1 {
+		return 1
+	}
+	return lines
 }
 
 func (m *softwareModel) ensureAppScroll() {
@@ -349,10 +356,9 @@ func (m softwareModel) renderSidebar(bodyH int) string {
 	if maxLines < 4 {
 		maxLines = 4
 	}
-	clipped := false
+
 	for i, c := range m.categories {
-		if len(lines) >= maxLines+1 {
-			clipped = true
+		if len(lines) >= maxLines {
 			break
 		}
 		count := m.selectedCount(c.ID)
@@ -360,7 +366,7 @@ func (m softwareModel) renderSidebar(bodyH int) string {
 		if count > 0 {
 			label = fmt.Sprintf("%s (%d)", label, count)
 		}
-		label = truncateRunes(label, softwareSidebarW-2)
+		label = truncateRunes(label, softwareSidebarW-4)
 		prefix := "  "
 		if i == m.catIndex {
 			prefix = "▸ "
@@ -376,8 +382,10 @@ func (m softwareModel) renderSidebar(bodyH int) string {
 		}
 		lines = append(lines, line)
 	}
-	if clipped {
-		lines = append(lines, muted.Render("  …"))
+
+	// Pad empty lines to ensure static height
+	for len(lines) < maxLines {
+		lines = append(lines, "")
 	}
 
 	content := strings.Join(lines, "\n")
@@ -392,7 +400,7 @@ func (m softwareModel) renderSidebar(bodyH int) string {
 	return box
 }
 
-func (m softwareModel) renderAppLine(idx int, item app, cat category, rowInView int, visible int, rowsBelow int) string {
+func (m softwareModel) renderAppLine(idx int, item app, cat category, rowInView int, visible int, totalApps int) string {
 	panelW := m.appPanelWidth()
 	selected := m.selected[cat.ID][item.ID]
 	marker := "[ ]"
@@ -412,7 +420,7 @@ func (m softwareModel) renderAppLine(idx int, item app, cat category, rowInView 
 		prefix = "▸ " + marker + " "
 	}
 	prefixW := runewidth.StringWidth(prefix)
-	labelW := panelW - prefixW - noteW - 1
+	labelW := panelW - prefixW - noteW - 2
 	if labelW < 8 {
 		labelW = 8
 	}
@@ -429,7 +437,8 @@ func (m softwareModel) renderAppLine(idx int, item app, cat category, rowInView 
 		line += lipgloss.NewStyle().Foreground(lipgloss.Color("240")).Render(note)
 	}
 
-	if fade := verticalFadeColor(rowInView, visible, rowsBelow); fade != "" && !isCursor {
+	// Apply btop-style vertical list fade to edge items
+	if fade := verticalFadeColor(rowInView, visible, m.appScroll, totalApps); fade != "" && !isCursor {
 		line = applyFadeStyle(stripANSI(line), fade)
 	} else if isCursor {
 		line = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("229")).Render(stripANSI(prefix)) + label
@@ -464,20 +473,25 @@ func (m softwareModel) renderAppPanel(bodyH int) string {
 	b.WriteString("\n\n")
 
 	visible := m.appVisibleLines()
-	if len(cat.Apps) == 0 {
-		b.WriteString(subStyle.Render("No apps in this category for your distro/platform."))
-	} else {
-		end := m.appScroll + visible
-		if end > len(cat.Apps) {
-			end = len(cat.Apps)
-		}
-		rowsBelow := len(cat.Apps) - end
+	totalApps := len(cat.Apps)
 
-		for vi, idx := range seq(m.appScroll, end) {
-			b.WriteString(m.renderAppLine(idx, cat.Apps[idx], cat, vi, visible, rowsBelow))
+	if totalApps == 0 {
+		b.WriteString(subStyle.Render("No apps in this category for your distro/platform."))
+		b.WriteString("\n")
+		for i := 1; i < visible; i++ {
 			b.WriteString("\n")
 		}
-		// Pad remaining visible lines so height stays fixed.
+	} else {
+		end := m.appScroll + visible
+		if end > totalApps {
+			end = totalApps
+		}
+
+		for vi, idx := range seq(m.appScroll, end) {
+			b.WriteString(m.renderAppLine(idx, cat.Apps[idx], cat, vi, visible, totalApps))
+			b.WriteString("\n")
+		}
+		// Pad remaining visible lines so panel height stays fixed.
 		for i := end - m.appScroll; i < visible; i++ {
 			b.WriteString("\n")
 		}
@@ -510,13 +524,25 @@ func (m softwareModel) View() string {
 		return "No compatible software for this category.\n"
 	}
 
+	w := m.width
+	if w < 40 {
+		w = 40
+	}
+	h := m.height
+	if h < 16 {
+		h = 16
+	}
+
 	header := m.headerView()
 	footer := m.footerView()
 	hint := m.hintView()
 	bodyH := m.bodyHeight()
-	body := lipgloss.NewStyle().Height(bodyH).Width(m.width).Render(m.bodyView(bodyH))
+	body := m.bodyView(bodyH)
 
-	return lipgloss.JoinVertical(lipgloss.Top, header, body, footer, hint)
+	fullContent := lipgloss.JoinVertical(lipgloss.Center, header, "", body, "", footer, "", hint)
+
+	// Lock entire frame to exact terminal window size to eliminate all layout shift
+	return lipgloss.Place(w, h, lipgloss.Center, lipgloss.Top, fullContent)
 }
 
 func loadCatalog(path string) ([]category, error) {

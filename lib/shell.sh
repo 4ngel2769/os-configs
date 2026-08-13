@@ -197,17 +197,17 @@ shell_registry_app() {
 shell_set_default() {
     local shell_id="$1"
     local dry_run="${2:-false}"
-    local bin current
-
     bin="$(command -v "$shell_id" 2>/dev/null || true)"
+
+    if [[ "$dry_run" == "true" ]]; then
+        [[ -n "$bin" ]] || bin="/usr/bin/${shell_id}"
+        echo "[dry-run] would run: chsh -s ${bin}"
+        return 0
+    fi
+
     if [[ -z "$bin" ]]; then
         echo "shell: ${shell_id} not in PATH after install" >&2
         return 1
-    fi
-
-    if [[ "$dry_run" == "true" ]]; then
-        echo "[dry-run] would run: chsh -s ${bin}"
-        return 0
     fi
 
     current="$(getent passwd "$(whoami)" | cut -d: -f7)"
@@ -229,6 +229,12 @@ shell_set_default() {
 
     if chsh -s "$bin" 2>/dev/null; then
         return 0
+    fi
+
+    if command -v sudo &>/dev/null; then
+        if sudo usermod -s "$bin" "$USER" 2>/dev/null || sudo chsh -s "$bin" "$USER" 2>/dev/null; then
+            return 0
+        fi
     fi
 
     echo "shell: chsh failed — run manually: chsh -s ${bin}" >&2

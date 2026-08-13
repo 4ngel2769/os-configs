@@ -22,7 +22,7 @@ func truncateRunes(s string, maxW int) string {
 	return out
 }
 
-// fadeText truncates long labels; the visible tail fades from bright to dim (→).
+// fadeText truncates long labels with a clean dim ellipsis at the end.
 func fadeText(s string, maxW int) string {
 	if maxW < 4 {
 		return truncateRunes(s, maxW)
@@ -31,34 +31,9 @@ func fadeText(s string, maxW int) string {
 		return s
 	}
 
-	plain := truncateRunes(s, maxW-1) + "…"
-	runes := []rune(plain)
-	if len(runes) < 3 {
-		return lipgloss.NewStyle().Foreground(lipgloss.Color("245")).Render(plain)
-	}
-
-	// Bright body, last N runes dim toward the cut (btop-style horizontal fade-out).
-	const fadeLen = 4
-	fadeStart := len(runes) - fadeLen
-	if fadeStart < 1 {
-		fadeStart = 1
-	}
-	shades := []lipgloss.Color{"252", "245", "240", "236"}
-
-	var b strings.Builder
-	for i, r := range runes {
-		ch := string(r)
-		if i < fadeStart {
-			b.WriteString(lipgloss.NewStyle().Foreground(lipgloss.Color("252")).Render(ch))
-			continue
-		}
-		idx := i - fadeStart
-		if idx >= len(shades) {
-			idx = len(shades) - 1
-		}
-		b.WriteString(lipgloss.NewStyle().Foreground(shades[idx]).Render(ch))
-	}
-	return b.String()
+	body := truncateRunes(s, maxW-1)
+	dimEllipsis := lipgloss.NewStyle().Foreground(lipgloss.Color("244")).Render("…")
+	return body + dimEllipsis
 }
 
 // marqueeText scrolls long labels horizontally when selected.
@@ -88,31 +63,34 @@ func marqueeText(s string, maxW int, offset int) string {
 		b.WriteRune(r)
 		w += cw
 	}
-	return lipgloss.NewStyle().Foreground(lipgloss.Color("252")).Render(b.String())
+	return lipgloss.NewStyle().Foreground(lipgloss.Color("255")).Render(b.String())
 }
 
-// verticalFadeColor dims rows near the bottom when more content exists below.
-func verticalFadeColor(rowInView, viewRows, rowsBelow int) lipgloss.Color {
-	if rowsBelow <= 0 || viewRows < 2 {
+// verticalFadeColor dims top or bottom rows when more content exists outside the viewport (btop-style).
+func verticalFadeColor(rowInView, viewRows, scrollOffset, totalItems int) lipgloss.Color {
+	if totalItems <= viewRows || viewRows < 3 {
 		return lipgloss.Color("")
 	}
-	fadeZone := 3
-	if fadeZone > viewRows {
-		fadeZone = viewRows
+
+	itemsAbove := scrollOffset
+	itemsBelow := totalItems - (scrollOffset + viewRows)
+
+	// Top fade zone (if hidden items above)
+	if itemsAbove > 0 && rowInView == 0 {
+		return lipgloss.Color("240")
 	}
-	distFromBottom := viewRows - 1 - rowInView
-	if distFromBottom >= fadeZone {
-		return lipgloss.Color("")
+
+	// Bottom fade zone (if hidden items below)
+	if itemsBelow > 0 {
+		distFromBottom := viewRows - 1 - rowInView
+		if distFromBottom == 0 {
+			return lipgloss.Color("238")
+		} else if distFromBottom == 1 {
+			return lipgloss.Color("244")
+		}
 	}
-	shades := []lipgloss.Color{"245", "240", "236", "234"}
-	idx := fadeZone - 1 - distFromBottom
-	if idx < 0 {
-		idx = 0
-	}
-	if idx >= len(shades) {
-		idx = len(shades) - 1
-	}
-	return shades[idx]
+
+	return lipgloss.Color("")
 }
 
 func applyFadeStyle(line string, color lipgloss.Color) string {

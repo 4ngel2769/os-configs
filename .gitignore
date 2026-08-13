@@ -40,3 +40,4 @@ data/user/registry.json
 data/user/categories.json
 /arco-resolver
 /.cursor
+/.agents
