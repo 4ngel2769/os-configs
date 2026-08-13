@@ -172,7 +172,10 @@ shell_resolve() {
     fi
 
     shell_pick_interactive
-    if ui_picker_menu_confirm "Apply a custom shell configuration (themes, plugins, rc file)?" true "Shell configuration"; then
+    if ui_picker_menu_confirm \
+        "$(tui_str shell_confirm_message "Apply a custom shell configuration (themes, plugins, rc file)?")" \
+        true \
+        "$(tui_str shell_confirm_title "Shell configuration")"; then
         shell_pick_profile_interactive "$SELECTED_SHELL"
         shell_apply_selection "$SELECTED_SHELL" "$SELECTED_SHELL_PROFILE" "true"
     else

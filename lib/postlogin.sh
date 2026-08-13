@@ -55,6 +55,8 @@ os_configs_ensure_deps
 # shellcheck source=/dev/null
 source "${REPO_ROOT}/lib/detect.sh"
 # shellcheck source=/dev/null
+source "${REPO_ROOT}/lib/tui.sh"
+# shellcheck source=/dev/null
 source "${REPO_ROOT}/lib/ui.sh"
 # shellcheck source=/dev/null
 source "${REPO_ROOT}/lib/registry.sh"

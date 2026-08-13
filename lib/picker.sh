@@ -4,6 +4,12 @@ set -euo pipefail
 _picker_lib_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="${REPO_ROOT:-$(cd "${_picker_lib_dir}/.." && pwd)}"
 
+picker_tui_args() {
+    if [[ -f "${TUI_FILE:-${REPO_ROOT}/data/tui.json}" ]]; then
+        printf '%s\n' "--tui" "${TUI_FILE:-${REPO_ROOT}/data/tui.json}"
+    fi
+}
+
 picker_binary() {
     echo "${OS_CONFIGS_BIN:-${HOME}/.cache/os-configs/bin}/os-configs-picker"
 }
@@ -40,19 +46,19 @@ picker_build_catalog() {
         arco)
             reg_fn=registry_merged_json
             cats_fn=categories_arco_json
-            title="More apps"
-            subtitle="Extended catalog"
+            title="$(tui_str software_arco_title "More apps")"
+            subtitle="$(tui_str software_arco_subtitle "Extended catalog")"
             ;;
         all)
             reg_fn=registry_merged_json
             cats_fn=categories_merged_json
-            title="Custom software"
+            title="$(tui_str software_main_title "Custom software")"
             subtitle=""
             ;;
         main | *)
             reg_fn=registry_main_json
             cats_fn=categories_main_json
-            title="Custom software"
+            title="$(tui_str software_main_title "Custom software")"
             subtitle=""
             ;;
     esac
@@ -160,7 +166,7 @@ picker_run() {
         return 1
     fi
 
-    if ! "$picker" --catalog "$catalog" --output "$out_file"; then
+    if ! "$picker" --catalog "$catalog" --output "$out_file" $(picker_tui_args); then
         rm -f "$catalog"
         return 1
     fi
@@ -283,7 +289,7 @@ menu_picker_run() {
         return 1
     fi
 
-    "$picker" --menu "$input_file" --output "$out_file"
+    "$picker" --menu "$input_file" --output "$out_file" $(picker_tui_args)
 }
 
 # Writes preset choice JSON { "choice": "<id>|custom" } to $1 using input JSON at $2.
@@ -309,7 +315,7 @@ preset_picker_run() {
         return 1
     fi
 
-    "$picker" --presets "$input_file" --output "$out_file"
+    "$picker" --presets "$input_file" --output "$out_file" $(picker_tui_args)
 }
 
 picker_fallback_gum() {

@@ -22,11 +22,11 @@ func renderBanner(width int, b bannerInfo) string {
 		width = 40
 	}
 
-	title := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center).Width(width).Render("os-configs")
-	sub := lipgloss.NewStyle().Align(lipgloss.Center).Width(width).Foreground(lipgloss.Color("245")).
-		Render("Post-install setup")
+	title := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center).Width(width).Render(tuiString("app_title", "os-configs"))
+	sub := lipgloss.NewStyle().Align(lipgloss.Center).Width(width).Foreground(appTUI.Theme.muted()).
+		Render(tuiString("app_subtitle", "Post-install setup"))
 	divWidth := clamp(width-4, 20, 100)
-	div := lipgloss.NewStyle().Align(lipgloss.Center).Width(width).Foreground(lipgloss.Color("240")).
+	div := lipgloss.NewStyle().Align(lipgloss.Center).Width(width).Foreground(appTUI.Theme.dim()).
 		Render(strings.Repeat("─", divWidth))
 
 	badgeColor := lipgloss.Color("252")
@@ -42,8 +42,8 @@ func renderBanner(width int, b bannerInfo) string {
 		distroLine = fmt.Sprintf("%s · %s", b.DistroLabel, arch)
 	}
 
-	labelStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("245"))
-	valueStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("252")).Bold(true)
+	labelStyle := lipgloss.NewStyle().Foreground(appTUI.Theme.muted())
+	valueStyle := lipgloss.NewStyle().Foreground(appTUI.Theme.body()).Bold(true)
 
 	var infoRows []string
 	infoRows = append(infoRows, labelStyle.Render("Distribution")+valueStyle.Render("  "+distroLine))
@@ -76,8 +76,8 @@ func renderDetectionStrip(width int, b bannerInfo) string {
 	if b.ShowGPU && b.GPULabel != "" {
 		parts = append(parts, b.GPULabel)
 	}
-	line := strings.Join(parts, lipgloss.NewStyle().Foreground(lipgloss.Color("240")).Render(" · "))
-	return lipgloss.NewStyle().Align(lipgloss.Center).Width(width).Foreground(lipgloss.Color("245")).Render(line)
+	line := strings.Join(parts, lipgloss.NewStyle().Foreground(appTUI.Theme.dim()).Render(" · "))
+	return lipgloss.NewStyle().Align(lipgloss.Center).Width(width).Foreground(appTUI.Theme.muted()).Render(line)
 }
 
 func padLines(lines []string, count int) []string {

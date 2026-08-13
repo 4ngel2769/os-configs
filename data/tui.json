@@ -1,0 +1,51 @@
+{
+  "_comment": "Edit strings and theme colors here. Bash: tui_str / tui_strf in lib/tui.sh. Picker: --tui data/tui.json",
+  "strings": {
+    "app_title": "os-configs",
+    "app_subtitle": "Post-install setup",
+
+    "confirm_yes": "Yes",
+    "confirm_no": "No",
+    "confirm_hint": "←/→ toggle · Enter submit",
+
+    "button_back": "Back",
+    "button_continue": "Continue",
+
+    "platform_confirm_title": "Platform",
+    "platform_confirm_message": "Keep detected platform '{{platform}}'?",
+
+    "arco_offer_title": "More apps",
+    "arco_offer_body": "Nice software choice, we have more you can choose from.",
+    "arco_offer_message": "Would you like to check out more apps?",
+    "arco_offer_yes": "Of course",
+    "arco_offer_no": "No thanks",
+
+    "software_main_title": "Custom software",
+    "software_main_subtitle": "",
+    "software_arco_title": "More apps",
+    "software_arco_subtitle": "Extended catalog",
+    "software_hint": "↑↓ move · Space toggle · Enter switch pane · Tab footer · c continue",
+
+    "list_hint": "↑↓ move · Enter select",
+    "info_continue": "Continue",
+    "info_hint": "Enter continue",
+
+    "shell_confirm_title": "Shell configuration",
+    "shell_confirm_message": "Apply a custom shell configuration (themes, plugins, rc file)?",
+
+    "preset_custom_label": "Custom",
+    "preset_custom_subtitle": "pick your apps"
+  },
+  "theme": {
+    "accent": "86",
+    "body": "252",
+    "muted": "245",
+    "dim": "240",
+    "success": "10",
+    "secondary": "117",
+    "selected": "229",
+    "dialog_border": "86",
+    "button_active_border": "10",
+    "button_idle_border": "240"
+  }
+}

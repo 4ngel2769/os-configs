@@ -110,7 +110,7 @@ func (m softwareModel) headerView() string {
 	w := m.termW()
 	titleText := strings.TrimSpace(m.title)
 	if titleText == "" {
-		titleText = "Custom software"
+		titleText = tuiString("software_main_title", "Custom software")
 	}
 	subtitleText := strings.TrimSpace(m.subtitle)
 	if subtitleText == "" {
@@ -134,29 +134,15 @@ func (m softwareModel) headerView() string {
 
 func (m softwareModel) footerView() string {
 	w := m.termW()
-	gap := lipgloss.NewStyle().Width(4).Render("")
-
-	continueStyle := lipgloss.NewStyle().Border(lipgloss.RoundedBorder()).Padding(0, 2).Foreground(lipgloss.Color("10"))
-	backStyle := lipgloss.NewStyle().Border(lipgloss.RoundedBorder()).Padding(0, 2).Foreground(lipgloss.Color("117"))
-
-	if m.focus == focusFooter && m.footerButton == footerBack {
-		backStyle = backStyle.Bold(true).BorderForeground(lipgloss.Color("117"))
-	} else {
-		backStyle = backStyle.BorderForeground(lipgloss.Color("240"))
-	}
-	if m.focus == focusFooter && m.footerButton == footerContinue {
-		continueStyle = continueStyle.Bold(true).BorderForeground(lipgloss.Color("10"))
-	} else {
-		continueStyle = continueStyle.BorderForeground(lipgloss.Color("240"))
-	}
-
-	buttons := lipgloss.JoinHorizontal(lipgloss.Top, backStyle.Render("Back"), gap, continueStyle.Render("Continue"))
-	return lipgloss.NewStyle().Width(w).Align(lipgloss.Center).Render(buttons)
+	backLabel := tuiString("button_back", "Back")
+	continueLabel := tuiString("button_continue", "Continue")
+	buttons := renderButtonRow(backLabel, continueLabel, m.focus == focusFooter && m.footerButton == footerBack, buttonSecondary, buttonPrimary, 4)
+	return centerBlock(w, buttons)
 }
 
 func (m softwareModel) hintView() string {
-	return lipgloss.NewStyle().Align(lipgloss.Center).Width(m.termW()).Foreground(lipgloss.Color("245")).
-		Render("↑↓ move · Space toggle · Enter switch pane · Tab footer · c continue")
+	return lipgloss.NewStyle().Align(lipgloss.Center).Width(m.termW()).Foreground(appTUI.Theme.muted()).
+		Render(tuiString("software_hint", "↑↓ move · Space toggle · Enter switch pane · Tab footer · c continue"))
 }
 
 func padLine(s string, width int) string {

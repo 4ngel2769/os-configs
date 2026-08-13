@@ -90,7 +90,10 @@ flow_platform_override() {
         return 0
     fi
 
-    if ui_picker_menu_confirm "Keep detected platform '$(ui_platform_label "$PLATFORM_CLASS")'?" true "Platform"; then
+    if ui_picker_menu_confirm \
+        "$(tui_strf platform_confirm_message platform="$(ui_platform_label "$PLATFORM_CLASS")")" \
+        true \
+        "$(tui_str platform_confirm_title Platform)"; then
         return 0
     fi
 

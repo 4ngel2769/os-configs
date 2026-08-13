@@ -118,10 +118,11 @@ func (m menuModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m menuModel) renderList() string {
-	header := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center).Width(m.width).Foreground(lipgloss.Color("86")).Render(m.in.Title)
+	th := appTUI.Theme
+	header := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center).Width(m.width).Foreground(th.accent()).Render(m.in.Title)
 	sub := ""
 	if m.in.Subtitle != "" {
-		sub = lipgloss.NewStyle().Align(lipgloss.Center).Width(m.width).Foreground(lipgloss.Color("245")).Render(m.in.Subtitle)
+		sub = lipgloss.NewStyle().Align(lipgloss.Center).Width(m.width).Foreground(th.muted()).Render(m.in.Subtitle)
 	}
 
 	listW := min(m.width-8, 72)
@@ -135,9 +136,9 @@ func (m menuModel) renderList() string {
 		label = truncateRunes(label, listW-4)
 		var line string
 		if i == m.cursor {
-			line = "▸ " + lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("229")).Render(label)
+			line = "▸ " + lipgloss.NewStyle().Bold(true).Foreground(th.selected()).Render(label)
 		} else {
-			line = "  " + lipgloss.NewStyle().Foreground(lipgloss.Color("245")).Render(label)
+			line = "  " + lipgloss.NewStyle().Foreground(th.muted()).Render(label)
 		}
 		rows = append(rows, lipgloss.NewStyle().Width(listW).Render(line))
 	}
@@ -151,104 +152,52 @@ func (m menuModel) confirmLabels() (yes, no string) {
 	yes = strings.TrimSpace(m.in.YesLabel)
 	no = strings.TrimSpace(m.in.NoLabel)
 	if yes == "" {
-		yes = "Yes"
+		yes = tuiString("confirm_yes", "Yes")
 	}
 	if no == "" {
-		no = "No"
+		no = tuiString("confirm_no", "No")
 	}
 	return yes, no
 }
 
 func (m menuModel) renderConfirm() string {
-	title := m.in.Title
+	title := strings.TrimSpace(m.in.Title)
 	if title == "" {
 		title = "Confirm"
 	}
 
-	bodyText := strings.TrimSpace(m.in.Body)
-	msgText := strings.TrimSpace(m.in.Message)
-
-	dialogW := min(m.width-8, 64)
-	if dialogW < 40 {
-		dialogW = 40
-	}
-
-	var inner []string
-
-	if bodyText != "" {
-		inner = append(inner, lipgloss.NewStyle().
-			Align(lipgloss.Center).
-			Width(dialogW - 4).
-			Foreground(lipgloss.Color("252")).
-			Render(bodyText))
-	}
-	if msgText != "" {
-		inner = append(inner, lipgloss.NewStyle().
-			Align(lipgloss.Center).
-			Width(dialogW - 4).
-			Foreground(lipgloss.Color("245")).
-			MarginTop(1).
-			Render(msgText))
-	}
-
 	yesLabel, noLabel := m.confirmLabels()
-	gap := lipgloss.NewStyle().Width(3).Render("")
-	yesStyle := lipgloss.NewStyle().Border(lipgloss.RoundedBorder()).Padding(0, 2).Foreground(lipgloss.Color("10"))
-	noStyle := lipgloss.NewStyle().Border(lipgloss.RoundedBorder()).Padding(0, 2).Foreground(lipgloss.Color("117"))
-
-	if m.confirmYes {
-		yesStyle = yesStyle.Bold(true).BorderForeground(lipgloss.Color("10"))
-		noStyle = noStyle.BorderForeground(lipgloss.Color("240"))
-	} else {
-		noStyle = noStyle.Bold(true).BorderForeground(lipgloss.Color("117"))
-		yesStyle = yesStyle.BorderForeground(lipgloss.Color("240"))
-	}
-
-	buttons := lipgloss.JoinHorizontal(lipgloss.Top, yesStyle.Render(yesLabel), gap, noStyle.Render(noLabel))
-	inner = append(inner, lipgloss.NewStyle().Width(dialogW-4).Align(lipgloss.Center).MarginTop(1).Render(buttons))
-
-	dialogBody := lipgloss.JoinVertical(lipgloss.Center, inner...)
-	dialog := lipgloss.NewStyle().
-		Border(lipgloss.RoundedBorder()).
-		BorderForeground(lipgloss.Color("86")).
-		Padding(1, 2).
-		Width(dialogW).
-		Align(lipgloss.Center).
-		Render(dialogBody)
-
-	header := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center).Width(m.width).Foreground(lipgloss.Color("86")).Render(title)
-	return lipgloss.JoinVertical(lipgloss.Center, header, "", dialog)
+	buttons := renderButtonPair(yesLabel, noLabel, m.confirmYes, 3)
+	maxW := min(m.width-8, 64)
+	dialog := renderDialog(title, strings.TrimSpace(m.in.Body), strings.TrimSpace(m.in.Message), buttons, maxW)
+	return centerBlock(m.width, dialog)
 }
 
 func (m menuModel) renderInfo() string {
-	header := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center).Width(m.width).Foreground(lipgloss.Color("86")).Render(m.in.Title)
+	th := appTUI.Theme
+	header := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center).Width(m.width).Foreground(th.accent()).Render(m.in.Title)
 
 	body := ""
 	if m.in.Body != "" {
 		body = lipgloss.NewStyle().
 			Border(lipgloss.RoundedBorder()).
-			BorderForeground(lipgloss.Color("86")).
+			BorderForeground(th.accent()).
 			Padding(1, 2).
-			Width(min(m.width-10, 76)).
+			MaxWidth(min(m.width-10, 76)).
 			Align(lipgloss.Left).
-			Foreground(lipgloss.Color("252")).
+			Foreground(th.body()).
 			Render(m.in.Body)
 	}
 
-	btn := lipgloss.NewStyle().
-		Border(lipgloss.RoundedBorder()).
-		BorderForeground(lipgloss.Color("10")).
-		Bold(true).
-		Padding(0, 2).
-		Foreground(lipgloss.Color("10")).
-		Render("Continue")
-	btn = lipgloss.NewStyle().Width(m.width).Align(lipgloss.Center).Margin(1, 0).Render(btn)
+	continueLabel := tuiString("info_continue", "Continue")
+	btn := renderBorderedButton(continueLabel, true, buttonPrimary)
+	btn = lipgloss.NewStyle().Margin(1, 0).Render(btn)
 
 	parts := []string{header}
 	if body != "" {
-		parts = append(parts, "", lipgloss.NewStyle().Width(m.width).Align(lipgloss.Center).Render(body))
+		parts = append(parts, "", centerBlock(m.width, body))
 	}
-	parts = append(parts, btn)
+	parts = append(parts, centerBlock(m.width, btn))
 	return lipgloss.JoinVertical(lipgloss.Center, parts...)
 }
 
@@ -268,20 +217,20 @@ func (m menuModel) View() string {
 	switch m.in.Mode {
 	case "confirm":
 		body = m.renderConfirm()
-		hint = lipgloss.NewStyle().Align(lipgloss.Center).Width(w).Foreground(lipgloss.Color("245")).
-			Render("←/→ toggle · Enter submit")
+		hint = lipgloss.NewStyle().Align(lipgloss.Center).Width(w).Foreground(appTUI.Theme.muted()).
+			Render(tuiString("confirm_hint", "←/→ toggle · Enter submit"))
 		if !m.in.ShowBanner {
 			content := lipgloss.JoinVertical(lipgloss.Center, body, "", hint)
 			return lipgloss.Place(w, h, lipgloss.Center, lipgloss.Center, content)
 		}
 	case "info":
 		body = m.renderInfo()
-		hint = lipgloss.NewStyle().Align(lipgloss.Center).Width(w).Foreground(lipgloss.Color("245")).
-			Render("Enter continue")
+		hint = lipgloss.NewStyle().Align(lipgloss.Center).Width(w).Foreground(appTUI.Theme.muted()).
+			Render(tuiString("info_hint", "Enter continue"))
 	default:
 		body = m.renderList()
-		hint = lipgloss.NewStyle().Align(lipgloss.Center).Width(w).Foreground(lipgloss.Color("245")).
-			Render("↑↓ move · Enter select")
+		hint = lipgloss.NewStyle().Align(lipgloss.Center).Width(w).Foreground(appTUI.Theme.muted()).
+			Render(tuiString("list_hint", "↑↓ move · Enter select"))
 	}
 
 	banner := renderBanner(w, m.in.Banner)

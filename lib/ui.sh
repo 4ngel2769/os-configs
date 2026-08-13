@@ -145,8 +145,8 @@ ui_picker_menu_confirm() {
     local default_yes="${2:-true}"
     local title="${3:-Confirm}"
     local body="${4:-}"
-    local yes_label="${5:-Yes}"
-    local no_label="${6:-No}"
+    local yes_label="${5:-$(tui_str confirm_yes Yes)}"
+    local no_label="${6:-$(tui_str confirm_no No)}"
     local show_banner="${7:-true}"
     local input_file result_file confirmed default_json banner_json show_banner_json
 
@@ -192,18 +192,18 @@ ui_picker_menu_confirm() {
 ui_picker_menu_offer() {
     if picker_can_run; then
         ui_picker_menu_confirm \
-            "Would you like to check out more apps?" \
+            "$(tui_str arco_offer_message "Would you like to check out more apps?")" \
             true \
-            "More apps" \
-            "Nice software choice, we have more you can choose from." \
-            "Of course" \
-            "No thanks" \
+            "$(tui_str arco_offer_title "More apps")" \
+            "$(tui_str arco_offer_body "Nice software choice, we have more you can choose from.")" \
+            "$(tui_str arco_offer_yes "Of course")" \
+            "$(tui_str arco_offer_no "No thanks")" \
             false
         return $?
     fi
 
-    ui_style_subheader "Nice software choice, we have more you can choose from."
-    ui_confirm "Would you like to check out more apps?" true
+    ui_style_subheader "$(tui_str arco_offer_body "Nice software choice, we have more you can choose from.")"
+    ui_confirm "$(tui_str arco_offer_message "Would you like to check out more apps?")" true
 }
 
 ui_picker_menu_list() {

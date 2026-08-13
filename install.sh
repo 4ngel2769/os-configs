@@ -83,6 +83,8 @@ os_configs_detect_minimal
 # shellcheck source=/dev/null
 source "${ROOT}/lib/deps.sh"
 # shellcheck source=/dev/null
+source "${ROOT}/lib/tui.sh"
+# shellcheck source=/dev/null
 source "${ROOT}/lib/ui.sh"
 
 export OS_CONFIGS_DRY_RUN="$DRY_RUN"
