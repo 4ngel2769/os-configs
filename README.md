@@ -19,7 +19,7 @@ wget -qO- https://raw.githubusercontent.com/4ngel2769/os-configs/main/bootstrap.
 curl -fsSL https://raw.githubusercontent.com/4ngel2769/os-configs/main/bootstrap.sh | bash -s -- --dry-run --auto
 ```
 
-The bootstrap script clones or updates `~/os-configs`, then runs `install.sh`.
+The bootstrap script installs `git` if needed, clones or updates **`~/.os-configs`**, then runs `install.sh`.
 Override the checkout with `OS_CONFIGS_DIR`, branch with `OS_CONFIGS_REF`.
 
 Already have a clone? Run `./install.sh` from the repo root.
