@@ -13,7 +13,18 @@ picker_has_tty() {
 }
 
 picker_can_run() {
-    [[ -x "$(picker_binary)" ]] && picker_has_tty
+    if ! picker_has_tty; then
+        return 1
+    fi
+    local bin
+    bin="$(picker_binary)"
+    [[ -x "$bin" ]] || return 1
+    # Reject wrong-format binaries (e.g. Windows PE copied to Linux cache).
+    if declare -F _deps_picker_runnable &>/dev/null; then
+        _deps_picker_runnable "$bin"
+        return $?
+    fi
+    return 0
 }
 
 picker_build_catalog() {

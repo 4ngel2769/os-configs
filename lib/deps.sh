@@ -8,7 +8,7 @@ OS_CONFIGS_BIN="${OS_CONFIGS_BIN:-${OS_CONFIGS_CACHE}/bin}"
 
 JQ_VERSION="${OS_CONFIGS_JQ_VERSION:-1.7.1}"
 GUM_VERSION="${OS_CONFIGS_GUM_VERSION:-0.14.5}"
-PICKER_VERSION="${OS_CONFIGS_PICKER_VERSION:-3}"
+PICKER_VERSION="${OS_CONFIGS_PICKER_VERSION:-4}"
 
 _deps_msg() { printf '[deps] %s\n' "$*" >&2; }
 
@@ -131,12 +131,31 @@ _deps_picker_cached() {
     local dest="$1"
     local stamp="${OS_CONFIGS_BIN}/.os-configs-picker.version"
 
-    [[ -x "$dest" && -f "$stamp" && "$(cat "$stamp")" == "$PICKER_VERSION" ]]
+    [[ -x "$dest" && -f "$stamp" && "$(cat "$stamp")" == "$PICKER_VERSION" ]] || return 1
+    _deps_picker_runnable "$dest"
+}
+
+# Bundled/cached picker must be a Linux ELF for this host arch (not a Windows PE accidentally committed).
+_deps_picker_runnable() {
+    local bin="$1"
+
+    [[ -f "$bin" && -x "$bin" ]] || return 1
+
+    if command -v file &>/dev/null; then
+        file -b "$bin" 2>/dev/null | grep -qiE 'ELF.*(x86-64|aarch64|ARM aarch64)' && return 0
+        return 1
+    fi
+
+    # file(1) missing — read ELF magic \x7fELF
+    local magic
+    magic="$(head -c 4 "$bin" 2>/dev/null || true)"
+    [[ "$magic" == $'\x7fELF' ]]
 }
 
 _deps_install_picker_from_source() {
     local dest="$1"
     local src="${REPO_ROOT}/tools/picker"
+    local arch goos goarch
 
     if ! command -v go &>/dev/null; then
         if [[ -x "${HOME}/go/bin/go" ]]; then
@@ -148,9 +167,22 @@ _deps_install_picker_from_source() {
 
     [[ -f "${src}/main.go" ]] || return 1
 
-    _deps_msg "building os-configs-picker from source (dev)..."
-    (cd "$src" && go mod tidy >/dev/null 2>&1 && go build -trimpath -ldflags "-s -w" -o "$dest" .)
+    arch="$(_deps_arch)"
+    goos="linux"
+    goarch="$arch"
+
+    _deps_msg "building os-configs-picker from source (${goos}/${goarch})..."
+    (
+        cd "$src"
+        go mod tidy >/dev/null 2>&1
+        GOOS="$goos" GOARCH="$goarch" go build -trimpath -ldflags "-s -w" -o "$dest" .
+    )
     chmod +x "$dest"
+    if ! _deps_picker_runnable "$dest"; then
+        echo "deps: picker build did not produce a runnable Linux ELF binary" >&2
+        rm -f "$dest"
+        return 1
+    fi
     printf '%s\n' "$PICKER_VERSION" >"${OS_CONFIGS_BIN}/.os-configs-picker.version"
     _deps_msg "picker built to ${dest}"
 }
@@ -167,13 +199,18 @@ _deps_install_picker() {
 
     mkdir -p "$OS_CONFIGS_BIN"
 
-    if [[ -f "$bundled" ]]; then
+    if [[ -f "$bundled" ]] && _deps_picker_runnable "$bundled"; then
         _deps_msg "installing bundled os-configs-picker (${arch})..."
         cp "$bundled" "$dest"
         chmod +x "$dest"
         printf '%s\n' "$PICKER_VERSION" >"${OS_CONFIGS_BIN}/.os-configs-picker.version"
         _deps_msg "picker installed to ${dest}"
         return 0
+    fi
+
+    if [[ -f "$bundled" ]] && ! _deps_picker_runnable "$bundled"; then
+        echo "deps: bundled picker is not a Linux ELF binary for ${arch}: ${bundled}" >&2
+        echo "deps: rebuild with: (cd tools/picker && ./build.sh)" >&2
     fi
 
     if [[ "${OS_CONFIGS_PICKER_BUILD:-}" == "1" ]]; then
