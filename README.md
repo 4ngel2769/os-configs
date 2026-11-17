@@ -14,7 +14,9 @@ bash <(curl -fsSL https://raw.githubusercontent.com/4ngel2769/os-configs/main/bo
 
 Or clone the repo and run `./install.sh`. Use a normal user with `sudo` — not root. Over SSH, use **`ssh -t`** for the full interactive UI.
 
-Bootstrap clones to `~/.os-configs`, checks missing dependencies, shows what it will install, then starts the installer.
+`setup.sh` still works as a compatibility alias for old links; it delegates to `bootstrap.sh`.
+
+Bootstrap clones to `~/.os-configs`, checks missing dependencies, shows what it will install, then starts the installer. All interactive pages are rendered by the bundled Go picker; gum is optional. The downloaded `jq` binary is verified against the upstream SHA-256 list. Set `OS_CONFIGS_SKIP_CHECKSUM=1` only if you have a reason to bypass that.
 
 ---
 
