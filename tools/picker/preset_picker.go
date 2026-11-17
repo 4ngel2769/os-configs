@@ -25,6 +25,8 @@ type presetInput struct {
 	IncludeCustom bool           `json:"include_custom,omitempty"`
 	Presets       []presetOption `json:"presets"`
 	Custom        presetOption   `json:"custom"`
+	Step          int            `json:"step,omitempty"`
+	Total         int            `json:"total,omitempty"`
 }
 
 type presetOutput struct {
@@ -277,6 +279,9 @@ func (m presetModel) View() string {
 	}
 
 	main := lipgloss.JoinVertical(lipgloss.Center, body, "", hint)
+	if s := renderStep(m.width, m.input.Step, m.input.Total); s != "" {
+		main = lipgloss.JoinVertical(lipgloss.Center, s, "", main)
+	}
 	return lipgloss.NewStyle().
 		Width(m.width).
 		Height(m.height).

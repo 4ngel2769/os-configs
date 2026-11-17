@@ -31,20 +31,28 @@ var appTUI tuiFile
 func defaultTUI() tuiFile {
 	return tuiFile{
 		Strings: map[string]string{
-			"app_title":                 "os-configs",
-			"app_subtitle":              "Post-install setup",
-			"confirm_yes":               "Yes",
-			"confirm_no":                "No",
-			"confirm_hint":              "←/→ toggle · Enter submit",
-			"button_back":               "Back",
-			"button_continue":           "Continue",
-			"software_hint":             "↑↓ move · Space toggle · Enter switch pane · Tab footer · c continue",
-			"list_hint":                 "↑↓ move · Enter select",
-			"info_continue":             "Continue",
-			"info_hint":                 "Enter continue",
-			"software_main_title":       "Custom software",
-			"software_arco_title":       "More apps",
-			"software_arco_subtitle":    "Extended catalog",
+			"app_title":              "os-configs",
+			"app_subtitle":           "Post-install setup",
+			"confirm_yes":            "Yes",
+			"confirm_no":             "No",
+			"confirm_hint":           "←/→ toggle · Enter submit",
+			"button_back":            "Back",
+			"button_continue":        "Continue",
+			"software_hint":          "↑↓ move · Space toggle · Enter switch pane · Tab footer · c continue",
+			"list_hint":              "↑↓ move · Enter select",
+			"flow_hint":              "↑↓ move · Tab footer · Enter continue · b back · q quit",
+			"flow_hint_multi":        "↑↓ move · Space toggle · Tab footer · Enter continue · b back · q quit",
+			"icon_cursor":            "▸",
+			"icon_on":                "◉",
+			"icon_off":               "○",
+			"icon_back":              "←",
+			"icon_continue":          "⏎",
+			"icon_done":              "•",
+			"info_continue":          "Continue",
+			"info_hint":              "Enter continue",
+			"software_main_title":    "Custom software",
+			"software_arco_title":    "More apps",
+			"software_arco_subtitle": "Extended catalog",
 		},
 		Theme: themeConfig{
 			Accent:             "86",
@@ -137,13 +145,13 @@ func tuiColor(code, fallback string) lipgloss.Color {
 	return lipgloss.Color(code)
 }
 
-func (t themeConfig) accent() lipgloss.Color   { return tuiColor(t.Accent, "86") }
-func (t themeConfig) body() lipgloss.Color     { return tuiColor(t.Body, "252") }
-func (t themeConfig) muted() lipgloss.Color    { return tuiColor(t.Muted, "245") }
-func (t themeConfig) dim() lipgloss.Color      { return tuiColor(t.Dim, "240") }
-func (t themeConfig) success() lipgloss.Color  { return tuiColor(t.Success, "10") }
+func (t themeConfig) accent() lipgloss.Color    { return tuiColor(t.Accent, "86") }
+func (t themeConfig) body() lipgloss.Color      { return tuiColor(t.Body, "252") }
+func (t themeConfig) muted() lipgloss.Color     { return tuiColor(t.Muted, "245") }
+func (t themeConfig) dim() lipgloss.Color       { return tuiColor(t.Dim, "240") }
+func (t themeConfig) success() lipgloss.Color   { return tuiColor(t.Success, "10") }
 func (t themeConfig) secondary() lipgloss.Color { return tuiColor(t.Secondary, "117") }
-func (t themeConfig) selected() lipgloss.Color { return tuiColor(t.Selected, "229") }
+func (t themeConfig) selected() lipgloss.Color  { return tuiColor(t.Selected, "229") }
 
 type buttonVariant int
 
