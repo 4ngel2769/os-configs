@@ -53,10 +53,13 @@ shell_pick_interactive() {
 
     items_json="$(jq -c '[.shells[] | {id: .id, label: .label, subtitle: .tagline}]' "$_shells_file")"
 
-    if choice="$(ui_picker_menu_list "Choose your shell" "Installed if needed and set as your default login shell" "$items_json")"; then
-        SELECTED_SHELL="$choice"
-        export SELECTED_SHELL
-        return 0
+    if choice="$(ui_picker_list "Choose your shell" "Installed if needed and set as your default login shell" "$items_json")"; then
+        [[ "$UI_NAV" == "back" ]] && return 2
+        if [[ -n "$choice" ]]; then
+            SELECTED_SHELL="$choice"
+            export SELECTED_SHELL
+            return 0
+        fi
     fi
 
     local -a options=() line
@@ -94,7 +97,8 @@ shell_pick_profile_interactive() {
          | {id: .key, label: .value.label, subtitle: .value.description}
         ]' "$_shell_profiles_file")"
 
-    if choice="$(ui_picker_menu_list "Shell configuration" "Themes, plugins, and rc files" "$items_json")"; then
+    if choice="$(ui_picker_list "Shell configuration" "Themes, plugins, and rc files" "$items_json")"; then
+        [[ "$UI_NAV" == "back" ]] && return 2
         profile="$choice"
     else
         local -a options=()
@@ -158,6 +162,7 @@ shell_apply_defaults() {
 
 shell_resolve() {
     local auto="${1:-false}"
+    local rc=0
 
     SELECTED_SHELL=""
     SELECTED_SHELL_PROFILE=""
@@ -171,17 +176,38 @@ shell_resolve() {
         return 0
     fi
 
-    shell_pick_interactive
-    if ui_picker_menu_confirm \
-        "$(tui_str shell_confirm_message "Apply a custom shell configuration (themes, plugins, rc file)?")" \
-        true \
-        "$(tui_str shell_confirm_title "Shell configuration")"; then
-        shell_pick_profile_interactive "$SELECTED_SHELL"
-        shell_apply_selection "$SELECTED_SHELL" "$SELECTED_SHELL_PROFILE" "true"
-    else
-        shell_apply_selection "$SELECTED_SHELL" "" "false"
-        ui_style_subheader "Shell config skipped — only install and set default"
+    shell_pick_interactive || rc=$?
+    if [[ "$rc" -eq 2 ]]; then
+        UI_NAV="back"
+        return 2
     fi
+    [[ "$rc" -eq 0 ]] || return "$rc"
+
+    ui_flow_confirm \
+        "$(tui_str shell_confirm_title "Shell configuration")" \
+        "$(tui_str confirm_yes Yes)" \
+        "$(tui_str confirm_no No)" \
+        "$(tui_str shell_confirm_message "Apply a custom shell configuration (themes, plugins, rc file)?")"
+
+    case "$UI_CONFIRM_RESULT" in
+        back)
+            UI_NAV="back"
+            return 2
+            ;;
+        yes)
+            shell_pick_profile_interactive "$SELECTED_SHELL" || rc=$?
+            if [[ "$rc" -eq 2 ]]; then
+                UI_NAV="back"
+                return 2
+            fi
+            [[ "$rc" -eq 0 ]] || return "$rc"
+            shell_apply_selection "$SELECTED_SHELL" "$SELECTED_SHELL_PROFILE" "true"
+            ;;
+        *)
+            shell_apply_selection "$SELECTED_SHELL" "" "false"
+            ui_style_subheader "Shell config skipped — only install and set default"
+            ;;
+    esac
 }
 
 shell_show_summary() {
@@ -200,6 +226,7 @@ shell_registry_app() {
 shell_set_default() {
     local shell_id="$1"
     local dry_run="${2:-false}"
+    local bin current
     bin="$(command -v "$shell_id" 2>/dev/null || true)"
 
     if [[ "$dry_run" == "true" ]]; then
@@ -352,7 +379,9 @@ shell_run_profile_setup() {
     case "$setup" in
         oh-my-zsh)
             ui_spin "Setting up Oh My Zsh..." shell_setup_oh_my_zsh "$dry_run"
-            [[ -n "$extra" ]] && ui_spin "Installing ${extra}..." shell_setup_zsh_extra "$extra" "$dry_run"
+            if [[ -n "$extra" ]]; then
+                ui_spin "Installing ${extra}..." shell_setup_zsh_extra "$extra" "$dry_run"
+            fi
             ;;
         oh-my-fish)
             ui_spin "Setting up Oh My Fish..." shell_setup_oh_my_fish "$dry_run"
