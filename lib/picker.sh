@@ -32,6 +32,19 @@ picker_can_run() {
     return 0
 }
 
+flow_picker_run() {
+    local out_file="$1"
+    local input_file="$2"
+    local picker
+
+    picker="$(picker_binary)"
+    [[ -f "$input_file" ]] || { echo "picker: flow input not found: ${input_file}" >&2; return 1; }
+    [[ -x "$picker" ]] || { echo "picker: os-configs-picker not found at ${picker}" >&2; return 1; }
+    picker_has_tty || { echo "picker: flow page requires a TTY (use: ssh -t)" >&2; return 1; }
+
+    "$picker" --flow "$input_file" --output "$out_file" $(picker_tui_args)
+}
+
 # phase: main (core catalog), arco (extended catalog), all (legacy full merge)
 picker_build_catalog() {
     local out="$1"
@@ -67,6 +80,8 @@ picker_build_catalog() {
     "$cats_fn" >"$cats_tmp"
 
     jq -n \
+        --argjson step "${UI_STEP:-0}" \
+        --argjson total "${UI_TOTAL:-0}" \
         --arg family "${DISTRO_FAMILY:?}" \
         --arg pc "${PLATFORM_CLASS:-desktop}" \
         --arg gpu "${GPU_CLASS:-none}" \
@@ -99,6 +114,8 @@ picker_build_catalog() {
             $reg[$app].label // ($app | gsub("-"; " ") | split(" ") | map(.[0:1] + .[1:]) | join(" "));
 
         {
+            step: $step,
+            total: $total,
             banner: {
                 distro_id: $distro_id,
                 distro_label: $distro_label,
@@ -241,7 +258,7 @@ picker_offer_arco_catalog() {
 }
 
 picker_banner_json() {
-    local gpu_label show_gpu="false"
+    local gpu_label="" show_gpu="false"
 
     if [[ "${PLATFORM_CLASS:-}" != "server" ]]; then
         gpu_label="$(ui_gpu_label "${GPU_CLASS:-none}")"

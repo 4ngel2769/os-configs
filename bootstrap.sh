@@ -24,10 +24,34 @@ _bootstrap_local_root() {
     local src="${BASH_SOURCE[0]:-}"
     local dir
 
-    [[ -n "$src" && -f "$src" && "$(basename "$src")" == "bootstrap.sh" ]] || return 1
+    # Any filename works: the test is the presence of install.sh beside the script.
+    [[ -n "$src" && -f "$src" ]] || return 1
     dir="$(cd "$(dirname "$src")" && pwd)"
     [[ -f "${dir}/install.sh" ]] || return 1
     printf '%s\n' "$dir"
+}
+
+_bootstrap_help() {
+    cat <<'EOF'
+os-configs bootstrap
+
+Fetch the repo (or use the local clone) and run the installer.
+
+Usage:
+  bash <(curl -fsSL .../bootstrap.sh) [installer options]
+  bash bootstrap.sh [installer options]
+
+Options are passed through to install.sh. Common ones:
+  --auto          non-interactive, pick the first preset
+  --dry-run       full flow, no system changes
+  --skip-dotfiles skip dotfile backup and deploy
+  --help          show this help
+
+Environment:
+  OS_CONFIGS_REPO   clone URL
+  OS_CONFIGS_DIR    checkout directory (default ~/.os-configs)
+  OS_CONFIGS_REF    branch or tag (default main)
+EOF
 }
 
 _bootstrap_require_sudo() {
@@ -93,10 +117,16 @@ _bootstrap_sync_repo() {
 
     if [[ -d "${dest}/.git" ]]; then
         _bootstrap_msg "updating ${dest} (${OS_CONFIGS_REF})..."
-        git -C "$dest" fetch --depth 1 origin "$OS_CONFIGS_REF" >/dev/null 2>&1
-        git -C "$dest" checkout -f "$OS_CONFIGS_REF" >/dev/null 2>&1 \
-            || git -C "$dest" checkout -f -B "$OS_CONFIGS_REF" "origin/${OS_CONFIGS_REF}" >/dev/null 2>&1
-        git -C "$dest" reset --hard "origin/${OS_CONFIGS_REF}" >/dev/null 2>&1
+        if ! git -C "$dest" fetch --depth 1 origin "$OS_CONFIGS_REF" >/dev/null 2>&1; then
+            _bootstrap_msg "fetch failed — continuing with the existing checkout (it may be stale)"
+            return 0
+        fi
+        if git -C "$dest" show-ref --verify --quiet "refs/heads/${OS_CONFIGS_REF}"; then
+            git -C "$dest" checkout -f "$OS_CONFIGS_REF" >/dev/null 2>&1 || return 1
+        else
+            git -C "$dest" checkout -f -B "$OS_CONFIGS_REF" "origin/${OS_CONFIGS_REF}" >/dev/null 2>&1 || return 1
+        fi
+        git -C "$dest" reset --hard "origin/${OS_CONFIGS_REF}" >/dev/null 2>&1 || return 1
         return 0
     fi
 
@@ -136,7 +166,11 @@ main() {
 
     for arg in "$@"; do
         case "$arg" in
-            --validate-user | --help | -h) skip_sudo=true ;;
+            --help | -h)
+                _bootstrap_help
+                exit 0
+                ;;
+            --validate-user) skip_sudo=true ;;
         esac
     done
 
@@ -144,7 +178,10 @@ main() {
         _bootstrap_require_sudo || exit 1
     fi
 
-    root="$(_bootstrap_repo_root)"
+    if ! root="$(_bootstrap_repo_root)"; then
+        _bootstrap_msg "could not obtain an os-configs checkout"
+        exit 1
+    fi
     if [[ ! -f "${root}/install.sh" ]]; then
         _bootstrap_msg "no install.sh at ${root} — fetch failed"
         exit 1

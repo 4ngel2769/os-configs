@@ -225,18 +225,27 @@ install_app() {
 install_run_plan() {
     local plan_file="$1"
     local dry_run="${2:-false}"
-    local app rc
+    local app rc failed=0
 
     log_reset
 
     while IFS= read -r app; do
         [[ -n "$app" ]] || continue
-        install_app "$app" "$dry_run" || {
+        if install_app "$app" "$dry_run"; then
+            continue
+        else
             rc=$?
+            # 2 means an optional app was skipped, which is not a failure.
             [[ "$rc" -eq 2 ]] && continue
-            true
-        }
+            failed=$((failed + 1))
+        fi
     done < <(preset_flatten_apps "$plan_file")
+
+    if [[ "$failed" -gt 0 ]]; then
+        echo "install: ${failed} package(s) failed — see the summary above" >&2
+        return 1
+    fi
+    return 0
 }
 
 install_ensure_stow() {

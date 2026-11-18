@@ -158,16 +158,23 @@ custom_run_selection() {
 
     if [[ "$auto" == "true" ]]; then
         picker_fallback_gum true
-    elif picker_can_run && picker_run "$pick_file" main; then
-        picker_apply_selections "$pick_file" || picker_fallback_gum false
-        picker_offer_arco_catalog "$auto" || true
     else
-        if [[ ! -x "$(picker_binary)" ]]; then
-            ui_style_subheader "(fallback) os-configs-picker missing — pull the latest repo or re-run install.sh"
-        elif ! picker_has_tty; then
-            ui_style_subheader "(fallback) no TTY — use ssh -t for the full picker"
-        fi
-        picker_fallback_gum false
+        while :; do
+            UI_NAV=""
+            if picker_can_run && picker_run "$pick_file" main; then
+                picker_apply_selections "$pick_file" || picker_fallback_gum false
+                picker_offer_arco_catalog "$auto" || true
+                [[ "$UI_NAV" == "back" ]] && continue
+            else
+                if [[ ! -x "$(picker_binary)" ]]; then
+                    ui_style_subheader "(fallback) os-configs-picker missing — pull the latest repo or re-run install.sh"
+                elif ! picker_has_tty; then
+                    ui_style_subheader "(fallback) no TTY — use ssh -t for the full picker"
+                fi
+                picker_fallback_gum false
+            fi
+            break
+        done
     fi
 
     rm -f "$pick_file"

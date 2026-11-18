@@ -17,22 +17,26 @@ type menuItem struct {
 }
 
 type menuInput struct {
-	Banner      bannerInfo `json:"banner"`
-	Mode        string     `json:"mode"`
-	Title       string     `json:"title"`
-	Subtitle    string     `json:"subtitle,omitempty"`
-	Body        string     `json:"body,omitempty"`
-	Message     string     `json:"message,omitempty"`
-	DefaultYes  bool       `json:"default_yes"`
-	YesLabel    string     `json:"yes_label,omitempty"`
-	NoLabel     string     `json:"no_label,omitempty"`
-	ShowBanner  bool       `json:"show_banner"`
-	Items       []menuItem `json:"items,omitempty"`
+	Banner     bannerInfo `json:"banner"`
+	Mode       string     `json:"mode"`
+	Title      string     `json:"title"`
+	Subtitle   string     `json:"subtitle,omitempty"`
+	Body       string     `json:"body,omitempty"`
+	Message    string     `json:"message,omitempty"`
+	DefaultYes bool       `json:"default_yes"`
+	YesLabel   string     `json:"yes_label,omitempty"`
+	NoLabel    string     `json:"no_label,omitempty"`
+	ShowBanner bool       `json:"show_banner"`
+	Items      []menuItem `json:"items,omitempty"`
+	Step       int        `json:"step,omitempty"`
+	Total      int        `json:"total,omitempty"`
+	ShowBack   bool       `json:"show_back,omitempty"`
 }
 
 type menuOutput struct {
 	Choice    string `json:"choice,omitempty"`
 	Confirmed *bool  `json:"confirmed,omitempty"`
+	Back      bool   `json:"back,omitempty"`
 }
 
 type menuModel struct {
@@ -43,6 +47,7 @@ type menuModel struct {
 	height     int
 	quitting   bool
 	done       bool
+	back       bool
 }
 
 func (m menuModel) Init() tea.Cmd { return nil }
@@ -75,9 +80,16 @@ func (m menuModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch m.in.Mode {
 		case "confirm":
 			switch msg.String() {
-			case "ctrl+c", "q", "esc":
+			case "ctrl+c", "q":
 				m.quitting = true
 				return m, tea.Quit
+			case "b", "esc":
+				if m.in.ShowBack {
+					m.back = true
+					m.done = true
+					return m, tea.Quit
+				}
+				return m, nil
 			case "left", "h", "y":
 				m.confirmYes = true
 			case "right", "l", "n":
@@ -90,18 +102,32 @@ func (m menuModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 		case "info":
 			switch msg.String() {
-			case "ctrl+c", "q", "esc":
+			case "ctrl+c", "q":
 				m.quitting = true
 				return m, tea.Quit
+			case "b", "esc":
+				if m.in.ShowBack {
+					m.back = true
+					m.done = true
+					return m, tea.Quit
+				}
+				return m, nil
 			case "enter":
 				m.done = true
 				return m, tea.Quit
 			}
 		default:
 			switch msg.String() {
-			case "ctrl+c", "q", "esc":
+			case "ctrl+c", "q":
 				m.quitting = true
 				return m, tea.Quit
+			case "b", "esc":
+				if m.in.ShowBack {
+					m.back = true
+					m.done = true
+					return m, tea.Quit
+				}
+				return m, nil
 			case "up", "k":
 				m.moveCursor(-1)
 			case "down", "j":
@@ -224,7 +250,11 @@ func (m menuModel) View() string {
 		hint = lipgloss.NewStyle().Align(lipgloss.Center).Width(w).Foreground(appTUI.Theme.muted()).
 			Render(tuiString("confirm_hint", "←/→ toggle · Enter submit"))
 		if !m.in.ShowBanner {
-			content := lipgloss.JoinVertical(lipgloss.Center, body, "", hint)
+			parts := []string{body, "", hint}
+			if s := renderStep(w, m.in.Step, m.in.Total); s != "" {
+				parts = append([]string{s, ""}, parts...)
+			}
+			content := lipgloss.JoinVertical(lipgloss.Center, parts...)
 			return lipgloss.Place(w, h, lipgloss.Center, lipgloss.Center, content)
 		}
 	case "info":
@@ -238,7 +268,11 @@ func (m menuModel) View() string {
 	}
 
 	banner := renderBanner(w, m.in.Banner)
-	content := lipgloss.JoinVertical(lipgloss.Center, banner, "", body, "", hint)
+	parts := []string{banner, "", body, "", hint}
+	if s := renderStep(w, m.in.Step, m.in.Total); s != "" {
+		parts = append([]string{s, ""}, parts...)
+	}
+	content := lipgloss.JoinVertical(lipgloss.Center, parts...)
 	return lipgloss.Place(w, h, lipgloss.Center, lipgloss.Top, content)
 }
 
@@ -278,7 +312,7 @@ func runMenuPicker(inputPath, outputPath string) error {
 		os.Exit(1)
 	}
 
-	out := menuOutput{}
+	out := menuOutput{Back: fm.back}
 	switch in.Mode {
 	case "confirm":
 		v := fm.confirmYes

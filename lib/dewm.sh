@@ -126,18 +126,84 @@ dewm_pick_dm_interactive() {
     jq -r --arg lbl "$choice" 'to_entries[] | select(.value.label == $lbl) | .key' "$_dewm_dms" | head -1
 }
 
-dewm_prompt_interactive() {
-    local de_wm dm default_dm
+dewm_session_items_json() {
+    jq -n '[{"id":"de","label":"Desktop environment","subtitle":"Full desktop session"},
+            {"id":"wm","label":"Window manager","subtitle":"Lighter session"}]'
+}
 
-    de_wm="$(dewm_pick_de_wm_menu)"
-    default_dm="$(dewm_default_dm_for_de_wm "$de_wm")"
-    dm="$(dewm_pick_dm_interactive "$default_dm")"
-    dewm_apply_ids "$de_wm" "$dm"
+dewm_kind_items_json() {
+    local kind="$1"
+    jq --arg kind "$kind" \
+        '[to_entries[] | select(.value.type == $kind) | {id: .key, label: .value.label}]' "$_dewm_map"
+}
+
+dewm_dm_items_json() {
+    jq '[to_entries[] | {id: .key, label: .value.label}]' "$_dewm_dms"
+}
+
+dewm_prompt_interactive() {
+    local mode de_wm dm default_dm kind_label rc=0
+
+    if ! picker_can_run; then
+        de_wm="$(dewm_pick_de_wm_menu)" || return 1
+        default_dm="$(dewm_default_dm_for_de_wm "$de_wm")"
+        dm="$(dewm_pick_dm_interactive "$default_dm")" || return 1
+        dewm_apply_ids "$de_wm" "$dm"
+        return 0
+    fi
+
+    while :; do
+        de_wm=""
+        UI_NAV=""
+        ui_picker_flow "Session type" "Choose how your desktop session starts" \
+            "" "$(dewm_session_items_json)" false "" || return 1
+        if [[ "$UI_FLOW_BACK" == "true" ]]; then
+            UI_NAV="back"
+            return 2
+        fi
+        mode="$UI_FLOW_CHOICE"
+        [[ "$mode" == "de" || "$mode" == "wm" ]] || continue
+        if [[ "$mode" == "de" ]]; then
+            kind_label="Desktop environments"
+        else
+            kind_label="Window managers"
+        fi
+
+        while :; do
+            UI_NAV=""
+            ui_picker_flow "$kind_label" "" "" "$(dewm_kind_items_json "$mode")" false "" || return 1
+            if [[ "$UI_FLOW_BACK" == "true" ]]; then
+                break
+            fi
+            de_wm="$UI_FLOW_CHOICE"
+            [[ -n "$de_wm" ]] && break
+        done
+        [[ -n "$de_wm" ]] || continue
+
+        default_dm="$(dewm_default_dm_for_de_wm "$de_wm")"
+        while :; do
+            UI_NAV=""
+            ui_picker_flow "Display manager" \
+                "Default for $(dewm_label "$de_wm"): $(dewm_dm_label "$default_dm")" \
+                "" "$(dewm_dm_items_json)" false "$default_dm" || return 1
+            if [[ "$UI_FLOW_BACK" == "true" ]]; then
+                de_wm=""
+                break
+            fi
+            dm="$UI_FLOW_CHOICE"
+            [[ -n "$dm" ]] && break
+        done
+        [[ -z "$de_wm" ]] && continue
+
+        dewm_apply_ids "$de_wm" "$dm"
+        return 0
+    done
 }
 
 dewm_resolve() {
     local auto="${1:-false}"
     local preset_file="${2:-}"
+    local rc=0
 
     SELECTED_DE_WM=""
     SELECTED_DM=""
@@ -149,7 +215,12 @@ dewm_resolve() {
     fi
 
     if dewm_ask_enabled && [[ "$auto" != "true" ]]; then
-        dewm_prompt_interactive
+        dewm_prompt_interactive || rc=$?
+        if [[ "$rc" -eq 2 ]]; then
+            UI_NAV="back"
+            return 2
+        fi
+        [[ "$rc" -eq 0 ]] || return "$rc"
         return 0
     fi
 
@@ -159,7 +230,12 @@ dewm_resolve() {
     fi
 
     if [[ "$auto" != "true" ]]; then
-        dewm_prompt_interactive
+        dewm_prompt_interactive || rc=$?
+        if [[ "$rc" -eq 2 ]]; then
+            UI_NAV="back"
+            return 2
+        fi
+        [[ "$rc" -eq 0 ]] || return "$rc"
         return 0
     fi
 
