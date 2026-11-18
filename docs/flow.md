@@ -2,6 +2,10 @@
 
 The installer is a six-step wizard. Every interactive decision is a page from `os-configs-picker` (Bubble Tea + lipgloss) with the same header, step counter, footer, and keys. Bash supplies page data as JSON and reads the answer from a result file.
 
+![Flow chart](flow.png)
+
+A compact terminal rendering is in [flow-terminal.png](flow-terminal.png). Both images come from the current flow. The chart source is [flow.dot](flow.dot); regenerate it with `dot -Tpng -Gdpi=130 docs/flow.dot -o docs/flow.png`.
+
 ```
   setup.sh (alias) ──► bootstrap.sh ◄── curl / wget pipe
                             │  clone or update, then exec
