@@ -17,7 +17,7 @@ finish_run() {
     ui_style_header "All done"
 
     if [[ -n "${DOTFILES_BACKUP_PATH:-}" ]]; then
-        gum style "Dotfiles backup: ${DOTFILES_BACKUP_PATH}"
+        ui_note 252 "Dotfiles backup: ${DOTFILES_BACKUP_PATH}"
     fi
 
     if [[ "$skip_postlogin" != "true" ]]; then
@@ -25,7 +25,7 @@ finish_run() {
     fi
 
     if [[ "$dry_run" == "true" || "$skip_reboot" == "true" ]]; then
-        gum style --foreground 245 "Reboot skipped."
+        ui_note 245 "Reboot skipped."
         return 0
     fi
 
@@ -34,10 +34,13 @@ finish_run() {
         return 0
     fi
 
-    if ui_confirm "Reboot now?"; then
+    ui_flow_confirm "Reboot" \
+        "$(tui_str confirm_yes Yes)" "$(tui_str confirm_no No)" \
+        "Reboot now?"
+    if [[ "$UI_CONFIRM_RESULT" == "yes" ]]; then
         ui_style_subheader "Rebooting..."
         sudo reboot
     else
-        gum style --foreground 245 "Reboot deferred."
+        ui_note 245 "Reboot deferred."
     fi
 }

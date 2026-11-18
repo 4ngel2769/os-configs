@@ -27,6 +27,15 @@
     "software_hint": "↑↓ move · Space toggle · Enter switch pane · Tab footer · c continue",
 
     "list_hint": "↑↓ move · Enter select",
+    "flow_hint": "↑↓ move · Tab footer · Enter continue · b back · q quit",
+    "flow_hint_multi": "↑↓ move · Space toggle · Tab footer · Enter continue · b back · q quit",
+
+    "icon_cursor": "▸",
+    "icon_on": "◉",
+    "icon_off": "○",
+    "icon_back": "←",
+    "icon_continue": "⏎",
+    "icon_done": "•",
     "info_continue": "Continue",
     "info_hint": "Enter continue",
 

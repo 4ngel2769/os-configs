@@ -34,7 +34,9 @@ set -euo pipefail
 
 STATE="${HOME}/.cache/os-configs/postlogin.env"
 # shellcheck source=/dev/null
-[[ -f "$STATE" ]] && source "$STATE"
+if [[ -f "$STATE" ]]; then
+    source "$STATE"
+fi
 
 cleanup() {
     systemctl --user disable os-configs-postlogin.service &>/dev/null || true
@@ -81,7 +83,7 @@ if gum confirm "Install additional software?"; then
     custom_show_summary
     confirm_custom_install "$SELECTED_CUSTOM_FILE" false false
 else
-    gum style --foreground 245 "Skipped additional software."
+    ui_note 245 "Skipped additional software."
 fi
 EOF
 
@@ -116,14 +118,14 @@ postlogin_install_service() {
     fi
 
     if [[ "$dry_run" == "true" ]]; then
-        gum style --foreground 245 "(dry-run) would install post-login one-shot service"
-        gum style "  script: ${POSTLOGIN_SCRIPT}"
-        gum style "  unit:   ${POSTLOGIN_UNIT}"
+        ui_note 245 "(dry-run) would install post-login one-shot service"
+        ui_note 252 "  script: ${POSTLOGIN_SCRIPT}"
+        ui_note 252 "  unit:   ${POSTLOGIN_UNIT}"
         return 0
     fi
 
     if ! command -v systemctl &>/dev/null; then
-        gum style --foreground 245 "systemd not available — skipping post-login service"
+        ui_note 245 "systemd not available — skipping post-login service"
         return 0
     fi
 
@@ -131,7 +133,7 @@ postlogin_install_service() {
     postlogin_write_unit
     systemctl --user daemon-reload
     systemctl --user enable "$POSTLOGIN_SERVICE_NAME"
-    gum style --foreground 10 "Post-login prompt scheduled (runs once on next graphical login)."
+    ui_note 10 "Post-login prompt scheduled (runs once on next graphical login)."
 }
 
 postlogin_run_test() {

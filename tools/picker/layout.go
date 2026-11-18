@@ -17,6 +17,26 @@ type bannerInfo struct {
 	ShowGPU       bool   `json:"show_gpu"`
 }
 
+func renderStep(width, step, total int) string {
+	if step < 1 || total < 1 {
+		return ""
+	}
+	var dots strings.Builder
+	for i := 1; i <= total; i++ {
+		switch {
+		case i == step:
+			dots.WriteString(tuiString("icon_on", "●"))
+		case i < step:
+			dots.WriteString(tuiString("icon_done", "•"))
+		default:
+			dots.WriteString(tuiString("icon_off", "○"))
+		}
+	}
+	label := fmt.Sprintf("Step %d / %d   %s", step, total, dots.String())
+	return lipgloss.NewStyle().Align(lipgloss.Center).Width(width).
+		Foreground(appTUI.Theme.muted()).Render(label)
+}
+
 func renderBanner(width int, b bannerInfo) string {
 	if width < 40 {
 		width = 40

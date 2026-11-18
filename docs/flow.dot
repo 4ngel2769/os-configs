@@ -1,0 +1,62 @@
+digraph os_configs_flow {
+  graph [
+    bgcolor="#0d1117"
+    rankdir=TB
+    nodesep=0.35
+    ranksep=0.45
+    pad=0.25
+    fontname="DejaVu Sans Mono"
+  ];
+  node [
+    shape=box
+    style=rounded
+    color="#484f58"
+    fontcolor="#e6edf3"
+    fontname="DejaVu Sans Mono"
+    fontsize=10
+    margin="0.18,0.10"
+  ];
+  edge [
+    color="#8b949e"
+    fontcolor="#8b949e"
+    fontname="DejaVu Sans Mono"
+    fontsize=9
+    arrowsize=0.65
+  ];
+
+  setup [label="setup.sh (alias)"];
+  curl  [label="curl / wget pipe"];
+  boot  [label="bootstrap.sh"];
+  local [label="local clone: install.sh"];
+  inst  [label="install.sh\nflags · sudo · detect · deps"];
+
+  p1 [label="1/6  Platform confirm\nkeep detected? server / desktop / laptop"];
+  p2 [label="2/6  Preset grid\npreset skips step 3"];
+  p3 [label="3/6  Software picker\nmain catalog"];
+  more [label="More apps?", shape=diamond];
+  ext [label="3/6  Software picker\nextended catalog"];
+  p4 [label="4/6  Session type\nDE/WM + display manager"];
+  p5 [label="5/6  Shell\nconfig? → profile → credit"];
+  p6 [label="6/6  Confirm installation\nplan + package list"];
+
+  dry  [label="dry-run\npreview → summary → shell → dotfiles → done"];
+  real [label="real\ninstall → summary → shell → dotfiles → post-login → reboot"];
+
+  setup -> boot;
+  curl  -> boot;
+  local -> boot;
+  boot  -> inst [label="clone or update, then exec"];
+
+  inst -> p1;
+  p1 -> p2;
+  p2 -> p3 [label="custom"];
+  p3 -> more;
+  more -> ext [label="yes"];
+  more -> p4  [label="no"];
+  ext  -> p4;
+  p4 -> p5;
+  p5 -> p6;
+
+  p6 -> dry  [label="dry-run"];
+  p6 -> real [label="real", color="#56d4c4", fontcolor="#56d4c4"];
+}

@@ -9,6 +9,9 @@ _flow_presets_dir="${_flow_repo_root}/data/presets"
 SELECTED_PRESET_ID=""
 SELECTED_PRESET_FILE=""
 INSTALL_MODE="" # preset | custom
+UI_STEP="${UI_STEP:-0}"
+UI_TOTAL="${UI_TOTAL:-0}"
+UI_NAV="${UI_NAV:-}"
 
 flow_preset_visible() {
     local requires_gaming="${1:-false}"
@@ -97,8 +100,13 @@ flow_platform_override() {
         return 0
     fi
 
-    local picked
-    picked="$(ui_platform_pick)"
+    local picked rc=0
+    picked="$(ui_platform_pick)" || rc=$?
+    if [[ "$rc" -eq 2 ]]; then
+        UI_NAV="back"
+        return 2
+    fi
+    [[ "$rc" -eq 0 ]] || return "$rc"
     PLATFORM_CLASS="$picked"
     export PLATFORM_CLASS
     ui_style_subheader "Platform overridden to: $(ui_platform_label "$PLATFORM_CLASS")"
@@ -133,15 +141,21 @@ flow_select_preset_menu() {
         result_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-presets-out.XXXXXX")"
 
         jq -n \
+            --argjson banner "$(picker_banner_json)" \
             --arg distro_id "${DISTRO_ID}" \
             --arg distro_label "$(ui_distro_label)" \
             --arg distro_color "$(ui_distro_color)" \
+            --argjson step "${UI_STEP:-0}" \
+            --argjson total "${UI_TOTAL:-0}" \
             --argjson labels "$(printf '%s\n' "${labels[@]}" | jq -R . | jq -s .)" \
             --argjson ids "$(printf '%s\n' "${ids[@]}" | jq -R . | jq -s .)" \
             '{
+                banner: $banner,
                 distro_id: $distro_id,
                 distro_label: $distro_label,
                 distro_color: $distro_color,
+                step: $step,
+                total: $total,
                 presets: [range($labels | length) as $i | {id: $ids[$i], label: $labels[$i]}],
                 custom: {id: "custom", label: "Custom", subtitle: "pick your apps"}
             }' >"$input_file"
@@ -210,18 +224,49 @@ flow_run_custom() {
 
 flow_run_entry() {
     local auto="${1:-false}"
+    local step=1
+    local total=6
+    local preset_file rc=0
 
-    flow_platform_override "$auto"
-    flow_select_preset_menu "$auto"
+    while (( step >= 1 && step <= total )); do
+        UI_STEP="$step"
+        UI_TOTAL="$total"
+        export UI_STEP UI_TOTAL
+        UI_NAV=""
 
-    if [[ "$INSTALL_MODE" == "custom" ]]; then
-        flow_run_custom "$auto"
-        dewm_resolve "$auto" ""
-    else
-        dewm_resolve "$auto" "$SELECTED_PRESET_FILE"
-    fi
+        case "$step" in
+            1) flow_platform_override "$auto" ;;
+            2) flow_select_preset_menu "$auto" ;;
+            3)
+                if [[ "$INSTALL_MODE" == "custom" ]]; then
+                    flow_run_custom "$auto"
+                fi
+                ;;
+            4)
+                preset_file=""
+                [[ "$INSTALL_MODE" == "preset" ]] && preset_file="$SELECTED_PRESET_FILE"
+                dewm_resolve "$auto" "$preset_file" || {
+                    [[ "$UI_NAV" == "back" ]] || return 1
+                }
+                ;;
+            5)
+                shell_resolve "$auto" || {
+                    [[ "$UI_NAV" == "back" ]] || return 1
+                }
+                ;;
+            6)
+                confirm_run "$auto" "${OS_CONFIGS_DRY_RUN:-false}" \
+                    "${OS_CONFIGS_SKIP_DOTFILES:-false}" "${OS_CONFIGS_SKIP_POSTLOGIN:-false}" \
+                    "${OS_CONFIGS_SKIP_REBOOT:-false}" || rc=$?
+                [[ "$rc" -ne 2 ]] && return "$rc"
+                ;;
+        esac
 
-    shell_resolve "$auto"
-
-    confirm_run "$auto" "${OS_CONFIGS_DRY_RUN:-false}" "${OS_CONFIGS_SKIP_DOTFILES:-false}" "${OS_CONFIGS_SKIP_POSTLOGIN:-false}" "${OS_CONFIGS_SKIP_REBOOT:-false}"
+        if [[ "$UI_NAV" == "back" ]]; then
+            ((step--))
+        else
+            ((step++))
+        fi
+    done
+    return 0
 }

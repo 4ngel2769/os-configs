@@ -22,22 +22,22 @@ log_print_summary() {
     ui_style_header "Install summary"
 
     if [[ ${#_log_success[@]} -gt 0 ]]; then
-        gum style --foreground 10 "Succeeded (${#_log_success[@]}):"
+        ui_note 10 "Succeeded (${#_log_success[@]}):"
         printf '  %s\n' "${_log_success[@]}"
     fi
 
     if [[ ${#_log_skipped[@]} -gt 0 ]]; then
-        gum style --foreground 245 "Skipped (${#_log_skipped[@]}):"
+        ui_note 245 "Skipped (${#_log_skipped[@]}):"
         printf '  %s\n' "${_log_skipped[@]}"
     fi
 
     if [[ ${#_log_failed[@]} -gt 0 ]]; then
-        gum style --foreground 9 "Failed (${#_log_failed[@]}):"
+        ui_note 9 "Failed (${#_log_failed[@]}):"
         printf '  %s\n' "${_log_failed[@]}"
     fi
 
     if [[ ${#_log_failed[@]} -eq 0 && ${#_log_success[@]} -gt 0 ]]; then
-        gum style --foreground 10 "All packages installed successfully."
+        ui_note 10 "All packages installed successfully."
     fi
 }
 

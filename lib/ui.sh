@@ -4,6 +4,108 @@ set -euo pipefail
 _lib_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 _ui_colors_file="${_lib_dir}/../data/distro-colors.json"
 
+UI_STEP="${UI_STEP:-0}"
+UI_TOTAL="${UI_TOTAL:-0}"
+UI_NAV=""
+UI_FLOW_CHOICE=""
+UI_FLOW_BACK="false"
+UI_CONFIRM_RESULT=""
+
+# One page renderer for every interactive decision. Falls back to gum prompts.
+ui_picker_flow() {
+    local title="$1"
+    local subtitle="${2:-}"
+    local body="${3:-}"
+    local items_json="${4:-[]}"
+    local multi="${5:-false}"
+    local default_id="${6:-}"
+    local back_label="${7:-}"
+    local continue_label="${8:-}"
+    local input_file result_file
+
+    UI_FLOW_CHOICE=""
+    UI_FLOW_BACK="false"
+    if ! picker_can_run; then
+        return 1
+    fi
+
+    input_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-flow-in.XXXXXX")"
+    result_file="$(mktemp "${TMPDIR:-/tmp}/os-configs-flow-out.XXXXXX")"
+
+    jq -n \
+        --argjson banner "$(picker_banner_json)" \
+        --argjson step "$UI_STEP" \
+        --argjson total "$UI_TOTAL" \
+        --arg title "$title" \
+        --arg subtitle "$subtitle" \
+        --arg body "$body" \
+        --argjson items "$items_json" \
+        --argjson multi "$multi" \
+        --arg default_id "$default_id" \
+        --arg back_label "$back_label" \
+        --arg continue_label "$continue_label" \
+        '{banner: $banner, step: $step, total: $total, title: $title,
+          subtitle: $subtitle, body: $body, items: $items, multi: $multi,
+          default_id: $default_id, show_back: ($step > 1),
+          back_label: $back_label, continue_label: $continue_label}' >"$input_file"
+
+    if flow_picker_run "$result_file" "$input_file"; then
+        UI_FLOW_CHOICE="$(jq -r '.choice // empty' "$result_file")"
+        UI_FLOW_BACK="$(jq -r '.back // false' "$result_file")"
+        [[ "$UI_FLOW_BACK" == "true" ]] && UI_NAV="back"
+        rm -f "$input_file" "$result_file"
+        return 0
+    fi
+    rm -f "$input_file" "$result_file"
+    return 1
+}
+
+ui_picker_list() {
+    local title="$1"
+    local subtitle="${2:-}"
+    local items_json="${3:-[]}"
+    local default_id="${4:-}"
+
+    if ui_picker_flow "$title" "$subtitle" "" "$items_json" false "$default_id"; then
+        [[ "$UI_FLOW_BACK" == "true" ]] && return 2
+        printf '%s' "$UI_FLOW_CHOICE"
+        return 0
+    fi
+    return 1
+}
+
+# Result in UI_CONFIRM_RESULT: yes | no | back
+ui_flow_confirm() {
+    local title="$1"
+    local yes_label="${2:-$(tui_str confirm_yes Yes)}"
+    local no_label="${3:-$(tui_str confirm_no No)}"
+    local body="${4:-}"
+    local items
+
+    UI_CONFIRM_RESULT=""
+    items="$(jq -n --arg y "$yes_label" --arg n "$no_label" \
+        '[{id:"yes",label:$y},{id:"no",label:$n}]')"
+
+    if ui_picker_flow "$title" "" "$body" "$items" false "yes" \
+        "$(tui_str button_back Back)" "$(tui_str button_continue Continue)"; then
+        if [[ "$UI_FLOW_BACK" == "true" ]]; then
+            UI_CONFIRM_RESULT="back"
+        elif [[ "$UI_FLOW_CHOICE" == "no" ]]; then
+            UI_CONFIRM_RESULT="no"
+        else
+            UI_CONFIRM_RESULT="yes"
+        fi
+        return 0
+    fi
+
+    if ui_confirm "$title" true; then
+        UI_CONFIRM_RESULT="yes"
+    else
+        UI_CONFIRM_RESULT="no"
+    fi
+    return 0
+}
+
 ui_require_gum() {
     if command -v gum &>/dev/null; then
         return 0
@@ -53,10 +155,18 @@ ui_gpu_label() {
 
 ui_platform_pick() {
     local picked
+    local items='[{"id":"server","label":"Server","subtitle":"Headless"},
+                  {"id":"desktop","label":"Desktop","subtitle":"Full session"},
+                  {"id":"laptop","label":"Laptop","subtitle":"Portable"}]'
+
+    if picked="$(ui_picker_list "Platform" "Choose the platform for this machine" "$items")"; then
+        printf '%s\n' "$picked"
+        return 0
+    fi
+    [[ "$UI_NAV" == "back" ]] && return 2
 
     ui_require_gum || return 1
     picked="$(gum choose "Server" "Desktop" "Laptop")"
-
     case "$picked" in
         Server) echo "server" ;;
         Desktop) echo "desktop" ;;
@@ -69,35 +179,64 @@ ui_platform_pick() {
 }
 
 ui_style_header() {
-    ui_require_gum || return 1
-    gum style --bold --align center --width "$(ui_term_width)" --margin "1 0 0 0" "$@"
+    if command -v gum &>/dev/null; then
+        gum style --bold --align center --width "$(ui_term_width)" --margin "1 0 0 0" "$@"
+    else
+        printf '\n== %s ==\n' "$*"
+    fi
 }
 
 ui_style_subheader() {
-    ui_require_gum || return 1
-    gum style --align center --width "$(ui_term_width)" --foreground 245 "$@"
+    if command -v gum &>/dev/null; then
+        gum style --align center --width "$(ui_term_width)" --foreground 245 "$@"
+    else
+        printf '  %s\n' "$*"
+    fi
 }
 
 ui_style_divider() {
-    ui_require_gum || return 1
-    gum style --align center --width "$(ui_term_width)" --foreground 240 "$(ui_divider_line)"
+    if command -v gum &>/dev/null; then
+        gum style --align center --width "$(ui_term_width)" --foreground 240 "$(ui_divider_line)"
+    else
+        printf '%s\n' "$(ui_divider_line)"
+    fi
 }
 
 ui_style_centered() {
-    ui_require_gum || return 1
-    gum style --align center --width "$(ui_term_width)" "$@"
+    if command -v gum &>/dev/null; then
+        gum style --align center --width "$(ui_term_width)" "$@"
+    else
+        printf '%s\n' "$*"
+    fi
 }
 
 ui_style() {
-    ui_require_gum || return 1
-    gum style "$@"
+    if command -v gum &>/dev/null; then
+        gum style "$@"
+    else
+        printf '%s\n' "$*"
+    fi
+}
+
+# Status line with optional color. Plain text when gum is absent.
+ui_note() {
+    local color="$1"
+    shift
+    if command -v gum &>/dev/null; then
+        gum style --foreground "$color" "$@"
+    else
+        printf '%s\n' "$*"
+    fi
 }
 
 ui_confirm() {
     local prompt="${1:-Continue?}"
     local default="${2:-true}"
 
-    ui_require_gum || return 1
+    if ! command -v gum &>/dev/null; then
+        ui_confirm_plain "$prompt"
+        return $?
+    fi
 
     if [[ "$default" == "true" ]]; then
         gum confirm "$prompt"
@@ -161,6 +300,8 @@ ui_picker_menu_confirm() {
 
         jq -n \
             --argjson banner "$banner_json" \
+            --argjson step "$UI_STEP" \
+            --argjson total "$UI_TOTAL" \
             --arg mode "confirm" \
             --arg title "$title" \
             --arg message "$message" \
@@ -169,11 +310,12 @@ ui_picker_menu_confirm() {
             --arg no_label "$no_label" \
             --argjson default_yes "$default_json" \
             --argjson show_banner "$show_banner_json" \
-            '{banner: $banner, mode: $mode, title: $title, message: $message, body: $body, yes_label: $yes_label, no_label: $no_label, default_yes: $default_yes, show_banner: $show_banner}' \
+            '{banner: $banner, step: $step, total: $total, mode: $mode, title: $title, message: $message, body: $body, yes_label: $yes_label, no_label: $no_label, default_yes: $default_yes, show_banner: $show_banner, show_back: ($step > 1)}' \
             >"$input_file"
 
         if menu_picker_run "$result_file" "$input_file"; then
             confirmed="$(jq -r '.confirmed // false' "$result_file")"
+            [[ "$(jq -r '.back // false' "$result_file")" == "true" ]] && UI_NAV="back"
             rm -f "$input_file" "$result_file"
             [[ "$confirmed" == "true" ]]
             return $?
@@ -218,15 +360,18 @@ ui_picker_menu_list() {
 
         jq -n \
             --argjson banner "$(picker_banner_json)" \
+            --argjson step "$UI_STEP" \
+            --argjson total "$UI_TOTAL" \
             --arg mode "list" \
             --arg title "$title" \
             --arg subtitle "$subtitle" \
             --argjson items "$items_json" \
-            '{banner: $banner, mode: "list", title: $title, subtitle: $subtitle, items: $items}' \
+            '{banner: $banner, step: $step, total: $total, mode: "list", title: $title, subtitle: $subtitle, items: $items, show_back: ($step > 1)}' \
             >"$input_file"
 
         if menu_picker_run "$result_file" "$input_file"; then
             choice="$(jq -r '.choice // empty' "$result_file")"
+            [[ "$(jq -r '.back // false' "$result_file")" == "true" ]] && UI_NAV="back"
             rm -f "$input_file" "$result_file"
             if [[ -n "$choice" ]]; then
                 printf '%s' "$choice"
@@ -250,13 +395,16 @@ ui_picker_menu_info() {
 
         jq -n \
             --argjson banner "$(picker_banner_json)" \
+            --argjson step "$UI_STEP" \
+            --argjson total "$UI_TOTAL" \
             --arg mode "info" \
             --arg title "$title" \
             --arg body "$body" \
-            '{banner: $banner, mode: "info", title: $title, body: $body}' \
+            '{banner: $banner, step: $step, total: $total, mode: "info", title: $title, body: $body, show_back: ($step > 1)}' \
             >"$input_file"
 
         if menu_picker_run "$result_file" "$input_file"; then
+            [[ "$(jq -r '.back // false' "$result_file")" == "true" ]] && UI_NAV="back"
             rm -f "$input_file" "$result_file"
             return 0
         fi
@@ -294,7 +442,12 @@ ui_spin() {
     local title="$1"
     shift
 
-    ui_require_gum || return 1
+    # gum spin opens /dev/tty directly; without a controlling terminal it fails.
+    if ! command -v gum &>/dev/null || [[ ! -t 0 && ! -t 1 ]]; then
+        printf '%s\n' "$title"
+        "$@"
+        return $?
+    fi
     gum spin --spinner dot --title "$title" -- "$@"
 }
 
@@ -333,28 +486,35 @@ ui_distro_badge() {
     local family="${2:-${DISTRO_FAMILY:-}}"
     local label="${3:-}"
 
-    ui_require_gum || return 1
-
     [[ -n "$label" ]] || label="$(ui_distro_label "$distro_id")"
 
-    local color
-    color="$(ui_distro_color "$distro_id" "$family")"
-
-    gum style --foreground "$color" "$label"
+    if command -v gum &>/dev/null; then
+        local color
+        color="$(ui_distro_color "$distro_id" "$family")"
+        gum style --foreground "$color" "$label"
+    else
+        printf '%s\n' "$label"
+    fi
 }
 
 ui_show_banner() {
-    local badge platform_label color width
+    local badge platform_label width
 
-    ui_require_gum || return 1
     badge="$(ui_distro_label)"
-    color="$(ui_distro_color)"
     platform_label="$(ui_platform_label "${PLATFORM_CLASS:-desktop}")"
     width="$(ui_term_width)"
 
-    gum style --bold --align center --width "$width" --margin "1 0" "os-configs"
-    gum style --align center --width "$width" --foreground 245 "Post-install setup"
-    ui_style_divider
-    gum style --align center --width "$width" --foreground "$color" "/ ${badge} · ${platform_label} \\"
+    if command -v gum &>/dev/null; then
+        local color
+        color="$(ui_distro_color)"
+        gum style --bold --align center --width "$width" --margin "1 0" "$(tui_str app_title os-configs)"
+        gum style --align center --width "$width" --foreground 245 "$(tui_str app_subtitle "Post-install setup")"
+        ui_style_divider
+        gum style --align center --width "$width" --foreground "$color" "/ ${badge} · ${platform_label} \\"
+    else
+        printf '\nos-configs\nPost-install setup\n'
+        ui_style_divider
+        printf '/ %s · %s \\\n' "$badge" "$platform_label"
+    fi
     ui_style_divider
 }

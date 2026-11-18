@@ -89,13 +89,13 @@ dotfiles_show_plan() {
     dotfiles_collect_packages packages
 
     if [[ ${#packages[@]} -eq 0 ]]; then
-        gum style --foreground 245 "No dotfiles packages found."
+        ui_note 245 "No dotfiles packages found."
         return 0
     fi
 
     ui_style_subheader "Dotfiles packages"
     for spec in "${packages[@]}"; do
-        gum style "  ${spec}"
+        ui_note 252 "  ${spec}"
     done
 
     dotfiles_collect_conflicts conflicts
@@ -103,7 +103,7 @@ dotfiles_show_plan() {
         ui_style_subheader "Existing files to back up (${#conflicts[@]})"
         printf '  %s\n' "${conflicts[@]}"
     else
-        gum style --foreground 245 "  No existing file conflicts detected."
+        ui_note 245 "  No existing file conflicts detected."
     fi
 }
 
@@ -126,12 +126,13 @@ dotfiles_backup() {
     for target in "${conflicts[@]}"; do
         rel="${target#${HOME}/}"
         mkdir -p "$(dirname "${dest}/${rel}")"
-        cp -a "$target" "${dest}/${rel}"
+        # Move, not copy: stow -R refuses a regular file left at the target.
+        mv "$target" "${dest}/${rel}"
     done
 
     DOTFILES_BACKUP_PATH="$dest"
     export DOTFILES_BACKUP_PATH
-    gum style --foreground 10 "Backed up ${#conflicts[@]} file(s) to ${dest}"
+    ui_note 10 "Backed up ${#conflicts[@]} file(s) to ${dest}"
 }
 
 dotfiles_stow_package() {
@@ -174,17 +175,20 @@ dotfiles_deploy() {
             pkg_name="${spec#*:}"
             dotfiles_stow_package "$stow_dir" "$pkg_name" true
         done
-        gum style --foreground 245 "(dry-run — dotfiles not deployed)"
+        ui_note 245 "(dry-run — dotfiles not deployed)"
         return 0
     fi
 
     install_ensure_stow false || return 1
 
     if [[ "$auto" != "true" ]]; then
-        ui_confirm "Back up existing configs and deploy dotfiles?" || {
-            gum style --foreground 245 "Dotfiles deploy skipped."
+        ui_flow_confirm "Dotfiles" \
+            "$(tui_str confirm_yes Yes)" "$(tui_str confirm_no No)" \
+            "Back up existing configs and deploy dotfiles?"
+        if [[ "$UI_CONFIRM_RESULT" != "yes" ]]; then
+            ui_note 245 "Dotfiles deploy skipped."
             return 0
-        }
+        fi
     else
         ui_style_subheader "(auto) backing up and deploying dotfiles"
     fi
@@ -196,13 +200,13 @@ dotfiles_deploy() {
         pkg_name="${spec#*:}"
         if ! ui_spin "Stowing ${spec}..." dotfiles_stow_package "$stow_dir" "$pkg_name" false; then
             failed=$((failed + 1))
-            gum style --foreground 9 "Failed to stow ${spec}"
+            ui_note 9 "Failed to stow ${spec}"
         fi
     done
 
     if [[ -n "$DOTFILES_BACKUP_PATH" ]]; then
         ui_style_subheader "Backup path: ${DOTFILES_BACKUP_PATH}"
-        gum style --foreground 245 "Restore with: cp -a '${DOTFILES_BACKUP_PATH}/.' '${HOME}/'"
+        ui_note 245 "Restore with: cp -a '${DOTFILES_BACKUP_PATH}/.' '${HOME}/'"
     fi
 
     [[ "$failed" -eq 0 ]]

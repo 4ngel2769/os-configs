@@ -8,7 +8,7 @@ OS_CONFIGS_BIN="${OS_CONFIGS_BIN:-${OS_CONFIGS_CACHE}/bin}"
 
 JQ_VERSION="${OS_CONFIGS_JQ_VERSION:-1.7.1}"
 GUM_VERSION="${OS_CONFIGS_GUM_VERSION:-0.14.5}"
-PICKER_VERSION="${OS_CONFIGS_PICKER_VERSION:-9}"
+PICKER_VERSION="${OS_CONFIGS_PICKER_VERSION:-10}"
 
 _deps_msg() { printf '[deps] %s\n' "$*" >&2; }
 
@@ -48,26 +48,75 @@ _deps_download() {
     return 1
 }
 
+_deps_download_stdout() {
+    local url="$1"
+
+    if command -v curl &>/dev/null; then
+        curl -fsSL "$url"
+    elif command -v wget &>/dev/null; then
+        wget -qO- "$url"
+    else
+        return 1
+    fi
+}
+
+_deps_verify_sha256() {
+    local file="$1" sums_url="$2" name="$3"
+    local expected actual sums
+
+    if [[ "${OS_CONFIGS_SKIP_CHECKSUM:-0}" == "1" ]]; then
+        return 0
+    fi
+
+    sums="$(_deps_download_stdout "$sums_url")" || return 1
+    expected="$(printf '%s\n' "$sums" | awk -v n="$name" '$2 == n { print $1; exit }')"
+    if [[ -z "$expected" ]]; then
+        echo "deps: no checksum entry for ${name}" >&2
+        return 1
+    fi
+
+    if command -v sha256sum &>/dev/null; then
+        actual="$(sha256sum "$file" | awk '{print $1}')"
+    elif command -v shasum &>/dev/null; then
+        actual="$(shasum -a 256 "$file" | awk '{print $1}')"
+    else
+        echo "deps: sha256sum or shasum is required to verify downloads" >&2
+        return 1
+    fi
+
+    if [[ "$actual" != "$expected" ]]; then
+        echo "deps: checksum mismatch for ${name}" >&2
+        return 1
+    fi
+}
+
 _deps_install_jq() {
-    local arch dest url
+    local arch dest url sums_url name tmp
     arch="$(_deps_arch)"
     dest="${OS_CONFIGS_BIN}/jq"
-    url="https://github.com/jqlang/jq/releases/download/jq-${JQ_VERSION}/jq-linux-${arch}"
+    name="jq-linux-${arch}"
+    url="https://github.com/jqlang/jq/releases/download/jq-${JQ_VERSION}/${name}"
+    sums_url="https://github.com/jqlang/jq/releases/download/jq-${JQ_VERSION}/sha256sum.txt"
 
     if [[ -x "$dest" ]]; then
         return 0
     fi
 
     _deps_ensure_bin_dir
+    tmp="$(mktemp "${TMPDIR:-/tmp}/os-configs-jq.XXXXXX")"
 
     _deps_msg "fetching jq ${JQ_VERSION} (${arch})..."
-    _deps_download "$url" "$dest"
-    chmod +x "$dest"
+    if ! _deps_download "$url" "$tmp" || ! _deps_verify_sha256 "$tmp" "$sums_url" "$name"; then
+        rm -f "$tmp"
+        return 1
+    fi
+    install -m 0755 "$tmp" "$dest"
+    rm -f "$tmp"
     _deps_msg "jq installed to ${dest}"
 }
 
 _deps_install_gum() {
-    local arch dest tarball tmpdir url folder
+    local arch dest tarball tmpdir url folder gum_arch name sums_url
     arch="$(_deps_arch)"
     dest="${OS_CONFIGS_BIN}/gum"
 
@@ -78,21 +127,22 @@ _deps_install_gum() {
     _deps_ensure_bin_dir
 
     case "$arch" in
-        amd64)
-            url="https://github.com/charmbracelet/gum/releases/download/v${GUM_VERSION}/gum_${GUM_VERSION}_Linux_x86_64.tar.gz"
-            folder="gum_${GUM_VERSION}_Linux_x86_64"
-            ;;
-        arm64)
-            url="https://github.com/charmbracelet/gum/releases/download/v${GUM_VERSION}/gum_${GUM_VERSION}_Linux_arm64.tar.gz"
-            folder="gum_${GUM_VERSION}_Linux_arm64"
-            ;;
+        amd64) gum_arch="x86_64" ;;
+        arm64) gum_arch="arm64" ;;
     esac
+    name="gum_${GUM_VERSION}_Linux_${gum_arch}.tar.gz"
+    folder="gum_${GUM_VERSION}_Linux_${gum_arch}"
+    url="https://github.com/charmbracelet/gum/releases/download/v${GUM_VERSION}/${name}"
+    sums_url="https://github.com/charmbracelet/gum/releases/download/v${GUM_VERSION}/checksums.txt"
 
     tmpdir="$(mktemp -d)"
     tarball="${tmpdir}/gum.tgz"
 
     _deps_msg "fetching gum ${GUM_VERSION} (${arch})..."
-    _deps_download "$url" "$tarball"
+    if ! _deps_download "$url" "$tarball" || ! _deps_verify_sha256 "$tarball" "$sums_url" "$name"; then
+        rm -rf "$tmpdir"
+        return 1
+    fi
     tar -xzf "$tarball" -C "$tmpdir"
     install -m 0755 "${tmpdir}/${folder}/gum" "$dest"
     rm -rf "$tmpdir"
@@ -126,8 +176,7 @@ os_configs_ensure_gum() {
 
 os_configs_ensure_deps() {
     os_configs_ensure_jq
-    os_configs_ensure_gum
-    os_configs_ensure_picker
+    os_configs_ensure_picker || true
     _deps_prepend_path
 }
 
@@ -244,7 +293,7 @@ _deps_install_picker() {
 
     echo "deps: os-configs-picker unavailable — gum fallbacks will be used" >&2
     echo "deps: install Go and re-run, or set OS_CONFIGS_PICKER_BUILD=1" >&2
-    return 0
+    return 1
 }
 
 os_configs_ensure_picker() {
@@ -312,10 +361,6 @@ deps_collect_missing() {
         _out+=("tool|jq|jq ${JQ_VERSION}|${OS_CONFIGS_BIN}/jq")
     fi
 
-    if ! _deps_has_gum; then
-        _out+=("tool|gum|gum ${GUM_VERSION}|${OS_CONFIGS_BIN}/gum")
-    fi
-
     if ! _deps_has_picker; then
         arch="$(_deps_arch)"
         bundled="$(_deps_picker_bundled "$arch")"
@@ -371,11 +416,7 @@ deps_show_install_panel() {
         extra=$'\n\n'"Dry-run: installer tools will still be fetched to run the TUI. System packages are listed but not installed until a real run."
     fi
 
-    if command -v gum &>/dev/null; then
-        gum style --bold --align center --width "$(ui_term_width)" --margin "1 0 0 0" "Dependencies"
-    else
-        printf '\nDependencies\n\n'
-    fi
+    ui_style_header "Dependencies"
     ui_panel "The following will be installed" "${body}${extra}"
 }
 
@@ -399,11 +440,9 @@ deps_install_item() {
             _deps_install_gum
             ;;
         tool:picker)
-            if [[ "$note" == *"not available"* ]]; then
-                echo "deps: ${note}" >&2
-                return 0
+            if ! _deps_install_picker; then
+                _deps_msg "picker unavailable — continuing with gum fallbacks"
             fi
-            _deps_install_picker || true
             ;;
         system:curl)
             _deps_install_system_pkg "curl"
@@ -447,11 +486,10 @@ deps_install_missing() {
 }
 
 deps_confirm_install_prompt() {
-    if command -v gum &>/dev/null; then
-        gum confirm "Install these dependencies now?"
-        return $?
-    fi
-    ui_confirm_plain "Install these dependencies now?"
+    ui_flow_confirm "Dependencies" \
+        "$(tui_str confirm_yes Yes)" "$(tui_str confirm_no No)" \
+        "Install these dependencies now?"
+    [[ "$UI_CONFIRM_RESULT" == "yes" ]]
 }
 
 # Audit, prompt, and install missing deps before the main installer flow.

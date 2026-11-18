@@ -22,6 +22,8 @@ type catalogFile struct {
 	Title      string      `json:"title,omitempty"`
 	Subtitle   string      `json:"subtitle,omitempty"`
 	Categories []category  `json:"categories"`
+	Step       int         `json:"step,omitempty"`
+	Total      int         `json:"total,omitempty"`
 }
 
 type category struct {
@@ -71,6 +73,8 @@ type softwareModel struct {
 	quitting     bool
 	done         bool
 	err          error
+	step         int
+	total        int
 }
 
 func (m softwareModel) Init() tea.Cmd { return nil }
@@ -126,6 +130,9 @@ func (m softwareModel) headerView() string {
 		Render(strings.Repeat("─", clamp(w-4, 20, 100)))
 
 	parts := []string{title, sub, div}
+	if s := renderStep(w, m.step, m.total); s != "" {
+		parts = append(parts, s)
+	}
 	if m.banner != nil {
 		parts = append(parts, renderDetectionStrip(w, *m.banner))
 	}
@@ -223,7 +230,7 @@ func (m softwareModel) sidebarLines(rows int) []string {
 		}
 		prefix := "  "
 		if i == m.catIndex {
-			prefix = "▸ "
+			prefix = tuiString("icon_cursor", "▸") + " "
 		}
 		text := truncateRunes(prefix+label, softwareSidebarW)
 		switch {
@@ -260,13 +267,13 @@ func (m softwareModel) appLines(rows int) []string {
 	var lines []string
 	for i := m.appScroll; i < end; i++ {
 		item := cat.Apps[i]
-		marker := "[ ]"
+		marker := tuiString("icon_off", "○")
 		if m.selected[cat.ID][item.ID] {
-			marker = "[x]"
+			marker = tuiString("icon_on", "◉")
 		}
 		prefix := "  " + marker + " "
 		if m.focus == focusApps && i == m.appIndex {
-			prefix = "▸ " + marker + " "
+			prefix = tuiString("icon_cursor", "▸") + " " + marker + " "
 		}
 		text := truncateRunes(prefix+item.Label, colW)
 		if m.focus == focusApps && i == m.appIndex {
@@ -486,16 +493,16 @@ func (m softwareModel) View() string {
 	return lipgloss.JoinVertical(lipgloss.Top, header, body, footer, hint)
 }
 
-func loadCatalog(path string) ([]category, *bannerInfo, string, string, error) {
+func loadCatalog(path string) ([]category, *bannerInfo, string, string, int, int, error) {
 	raw, err := os.ReadFile(path)
 	if err != nil {
-		return nil, nil, "", "", err
+		return nil, nil, "", "", 0, 0, err
 	}
 	var cf catalogFile
 	if err := json.Unmarshal(raw, &cf); err != nil {
-		return nil, nil, "", "", err
+		return nil, nil, "", "", 0, 0, err
 	}
-	return cf.Categories, cf.Banner, cf.Title, cf.Subtitle, nil
+	return cf.Categories, cf.Banner, cf.Title, cf.Subtitle, cf.Step, cf.Total, nil
 }
 
 func writeSoftwareOutput(m softwareModel, dest *os.File) error {
@@ -518,7 +525,7 @@ func writeSoftwareOutput(m softwareModel, dest *os.File) error {
 }
 
 func runSoftwarePicker(catalogPath, outputPath string) error {
-	cats, banner, title, subtitle, err := loadCatalog(catalogPath)
+	cats, banner, title, subtitle, step, total, err := loadCatalog(catalogPath)
 	if err != nil {
 		return err
 	}
@@ -537,6 +544,8 @@ func runSoftwarePicker(catalogPath, outputPath string) error {
 		focus:        focusSidebar,
 		lastPane:     focusSidebar,
 		footerButton: footerBack,
+		step:         step,
+		total:        total,
 	}
 
 	p := tea.NewProgram(m, tea.WithAltScreen())
