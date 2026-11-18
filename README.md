@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/logo.svg" alt="os-configs" width="120">
+<img src="docs/logo.png" alt="os-configs" width="120">
 
 # os-configs
 
